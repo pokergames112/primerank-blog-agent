@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Prime Rank Marketing | Agente de Blog & Validação Mobile</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Header / Navigation Bar -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand-logo">
+        <div class="logo-badge"><i class="fa-solid fa-crown"></i></div>
+        <div class="logo-text">
+          <span class="brand-name">PRIME RANK</span>
+          <span class="brand-sub">Marketing AI Agent</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button id="btn-quick-generate" class="btn btn-gradient-sm">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+          <span>Gerar Artigo</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Nav Tabs -->
+    <nav class="nav-tabs">
+      <button class="nav-tab active" data-tab="tab-pending">
+        <i class="fa-solid fa-clock"></i>
+        <span>Validação</span>
+        <span class="badge-count" id="badge-pending-count">0</span>
+      </button>
+      <button class="nav-tab" data-tab="tab-trends">
+        <i class="fa-solid fa-arrow-trend-up"></i>
+        <span>Trends</span>
+      </button>
+      <button class="nav-tab" data-tab="tab-published">
+        <i class="fa-solid fa-circle-check"></i>
+        <span>Publicados</span>
+      </button>
+      <button class="nav-tab" data-tab="tab-api">
+        <i class="fa-solid fa-code"></i>
+        <span>API & Site</span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- Main Container -->
+  <main class="main-content">
+
+    <!-- TAB 1: VALIDAÇÃO MOBILE (PENDENTES) -->
+    <section id="tab-pending" class="tab-pane active">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <h1 class="section-title">Validação de Conteúdo</h1>
+          <p class="section-desc">Revise o artigo gerado com base no Google Trends e aprove no celular.</p>
+        </div>
+        <button id="btn-refresh-pending" class="btn-icon" title="Atualizar">
+          <i class="fa-solid fa-rotate"></i>
+        </button>
+      </div>
+
+      <!-- Pending Articles Feed -->
+      <div id="pending-list" class="cards-list">
+        <!-- Rendered via JS -->
+      </div>
+    </section>
+
+    <!-- TAB 2: GOOGLE TRENDS SCANNER -->
+    <section id="tab-trends" class="tab-pane">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <h2 class="section-title">Google Trends Brasil</h2>
+          <p class="section-desc">Pautas do dia e notícias de marketing com alto volume de busca.</p>
+        </div>
+        <button id="btn-refresh-trends" class="btn btn-outline-sm">
+          <i class="fa-solid fa-radar"></i> Varrer Agora
+        </button>
+      </div>
+
+      <div id="trends-container" class="trends-grid">
+        <!-- Rendered via JS -->
+      </div>
+    </section>
+
+    <!-- TAB 3: ARTIGOS PUBLICADOS -->
+    <section id="tab-published" class="tab-pane">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <h2 class="section-title">Artigos Aprovados & Publicados</h2>
+          <p class="section-desc">Conteúdos prontos e integrados com a aba do blog no site.</p>
+        </div>
+      </div>
+
+      <div id="published-list" class="cards-list">
+        <!-- Rendered via JS -->
+      </div>
+    </section>
+
+    <!-- TAB 4: INTEGRAÇÃO & API DO SITE -->
+    <section id="tab-api" class="tab-pane">
+      <div class="api-integration-card">
+        <div class="api-header">
+          <div class="api-icon"><i class="fa-solid fa-plug"></i></div>
+          <div>
+            <h3>Conexão com primerankmarketing.com.br</h3>
+            <p>Endpoints REST prontos para alimentar a aba do Blog do site automaticamente.</p>
+          </div>
+        </div>
+
+        <div class="api-endpoints-box">
+          <div class="endpoint-item">
+            <span class="method get">GET</span>
+            <code class="endpoint-url">/api/blog/posts</code>
+            <p class="endpoint-desc">Retorna lista de posts aprovados com paginação, filtros e metadados SEO.</p>
+          </div>
+
+          <div class="endpoint-item">
+            <span class="method get">GET</span>
+            <code class="endpoint-url">/api/blog/posts/:slug</code>
+            <p class="endpoint-desc">Retorna o artigo completo com Markdown renderizado, FAQ Schema e autoridade.</p>
+          </div>
+
+          <div class="endpoint-item">
+            <span class="method post">POST</span>
+            <code class="endpoint-url">/api/generate</code>
+            <p class="endpoint-desc">Dispara geração de artigo com IA para uma pauta específica.</p>
+          </div>
+        </div>
+
+        <div class="telegram-setup-box">
+          <h4><i class="fa-brands fa-telegram"></i> Notificações Diretas no Telegram</h4>
+          <p>Para aprovar diretamente pelo app do Telegram no celular sem abrir o navegador:</p>
+          <ol>
+            <li>Inicie conversa com seu bot no Telegram.</li>
+            <li>Digite <code>/start</code> para ver seu Chat ID.</li>
+            <li>Insira as chaves no arquivo <code>.env</code>.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Modal Visualizador / Editor Completo de Artigo -->
+  <div id="article-modal" class="modal-backdrop">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-badge-group">
+          <span id="modal-word-badge" class="badge badge-success"><i class="fa-solid fa-feather"></i> 1.620 palavras</span>
+          <span id="modal-time-badge" class="badge badge-info"><i class="fa-solid fa-stopwatch"></i> 8 min leitura</span>
+        </div>
+        <button id="btn-close-modal" class="btn-close">&times;</button>
+      </div>
+
+      <div class="modal-body" id="modal-body-content">
+        <!-- Post Detail Rendered via JS -->
+      </div>
+
+      <div class="modal-footer-mobile">
+        <button id="btn-modal-reject" class="btn btn-danger">
+          <i class="fa-solid fa-xmark"></i> Rejeitar
+        </button>
+        <button id="btn-modal-edit" class="btn btn-secondary">
+          <i class="fa-solid fa-pen-to-square"></i> Editar
+        </button>
+        <button id="btn-modal-approve" class="btn btn-gradient">
+          <i class="fa-solid fa-rocket"></i> Aprovar & Publicar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Criação Rápida de Pauta -->
+  <div id="generate-modal" class="modal-backdrop">
+    <div class="modal-card modal-compact">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-wand-magic-sparkles"></i> Gerar Novo Artigo</h3>
+        <button id="btn-close-generate-modal" class="btn-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <label class="form-label">Tema ou Palavra-chave (ou deixe vazio para pegar a melhor do Google):</label>
+        <input type="text" id="input-custom-topic" class="form-input" placeholder="Ex: Tendências de Google Ads para 2026...">
+
+        <label class="form-label" style="margin-top: 12px;">Instruções ou Foco Específico (Opcional):</label>
+        <textarea id="input-custom-notes" class="form-textarea" placeholder="Ex: Enfatizar o serviço de consultoria de SEO da Prime Rank..."></textarea>
+      </div>
+      <div class="modal-footer">
+        <button id="btn-confirm-generate" class="btn btn-gradient btn-full">
+          <i class="fa-solid fa-bolt"></i> Iniciar Redação IA (+1500 Palavras)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

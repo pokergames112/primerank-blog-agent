@@ -1,0 +1,50 @@
+{
+  "agencyName": "Prime Rank Marketing",
+  "website": "https://primerankmarketing.com.br",
+  "tagline": "Estratégias de Marketing Digital de Alta Performance, SEO e Conversão",
+  "targetAudience": "Empresários, diretores de marketing, gestores comerciais, e-commerces e profissionais liberais que buscam escalar vendas, tráfego qualificado e autoridade no Google e mídias pagas.",
+  "toneOfVoice": {
+    "style": "Profissional, autoritário, persuasivo, analítico, direto ao ponto e orientado a resultados (ROI e dados)",
+    "person": "Nós (Prime Rank Marketing) / Você (Leitor/Empresário)",
+    "vocabulary": ["ROI", "conversão", "escalabilidade", "autoridade de domínio", "tráfego qualificado", "SEO de alta performance", "posicionamento estratégico", "funil de vendas", "growth marketing"]
+  },
+  "coreServices": [
+    {
+      "name": "SEO & Otimização para Mecanismos de Busca",
+      "description": "Posicionamento orgânico nas primeiras posições do Google, auditoria técnica, link building e SEO on-page.",
+      "ctaText": "Quer dominar a primeira página do Google? Fale com os especialistas da Prime Rank Marketing."
+    },
+    {
+      "name": "Gestão de Tráfego Pago (Google Ads & Meta Ads)",
+      "description": "Campanhas otimizadas com foco em menor custo por aquisição (CPA) e máximo retorno sobre investimento (ROAS).",
+      "ctaText": "Escale suas vendas com campanhas de tráfego pago de alta precisão com a Prime Rank."
+    },
+    {
+      "name": "Criação de Sites de Alta Conversão & Landing Pages",
+      "description": "Desenvolvimento web responsivo, ultra rápido e planejado para converter visitantes em clientes pagantes.",
+      "ctaText": "Transforme seu site em uma máquina de vendas com a Prime Rank Marketing."
+    },
+    {
+      "name": "Inbound Marketing & Estratégia de Conteúdo",
+      "description": "Nutrição de leads, criação de autoridade com artigos e materiais ricos que atraem compradores qualificados.",
+      "ctaText": "Crie uma presença digital irresistível e atraia clientes todos os dias."
+    }
+  ],
+  "defaultCTA": {
+    "heading": "Pronto para levar seu negócio ao próximo nível de faturamento?",
+    "text": "Na **Prime Rank Marketing**, nós não vendemos promessas; entregamos estratégias validadas com métricas claras de crescimento. Agende uma consultoria estratégica gratuita com o nosso time de especialistas e descubra onde sua empresa está perdendo oportunidades.",
+    "buttonLabel": "Solicitar Diagnóstico Estratégico Gratuito",
+    "buttonUrl": "https://primerankmarketing.com.br/#contato"
+  },
+  "editorialGuidelines": {
+    "minWords": 1500,
+    "targetLanguage": "pt-BR",
+    "seoElements": {
+      "includeTableOfContents": true,
+      "includeFAQSchema": true,
+      "includeKeyTakeaways": true,
+      "includeActionableChecklist": true,
+      "headingHierarchy": "H1 único -> múltiplos H2 -> H3 para desdobramento lógico"
+    }
+  }
+}
