@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preview Blog | Prime Rank Marketing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background: transparent;
+      color: #f3f4f6;
+      padding: 10px 0;
+    }
+
+    .blog-preview-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    .preview-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .badge-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(245, 158, 11, 0.12);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .preview-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.2;
+    }
+
+    .preview-title span {
+      background: linear-gradient(90deg, #ffffff, #fbbf24);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .btn-view-all {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #fbbf24;
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 700;
+      transition: transform 0.2s ease, color 0.2s ease;
+    }
+
+    .btn-view-all:hover {
+      transform: translateX(4px);
+      color: #f59e0b;
+    }
+
+    .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+    }
+
+    .post-card {
+      background: rgba(17, 24, 39, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .post-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(245, 158, 11, 0.4);
+      box-shadow: 0 12px 32px rgba(245, 158, 11, 0.12);
+    }
+
+    .card-thumb-wrap {
+      position: relative;
+      width: 100%;
+      height: 190px;
+      overflow: hidden;
+      background: #1f2937;
+    }
+
+    .card-thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .post-card:hover .card-thumb {
+      transform: scale(1.05);
+    }
+
+    .card-category-tag {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(9, 13, 22, 0.85);
+      backdrop-filter: blur(8px);
+      color: #fbbf24;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .card-content {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .card-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.76rem;
+      color: #9ca3af;
+      margin-bottom: 10px;
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.4;
+      margin-bottom: 10px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-excerpt {
+      font-size: 0.86rem;
+      color: #9ca3af;
+      line-height: 1.5;
+      margin-bottom: 16px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      flex: 1;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .author-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      color: #e5e7eb;
+      font-weight: 600;
+    }
+
+    .read-more-link {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #fbbf24;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .loading-state {
+      text-align: center;
+      padding: 40px;
+      color: #9ca3af;
+    }
+  </style>
+</head>
+<body>
+  <div class="blog-preview-section">
+    <div class="preview-header">
+      <div>
+        <span class="badge-label"><i class="fa-solid fa-bolt"></i> Inteligência & Tendências</span>
+        <h2 class="preview-title">Últimos Artigos da <span>Prime Rank</span></h2>
+      </div>
+      <a href="/blog" target="_blank" class="btn-view-all">
+        Ver Todo o Blog <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    </div>
+
+    <div id="posts-container" class="posts-grid">
+      <div class="loading-state">
+        <i class="fa-solid fa-spinner fa-spin" style="font-size: 1.5rem; margin-bottom: 8px;"></i>
+        <p>Carregando artigos atualizados...</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    async function loadLatestPosts() {
+      const container = document.getElementById('posts-container');
+      try {
+        const res = await fetch('/api/blog/posts?limit=3');
+        const data = await res.json();
+        const posts = data.posts || [];
+
+        if (posts.length === 0) {
+          container.innerHTML = `
+            <div class="loading-state" style="grid-column: 1 / -1;">
+              <p>Nenhum artigo publicado ainda. Em breve novas análises estratégicas!</p>
+            </div>
+          `;
+          return;
+        }
+
+        container.innerHTML = posts.map(post => `
+          <a href="/blog/post.html?slug=${post.slug}" target="_blank" class="post-card">
+            <div class="card-thumb-wrap">
+              <img src="${post.featuredImageUrl || 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80'}" alt="${post.title}" class="card-thumb" loading="lazy">
+              <span class="card-category-tag">${post.category || 'Marketing & SEO'}</span>
+            </div>
+            <div class="card-content">
+              <div class="card-meta-row">
+                <span><i class="fa-regular fa-calendar"></i> ${new Date(post.publishedAt).toLocaleDateString('pt-BR')}</span>
+                <span>•</span>
+                <span><i class="fa-solid fa-stopwatch"></i> ${post.readingTimeMinutes || 7} min de leitura</span>
+              </div>
+              <h3 class="card-title">${post.title}</h3>
+              <p class="card-excerpt">${post.excerpt}</p>
+              <div class="card-footer">
+                <div class="author-info">
+                  <i class="fa-solid fa-crown" style="color: #fbbf24;"></i>
+                  <span>${post.author?.name || 'Prime Rank'}</span>
+                </div>
+                <span class="read-more-link">
+                  Ler Artigo <i class="fa-solid fa-chevron-right"></i>
+                </span>
+              </div>
+            </div>
+          </a>
+        `).join('');
+      } catch (err) {
+        container.innerHTML = `<div class="loading-state" style="grid-column: 1 / -1;"><p>Erro ao conectar com a API do Blog.</p></div>`;
+      }
+    }
+
+    loadLatestPosts();
+  </script>
+</body>
+</html>

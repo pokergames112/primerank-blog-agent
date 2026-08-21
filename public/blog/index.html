@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog Prime Rank Marketing | Estratégias de SEO, Tráfego Pago e Conversão</title>
+  <meta name="description" content="Artigos estratégicos, tendências de mercado e guias práticos sobre SEO de alta performance e tráfego pago da Prime Rank Marketing.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="blog.css">
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/blog" class="brand-link">
+        <div class="brand-logo-icon"><i class="fa-solid fa-crown"></i></div>
+        <div class="brand-text">
+          <span class="logo-title">PRIME RANK</span>
+          <p>Intelligence & Growth</p>
+        </div>
+      </a>
+
+      <nav class="nav-menu">
+        <a href="/blog" class="nav-link active">Blog</a>
+        <a href="https://primerankmarketing.com.br" target="_blank" class="nav-link">Site Oficial</a>
+        <a href="https://primerankmarketing.com.br/#contato" target="_blank" class="btn-header-cta">
+          Falar com Especialista
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="blog-hero">
+    <div class="hero-pill">
+      <i class="fa-solid fa-bolt"></i> Insights e Estratégias em Tempo Real
+    </div>
+    <h1 class="hero-title">Blog <span>Prime Rank Marketing</span></h1>
+    <p class="hero-desc">
+      Análises aprofundadas, dados de mercado e os roteiros mais eficientes de SEO e Tráfego Pago para escalar o faturamento da sua empresa.
+    </p>
+  </section>
+
+  <!-- Blog Main Container -->
+  <main class="blog-container">
+    <div id="posts-grid" class="posts-grid-main">
+      <div style="grid-column: 1 / -1; text-align: center; padding: 60px 0; color: var(--text-muted);">
+        <i class="fa-solid fa-spinner fa-spin" style="font-size: 2rem; margin-bottom: 12px;"></i>
+        <p>Carregando artigos...</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <p>© 2026 Prime Rank Marketing. Todos os direitos reservados.</p>
+    <p style="margin-top: 6px; color: var(--text-dim);">Estratégias de Marketing Digital e SEO de Alta Performance.</p>
+  </footer>
+
+  <script>
+    async function fetchBlogPosts() {
+      const grid = document.getElementById('posts-grid');
+      try {
+        const res = await fetch('/api/blog/posts');
+        const data = await res.json();
+        const posts = data.posts || [];
+
+        if (posts.length === 0) {
+          grid.innerHTML = `
+            <div style="grid-column: 1 / -1; text-align: center; padding: 60px 0;">
+              <h3>Nenhum artigo publicado no momento</h3>
+              <p style="color: var(--text-muted); margin-top: 8px;">Valide novos artigos no painel do agente para exibi-los aqui.</p>
+            </div>
+          `;
+          return;
+        }
+
+        grid.innerHTML = posts.map(post => `
+          <a href="/blog/post.html?slug=${post.slug}" class="blog-card">
+            <div class="card-img-wrap">
+              <img src="${post.featuredImageUrl || 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80'}" alt="${post.title}" class="card-img" loading="lazy">
+            </div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span><i class="fa-regular fa-calendar"></i> ${new Date(post.publishedAt).toLocaleDateString('pt-BR')}</span>
+                <span>•</span>
+                <span><i class="fa-solid fa-stopwatch"></i> ${post.readingTimeMinutes || 7} min</span>
+              </div>
+              <h2 class="card-heading">${post.title}</h2>
+              <p class="card-summary">${post.excerpt}</p>
+              <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 14px; margin-top: auto;">
+                <span style="font-size: 0.8rem; font-weight: 700; color: var(--gold-light);">
+                  <i class="fa-solid fa-crown"></i> ${post.author?.name || 'Prime Rank'}
+                </span>
+                <span style="font-size: 0.85rem; font-weight: 700; color: var(--gold-light);">
+                  Ler Mais <i class="fa-solid fa-arrow-right"></i>
+                </span>
+              </div>
+            </div>
+          </a>
+        `).join('');
+      } catch (err) {
+        grid.innerHTML = `<div style="grid-column: 1 / -1; text-align: center;"><p>Erro ao carregar artigos da API.</p></div>`;
+      }
+    }
+
+    fetchBlogPosts();
+  </script>
+</body>
+</html>

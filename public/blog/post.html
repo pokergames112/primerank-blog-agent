@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="meta-page-title">Artigo | Prime Rank Marketing</title>
+  <meta id="meta-page-desc" name="description" content="">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="blog.css">
+</head>
+<body>
+
+  <!-- Reading Progress -->
+  <div id="reading-progress" class="reading-progress-bar"></div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/blog" class="brand-link">
+        <div class="brand-logo-icon"><i class="fa-solid fa-crown"></i></div>
+        <div class="brand-text">
+          <span class="logo-title">PRIME RANK</span>
+          <p>Intelligence & Growth</p>
+        </div>
+      </a>
+
+      <nav class="nav-menu">
+        <a href="/blog" class="nav-link"><i class="fa-solid fa-arrow-left"></i> Voltar ao Blog</a>
+        <a href="https://primerankmarketing.com.br/#contato" target="_blank" class="btn-header-cta">
+          Diagnóstico Gratuito
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Article Main Layout -->
+  <main class="article-layout">
+    
+    <!-- Left: Content Column -->
+    <article id="article-main-container">
+      <div class="article-header">
+        <span class="hero-pill" id="article-category"><i class="fa-solid fa-fire"></i> Marketing & SEO</span>
+        <h1 class="article-h1" id="article-title">Carregando artigo...</h1>
+        
+        <div class="article-meta-bar">
+          <span><i class="fa-solid fa-crown" style="color: #fbbf24;"></i> <strong id="article-author">Prime Rank Marketing</strong></span>
+          <span>•</span>
+          <span><i class="fa-regular fa-calendar"></i> <span id="article-date">--/--/----</span></span>
+          <span>•</span>
+          <span><i class="fa-solid fa-stopwatch"></i> <span id="article-reading-time">--</span> min de leitura</span>
+          <span>•</span>
+          <span><i class="fa-solid fa-feather"></i> <span id="article-word-count">--</span> palavras</span>
+        </div>
+      </div>
+
+      <img id="article-featured-img" src="" alt="" class="article-featured-image">
+
+      <div id="article-body" class="article-content">
+        <!-- Rendered via Marked.js -->
+      </div>
+    </article>
+
+    <!-- Right: Sticky Conversion Sidebar -->
+    <aside class="article-sidebar">
+      <div class="sidebar-cta-card">
+        <div class="sidebar-cta-icon"><i class="fa-solid fa-chart-line"></i></div>
+        <h3 class="sidebar-cta-title">Quer Dominar a 1ª Página do Google?</h3>
+        <p class="sidebar-cta-desc">
+          Nossos especialistas desenvolvem estratégias sob medida de SEO e Tráfego Pago focadas em ROI e novos clientes todos os dias.
+        </p>
+        <a href="https://primerankmarketing.com.br/#contato" target="_blank" class="btn-cta-full">
+          Solicitar Diagnóstico Gratuito
+        </a>
+      </div>
+
+      <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 20px;">
+        <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 12px; color: #fff;">Compartilhar</h4>
+        <div style="display: flex; gap: 10px;">
+          <button onclick="shareWhatsApp()" class="btn-header-cta" style="flex: 1; text-align: center; border: none; cursor: pointer;">
+            <i class="fa-brands fa-whatsapp"></i> WhatsApp
+          </button>
+          <button onclick="copyArticleLink()" class="nav-link" style="padding: 8px 12px; background: var(--bg-surface); border-radius: 9999px; border: 1px solid var(--border-color); cursor: pointer;">
+            <i class="fa-solid fa-copy"></i>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <p>© 2026 Prime Rank Marketing. Todos os direitos reservados.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    // Scroll progress bar
+    window.addEventListener('scroll', () => {
+      const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('reading-progress').style.width = scrolled + '%';
+    });
+
+    async function loadSinglePost() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const slug = urlParams.get('slug');
+
+      if (!slug) {
+        document.getElementById('article-title').innerText = 'Artigo não especificado.';
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/blog/posts/${slug}`);
+        const data = await res.json();
+
+        if (!data.success || !data.post) {
+          document.getElementById('article-title').innerText = 'Artigo não encontrado.';
+          return;
+        }
+
+        const post = data.post;
+
+        // Meta tags & SEO
+        document.title = post.seo?.metaTitle || post.title;
+        document.getElementById('meta-page-title').innerText = post.seo?.metaTitle || post.title;
+        document.getElementById('meta-page-desc').setAttribute('content', post.seo?.metaDescription || post.excerpt);
+
+        // Header Elements
+        document.getElementById('article-title').innerText = post.title;
+        document.getElementById('article-category').innerHTML = `<i class="fa-solid fa-fire"></i> ${post.category || 'Marketing & SEO'}`;
+        document.getElementById('article-author').innerText = post.author?.name || 'Prime Rank Marketing';
+        document.getElementById('article-date').innerText = new Date(post.publishedAt || post.createdAt).toLocaleDateString('pt-BR');
+        document.getElementById('article-reading-time').innerText = post.seo?.readingTimeMinutes || 8;
+        document.getElementById('article-word-count').innerText = post.seo?.wordCount || 1500;
+
+        const featuredImg = document.getElementById('article-featured-img');
+        featuredImg.src = post.featuredImageUrl || 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80';
+        featuredImg.alt = post.imageAlt || post.title;
+
+        // Content
+        const parsedMarkdown = marked.parse(post.contentMarkdown);
+        document.getElementById('article-body').innerHTML = parsedMarkdown;
+
+        // Injetar FAQ Schema JSON-LD se existir
+        if (post.seo?.faqSchemaJson) {
+          const script = document.createElement('script');
+          script.type = 'application/ld+json';
+          script.text = post.seo.faqSchemaJson;
+          document.head.appendChild(script);
+        }
+      } catch (err) {
+        document.getElementById('article-title').innerText = 'Erro ao carregar artigo.';
+      }
+    }
+
+    function shareWhatsApp() {
+      const url = encodeURIComponent(window.location.href);
+      const text = encodeURIComponent(document.title + ' - Confira este artigo da Prime Rank: ');
+      window.open(`https://api.whatsapp.com/send?text=${text}${url}`, '_blank');
+    }
+
+    function copyArticleLink() {
+      navigator.clipboard.writeText(window.location.href);
+      alert('Link do artigo copiado para a área de transferência!');
+    }
+
+    loadSinglePost();
+  </script>
+</body>
+</html>
