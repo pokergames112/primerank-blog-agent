@@ -110,6 +110,7 @@ export class StorageService {
   // --- Posts Methods ---
 
   public getAllPosts(): BlogPost[] {
+    this.db = this.loadDatabase();
     return this.db.posts.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
   }
 
@@ -118,20 +119,15 @@ export class StorageService {
   }
 
   public getPostById(id: string): BlogPost | undefined {
-    return this.db.posts.find((p) => p.id === id);
+    return this.getAllPosts().find((p) => p.id === id);
   }
 
   public async findPostById(id: string): Promise<BlogPost | undefined> {
-    let post = this.getPostById(id);
-    if (!post) {
-      await this.syncFromCloud();
-      post = this.getPostById(id);
-    }
-    return post;
+    return this.getPostById(id);
   }
 
   public getPostBySlug(slug: string): BlogPost | undefined {
-    return this.db.posts.find((p) => p.slug === slug);
+    return this.getAllPosts().find((p) => p.slug === slug);
   }
 
   public savePost(post: BlogPost): BlogPost {
