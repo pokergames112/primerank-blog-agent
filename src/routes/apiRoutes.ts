@@ -139,9 +139,9 @@ apiRouter.patch('/posts/:id/status', async (req: Request, res: Response) => {
 });
 
 // Atualizar conteúdo e dados do post
-apiRouter.put('/posts/:id', (req: Request, res: Response) => {
+apiRouter.put('/posts/:id', async (req: Request, res: Response) => {
   const { id } = req.params;
-  const post = storage.getPostById(id);
+  const post = await storage.findPostById(id);
 
   if (!post) {
     return res.status(404).json({ success: false, error: 'Post não encontrado' });
@@ -154,9 +154,9 @@ apiRouter.put('/posts/:id', (req: Request, res: Response) => {
 });
 
 // Excluir post
-apiRouter.delete('/posts/:id', (req: Request, res: Response) => {
+apiRouter.delete('/posts/:id', async (req: Request, res: Response) => {
   const { id } = req.params;
-  const deleted = storage.deletePost(id);
+  const deleted = await storage.deletePost(id);
 
   if (!deleted) {
     return res.status(404).json({ success: false, error: 'Post não encontrado' });

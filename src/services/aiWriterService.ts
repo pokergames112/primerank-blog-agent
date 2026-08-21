@@ -661,7 +661,8 @@ Se você deseja posicionar a sua empresa no topo das pesquisas, reduzir seu cust
       .trim()
       .replace(/\s+/g, '-')
       .replace(/-+/g, '-')
-      .slice(0, 80);
+      .slice(0, 80)
+      .replace(/^-+|-+$/g, '');
   }
 
     private getFeaturedImageUrl(topic: string): string {

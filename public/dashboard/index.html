@@ -1024,7 +1024,7 @@
           html += '    <p class="card-excerpt">' + p.excerpt + '</p>';
           html += '    <div class="card-actions">';
           html += '      <button onclick="previewArticleById(\'' + p.id + '\')" class="btn btn-secondary" style="flex: 1; justify-content: center;"><i class="fa-solid fa-eye"></i> Ler / Editar</button>';
-          html += '      <button onclick="updateStatus(\'' + p.id + '\', \'published\')" class="btn btn-success" style="flex: 1; justify-content: center;"><i class="fa-solid fa-check"></i> Aprovar (0s)</button>';
+          html += '      <button onclick="updateStatus(\'' + p.id + '\', \'published\', this)" class="btn btn-success" style="flex: 1; justify-content: center;"><i class="fa-solid fa-check"></i> Aprovar (0s)</button>';
           html += '      <button onclick="deletePost(\'' + p.id + '\')" class="btn btn-danger" title="Excluir"><i class="fa-solid fa-trash"></i></button>';
           html += '    </div>';
           html += '  </div>';
@@ -1189,7 +1189,11 @@
       return headers;
     }
 
-    async function updateStatus(id, status) {
+    async function updateStatus(id, status, btnElement) {
+      if (btnElement) {
+        btnElement.disabled = true;
+        btnElement.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processando...';
+      }
       try {
         var res = await fetch('/api/posts/' + id + '/status', {
           method: 'PATCH',
@@ -1203,10 +1207,10 @@
           loadStats();
           closeModal();
         } else {
-          alert('Erro ao atualizar status: ' + (data.error || 'Não autorizado.'));
+          alert('Aviso ao atualizar: ' + (data.error || 'Não foi possível concluir.'));
         }
       } catch (err) {
-        alert('Erro ao atualizar status.');
+        alert('Erro ao atualizar status do artigo.');
       }
     }
 
@@ -1299,7 +1303,7 @@
 
         var actionsHtml = '';
         if (post.status === 'pending_approval') {
-          actionsHtml += '<button onclick="updateStatus(\'' + post.id + '\', \'published\')" class="btn btn-success" style="flex: 1; justify-content: center;"><i class="fa-solid fa-check"></i> Aprovar (0s)</button>';
+          actionsHtml += '<button onclick="updateStatus(\'' + post.id + '\', \'published\', this)" class="btn btn-success" style="flex: 1; justify-content: center;"><i class="fa-solid fa-check"></i> Aprovar (0s)</button>';
         } else if (post.status === 'published') {
           actionsHtml += '<a href="https://pokergames112.github.io/primerankmarketing.com.br/post.html?slug=' + encodeURIComponent(post.slug) + '" target="_blank" class="btn btn-primary" style="flex: 1; justify-content: center;"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver no Site</a>';
         }

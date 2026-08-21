@@ -55,15 +55,36 @@ export class StorageService {
 
   private loadDatabase(): StorageDatabase {
     try {
-      if (fs.existsSync(DB_FILE)) {
-        const content = fs.readFileSync(DB_FILE, 'utf-8');
-        return JSON.parse(content);
-      }
+      let basePosts: BlogPost[] = [];
+      let extraPosts: BlogPost[] = [];
+      let baseDb: StorageDatabase = { ...DEFAULT_DB };
+
       if (fs.existsSync(BUNDLED_DB_FILE)) {
-        const content = fs.readFileSync(BUNDLED_DB_FILE, 'utf-8');
-        return JSON.parse(content);
+        try {
+          const content = fs.readFileSync(BUNDLED_DB_FILE, 'utf-8');
+          baseDb = JSON.parse(content);
+          if (Array.isArray(baseDb.posts)) {
+            basePosts = baseDb.posts;
+          }
+        } catch (_) {}
       }
-      return DEFAULT_DB;
+
+      if (fs.existsSync(DB_FILE) && DB_FILE !== BUNDLED_DB_FILE) {
+        try {
+          const content = fs.readFileSync(DB_FILE, 'utf-8');
+          const tmpDb = JSON.parse(content);
+          if (Array.isArray(tmpDb.posts)) {
+            extraPosts = tmpDb.posts;
+          }
+        } catch (_) {}
+      }
+
+      const postMap = new Map<string, BlogPost>();
+      basePosts.forEach((p) => postMap.set(p.id, p));
+      extraPosts.forEach((p) => postMap.set(p.id, p));
+
+      baseDb.posts = Array.from(postMap.values()).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+      return baseDb;
     } catch (err) {
       console.error('Erro ao carregar banco de dados local. Usando padrão...', err);
       return DEFAULT_DB;
@@ -139,6 +160,15 @@ export class StorageService {
     return this.db.posts.find((p) => p.id === id);
   }
 
+  public async findPostById(id: string): Promise<BlogPost | undefined> {
+    let post = this.getPostById(id);
+    if (!post) {
+      await this.syncFromCloud();
+      post = this.getPostById(id);
+    }
+    return post;
+  }
+
   public getPostBySlug(slug: string): BlogPost | undefined {
     return this.db.posts.find((p) => p.slug === slug);
   }
@@ -183,12 +213,16 @@ export class StorageService {
     return post;
   }
 
-  public deletePost(id: string): boolean {
+  public async deletePost(id: string): Promise<boolean> {
+    let post = this.getPostById(id);
+    if (!post) {
+      await this.syncFromCloud();
+    }
     const initialLen = this.db.posts.length;
     this.db.posts = this.db.posts.filter((p) => p.id !== id);
     const deleted = this.db.posts.length !== initialLen;
     if (deleted) {
-      this.saveDatabase();
+      await this.saveDatabase();
     }
     return deleted;
   }
