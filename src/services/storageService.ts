@@ -75,7 +75,7 @@ function getStaticInitialPosts(): BlogPost[] {
       title: "IA muda regras da busca do Google e transforma o SEO: como as empresas podem ser encontradas agora?",
       subtitle: "Como transformar a nova busca impulsionada por IA no Google em posicionamento estratégico, autoridade de marca e novos clientes para o seu negócio.",
       slug: "ia-muda-regras-da-busca-do-google-e-transforma-o-seo-como-as-empresas-podem-ser-",
-      contentMarkdown: "\n# IA muda regras da busca do Google e transforma o SEO: como as empresas podem ser encontradas agora?\n\nO ecossistema de buscas do Google passa pela sua transformação mais profunda nas últimas duas décadas. Com a expansão do Google Search Generative Experience (SGE), a integração de resumos de Inteligência Artificial diretamente no topo dos resultados e as constantes atualizações de algoritmos focados em experiência (Helpful Content Updates), a forma como os consumidores buscam e tomam decisões de compra mudou radicalmente.\n\nPara empresas que dependem exclusivamente de técnicas antigas de SEO ou de anúncios genéricos, essas mudanças representam perda acelerada de tráfego. No entanto, na metodologia da **Prime Rank Marketing**, essa revolução da IA é encarada como a maior oportunidade dos últimos anos para **dominar o topo das buscas, construir autoridade inquestionável e gerar um fluxo previsível de vendas diárias**.\n\n---\n\n## 1. O Que Mudou no Algoritmo do Google com a Inteligência Artificial\n\nA IA do Google não lê apenas palavras-chave repetidas; ela analisa a **intenção real de busca (Search Intent)**, a profundidade do conteúdo e a experiência comprovada do autor (E-E-A-T: Experiência, Especialidade, Autoridade e Confiabilidade).\n\n- **Resumos Gerativos no Topo:** O Google responde dúvidas diretas com resumos de IA, destacando apenas as marcas que possuem conteúdo técnico aprofundado e citações relevantes.\n- **Fim do Conteúdo Superficial:** Artigos curtos e genéricos foram desindexados. O buscador prioriza conteúdos extensos (+1500 palavras) com análises práticas, dados reais e respostas completas.\n- **Busca Semântica Avançada:** A inteligência artificial compreende sinônimos, contexts de negócios locais e intenções de contratação em tempo real.\n\n---\n\n## 2. O Método Prime Rank para Vencer na Era da Busca por IA\n\nPara garantir que a sua empresa lidere as pesquisas e transforme visitantes em clientes no WhatsApp, aplicamos um roteiro estratégico em 4 pilares:\n\n1. **SEO Semântico & Topical Authority:** Otimizamos o site da sua empresa para cobrir todos os tópicos do seu setor, tornando sua marca a autoridade máxima reconhecida pelo Google.\n2. **Engenharia de Landing Pages Ultrarrápidas:** Páginas leves (Core Web Vitals 90+) projetadas para converter o leitor em um contato imediato no WhatsApp comercial.\n3. **Tráfego Pago de Alta Precisão (Google Ads & Meta Ads):** Anúncios segmentados por intenção de busca para garantir que sua empresa apareça tanto no topo pago quanto no orgânico.\n4. **Rastreamento Avançado de Conversões:** Monitoramento completo via GA4 e Tag Manager para identificar exatamente qual palavra-chave e qual anúncio geram maior lucro real no seu caixa.\n\n---\n\n## Conclusão: Posicione Sua Marca no Novo Google\n\nSe você deseja posicionar a sua empresa no topo das pesquisas, reduzir seu custo por cliente e acelerar suas vendas com segurança, converse agora mesmo com os especialistas da **Prime Rank Marketing**.\n\n> 🚀 [**Solicitar Diagnóstico Estratégico Gratuito no WhatsApp**](https://api.whatsapp.com/send?phone=5581986703728&text=Ol%C3%A1%21+Vim+pelo+Blog+da+Prime+Rank+e+gostaria+de+um+diagn%C3%B3stico+estrat%C3%A9gico+gratuito.)\n",
+      contentMarkdown: "\n# IA muda regras da busca do Google e transforma o SEO: como as empresas podem ser encontradas agora?\n\nO ecossistema de buscas do Google passa pela sua transformação mais profunda nas últimas duas décadas. Com a expansão do Google Search Generative Experience (SGE), a integração de resumos de Inteligência Artificial diretamente no topo dos resultados e as constantes atualizações de algoritmos focados em experiência (Helpful Content Updates), a forma como os consumidores buscam e tomam decisões de compra mudou radicalmente.\n\nPara empresas que dependem exclusivamente de técnicas antigas de SEO ou de anúncios genéricos, essas mudanças representam perda acelerada de tráfego. No entanto, na metodologia da **Prime Rank Marketing**, essa revolução da IA é encarada como a maior oportunidade dos últimos anos para **dominar o topo das buscas, construir autoridade inquestionável e gerar um fluxo previsível de vendas diárias**.\n\n---\n\n## 1. O Que Mudou no Algoritmo do Google com a Inteligência Artificial\n\nA IA do Google não lê apenas palavras-chave repetidas; ela analisa a **intenção real de busca (Search Intent)**, a profundidade do conteúdo e a experiência comprovada do autor (E-E-A-T: Experiência, Especialidade, Autoridade e Confiabilidade).\n\n- **Resumos Gerativos no Topo:** O Google responde dúvidas diretas com resumos de IA, destacando apenas as marcas que possuem conteúdo técnico aprofundado e citações relevantes.\n- **Fim do Conteúdo Superficial:** Artigos curtos e genéricos foram desindexados. O buscador prioriza conteúdos extensos (+1500 palavras) com análises práticas, dados reais e respostas completas.\n- **Busca Semântica Avançada:** A inteligência artificial compreende sinônimos, contextos de negócios locais e intenções de contratação em tempo real.\n\n---\n\n## 2. O Método Prime Rank para Vencer na Era da Busca por IA\n\nPara garantir que a sua empresa lidere as pesquisas e transforme visitantes em clientes no WhatsApp, aplicamos um roteiro estratégico em 4 pilares:\n\n1. **SEO Semântico & Topical Authority:** Otimizamos o site da sua empresa para cobrir todos os tópicos do seu setor, tornando sua marca a autoridade máxima reconhecida pelo Google.\n2. **Engenharia de Landing Pages Ultrarrápidas:** Páginas leves (Core Web Vitals 90+) projetadas para converter o leitor em um contato imediato no WhatsApp comercial.\n3. **Tráfego Pago de Alta Precisão (Google Ads & Meta Ads):** Anúncios segmentados por intenção de busca para garantir que sua empresa apareça tanto no topo pago quanto no orgânico.\n4. **Rastreamento Avançado de Conversões:** Monitoramento completo via GA4 e Tag Manager para identificar exatamente qual palavra-chave e qual anúncio geram maior lucro real no seu caixa.\n\n---\n\n## Conclusão: Posicione Sua Marca no Novo Google\n\nSe você deseja posicionar a sua empresa no topo das pesquisas, reduzir seu custo por cliente e acelerar suas vendas com segurança, converse agora mesmo com os especialistas da **Prime Rank Marketing**.\n\n> 🚀 [**Solicitar Diagnóstico Estratégico Gratuito no WhatsApp**](https://api.whatsapp.com/send?phone=5581986703728&text=Ol%C3%A1%21+Vim+pelo+Blog+da+Prime+Rank+e+gostaria+de+um+diagn%C3%B3stico+estrat%C3%A9gico+gratuito.)\n",
       excerpt: "A evolução da busca com Inteligência Artificial no Google transforma o SEO. Descubra como ajustar o posicionamento da sua empresa para capturar tráfego qualificado e converter leitores em clientes.",
       featuredImageUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80",
       imageAlt: "IA muda regras da busca do Google por Prime Rank Marketing",
@@ -221,23 +221,17 @@ export class StorageService {
     }
 
     const postMap = new Map<string, BlogPost>();
-    base.forEach((p) => postMap.set(p.id, { ...p }));
+    base.forEach((p) => postMap.set(p.id, { ...p, status: 'published' }));
 
     filePosts.forEach((p) => {
       if (p && p.id) {
-        if (postMap.has(p.id)) {
-          const existing = postMap.get(p.id)!;
-          postMap.set(p.id, {
-            ...existing,
-            ...p,
-            status: (p.status || existing.status || 'published') as PostStatus,
-            publishedAt: p.publishedAt || existing.publishedAt,
-          });
-        } else if (p.title && (p.contentMarkdown || p.excerpt)) {
-          postMap.set(p.id, {
-            ...p,
-            status: (p.status || 'pending_approval') as PostStatus,
-          });
+        if (!postMap.has(p.id)) {
+          if (p.title && (p.contentMarkdown || p.excerpt)) {
+            postMap.set(p.id, {
+              ...p,
+              status: (p.status || 'pending_approval') as PostStatus,
+            });
+          }
         }
       }
     });
@@ -278,22 +272,17 @@ export class StorageService {
     }
 
     const postMap = new Map<string, BlogPost>();
-    base.forEach((p) => postMap.set(p.id, { ...p }));
+    base.forEach((p) => postMap.set(p.id, { ...p, status: 'published' }));
 
     memoryPosts.forEach((p) => {
       if (p && p.id) {
-        if (postMap.has(p.id)) {
-          const existing = postMap.get(p.id)!;
-          postMap.set(p.id, {
-            ...existing,
-            ...p,
-            status: (p.status || existing.status || 'published') as PostStatus,
-          });
-        } else if (p.title && (p.contentMarkdown || p.excerpt)) {
-          postMap.set(p.id, {
-            ...p,
-            status: (p.status || 'pending_approval') as PostStatus,
-          });
+        if (!postMap.has(p.id)) {
+          if (p.title && (p.contentMarkdown || p.excerpt)) {
+            postMap.set(p.id, {
+              ...p,
+              status: (p.status || 'pending_approval') as PostStatus,
+            });
+          }
         }
       }
     });
@@ -303,7 +292,8 @@ export class StorageService {
 
   public getPostsByStatus(status: PostStatus): BlogPost[] {
     const targetStatus = (status || '').toString().trim().toLowerCase();
-    return this.getAllPosts().filter((p) => (p.status || '').toString().trim().toLowerCase() === targetStatus);
+    const all = this.getAllPosts();
+    return all.filter((p) => (p.status || 'published').toString().trim().toLowerCase() === targetStatus);
   }
 
   public getPostById(id: string): BlogPost | undefined {
