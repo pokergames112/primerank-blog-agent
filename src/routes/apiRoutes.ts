@@ -107,7 +107,10 @@ apiRouter.get('/posts', (req: Request, res: Response) => {
 
   if (status && typeof status === 'string' && status.trim().length > 0) {
     const targetStatus = status.trim().toLowerCase();
-    posts = posts.filter((p) => (p.status || 'published').toLowerCase() === targetStatus);
+    posts = posts.filter((p) => {
+      const pStat = (p.status || 'published').toString().trim().toLowerCase();
+      return pStat === targetStatus || (targetStatus === 'published' && (!p.status || p.status === 'published'));
+    });
   }
 
   if (!posts || posts.length === 0) {
