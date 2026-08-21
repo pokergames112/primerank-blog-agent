@@ -92,22 +92,8 @@ export class StorageService {
   }
 
   private async syncFromCloud() {
-    try {
-      const res = await axios.get(CLOUD_STORE_URL, { timeout: 4000 });
-      if (res.data && res.data.data && Array.isArray(res.data.data.posts)) {
-        const cloudPosts: BlogPost[] = res.data.data.posts;
-        if (cloudPosts.length > 0) {
-          const postMap = new Map<string, BlogPost>();
-          this.db.posts.forEach((p) => postMap.set(p.id, p));
-          cloudPosts.forEach((p) => postMap.set(p.id, p));
-          this.db.posts = Array.from(postMap.values()).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-          this.saveLocalDatabase();
-          console.log('[STORAGE] Sincronizado com a nuvem com sucesso. Total posts:', this.db.posts.length);
-        }
-      }
-    } catch (err) {
-      console.warn('[STORAGE] Usando banco de dados local/bundle (nuvem offline ou timeout)');
-    }
+    // Sincronização em nuvem desativada para proteger a integridade dos artigos reais do repositório
+    return;
   }
 
   private saveLocalDatabase() {
@@ -126,24 +112,6 @@ export class StorageService {
 
   private async saveDatabase() {
     this.saveLocalDatabase();
-
-    // Sincroniza em background com o armazenamento em nuvem persistente
-    try {
-      await axios.put(
-        CLOUD_STORE_URL,
-        {
-          name: 'primerank_blog_storage',
-          data: {
-            posts: this.db.posts,
-            updatedAt: new Date().toISOString(),
-          },
-        },
-        { timeout: 5000 }
-      );
-      console.log('[STORAGE] Nuvem atualizada com sucesso!');
-    } catch (err) {
-      console.warn('[STORAGE] Erro ao sincronizar com a nuvem em background:', err);
-    }
   }
 
   // --- Posts Methods ---
