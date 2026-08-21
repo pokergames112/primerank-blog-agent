@@ -69,7 +69,7 @@
       z-index: 1;
       max-width: 1200px;
       margin: 0 auto;
-      padding: 20px 16px 80px 16px;
+      padding: 16px 14px 90px 14px;
     }
 
     .header {
@@ -77,38 +77,39 @@
       backdrop-filter: blur(20px);
       border: 1px solid var(--border-glow);
       border-radius: 20px;
-      padding: 16px 24px;
+      padding: 16px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
       flex-wrap: wrap;
-      gap: 16px;
+      gap: 14px;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
     }
 
     .brand-icon {
-      width: 44px;
-      height: 44px;
+      width: 42px;
+      height: 42px;
       background: linear-gradient(135deg, var(--purple-primary), var(--purple-accent));
       border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       color: #fff;
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       box-shadow: 0 0 20px var(--purple-glow);
+      flex-shrink: 0;
     }
 
     .brand-text h1 {
       font-family: var(--font-heading);
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       font-weight: 800;
       letter-spacing: -0.5px;
       background: linear-gradient(90deg, #fff, #c084fc);
@@ -117,7 +118,7 @@
     }
 
     .brand-text p {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: var(--text-muted);
       display: flex;
       align-items: center;
@@ -131,6 +132,7 @@
       border-radius: 50%;
       box-shadow: 0 0 10px var(--green-success);
       animation: pulse 2s infinite;
+      flex-shrink: 0;
     }
 
     @keyframes pulse {
@@ -140,14 +142,14 @@
 
     .header-actions {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       align-items: center;
     }
 
     .btn {
-      padding: 10px 18px;
+      padding: 10px 16px;
       border-radius: 12px;
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       font-weight: 700;
       cursor: pointer;
       display: inline-flex;
@@ -156,6 +158,8 @@
       transition: all 0.2s ease;
       border: 1px solid transparent;
       text-decoration: none;
+      min-height: 42px;
+      touch-action: manipulation;
     }
 
     .btn-primary {
@@ -201,11 +205,37 @@
       color: #fff;
     }
 
+    .banner-info {
+      background: linear-gradient(135deg, rgba(50, 9, 109, 0.4), rgba(16, 6, 36, 0.7));
+      border: 1px solid rgba(0, 240, 255, 0.3);
+      border-radius: 16px;
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .banner-info-text {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.85rem;
+      color: #e2e8f0;
+    }
+
+    .banner-info-text i {
+      color: var(--cyan-accent);
+      font-size: 1.1rem;
+    }
+
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-      margin-bottom: 24px;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      margin-bottom: 20px;
     }
 
     .stat-card {
@@ -213,10 +243,10 @@
       backdrop-filter: blur(12px);
       border: 1px solid var(--border-glow);
       border-radius: 16px;
-      padding: 18px 20px;
+      padding: 16px 18px;
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 14px;
       transition: all 0.2s ease;
     }
 
@@ -226,13 +256,14 @@
     }
 
     .stat-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 14px;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.3rem;
+      font-size: 1.2rem;
+      flex-shrink: 0;
     }
 
     .stat-icon.purple { background: rgba(145, 57, 229, 0.15); color: #c084fc; border: 1px solid rgba(145, 57, 229, 0.3); }
@@ -241,43 +272,52 @@
     .stat-icon.cyan { background: rgba(0, 240, 255, 0.15); color: #38bdf8; border: 1px solid rgba(0, 240, 255, 0.3); }
 
     .stat-info .stat-value {
-      font-size: 1.6rem;
+      font-size: 1.5rem;
       font-weight: 800;
       font-family: var(--font-mono);
       color: #fff;
+      line-height: 1.1;
     }
 
     .stat-info .stat-label {
-      font-size: 0.78rem;
+      font-size: 0.74rem;
       color: var(--text-muted);
       font-weight: 600;
+      margin-top: 2px;
     }
 
     .tabs-nav {
       display: flex;
       gap: 8px;
-      background: rgba(16, 6, 36, 0.7);
+      background: rgba(16, 6, 36, 0.75);
       padding: 6px;
       border-radius: 16px;
       border: 1px solid var(--border-glow);
-      margin-bottom: 24px;
+      margin-bottom: 22px;
       overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    .tabs-nav::-webkit-scrollbar {
+      display: none;
     }
 
     .tab-btn {
-      padding: 10px 18px;
+      padding: 10px 16px;
       border-radius: 10px;
       background: transparent;
       border: none;
       color: var(--text-muted);
       font-weight: 700;
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 8px;
       transition: all 0.2s ease;
       white-space: nowrap;
+      min-height: 40px;
     }
 
     .tab-btn:hover {
@@ -309,14 +349,14 @@
       background: var(--bg-card);
       border: 1px solid var(--border-glow);
       border-radius: 20px;
-      padding: 24px;
-      margin-bottom: 24px;
+      padding: 22px;
+      margin-bottom: 22px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.4);
     }
 
     .ai-box h2 {
       font-family: var(--font-heading);
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       margin-bottom: 8px;
       display: flex;
       align-items: center;
@@ -324,26 +364,26 @@
     }
 
     .ai-box p {
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       color: var(--text-muted);
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     .input-group {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       flex-wrap: wrap;
     }
 
     .input-field {
       flex: 1;
-      min-width: 260px;
+      min-width: 240px;
       background: rgba(8, 3, 19, 0.8);
       border: 1px solid var(--border-glow);
       border-radius: 12px;
-      padding: 14px 18px;
+      padding: 12px 16px;
       color: #fff;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       outline: none;
       transition: border-color 0.2s;
     }
@@ -355,8 +395,8 @@
 
     .articles-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 18px;
     }
 
     .article-card {
@@ -371,13 +411,13 @@
 
     .article-card:hover {
       border-color: var(--purple-accent);
-      transform: translateY(-4px);
+      transform: translateY(-3px);
       box-shadow: 0 12px 30px rgba(0,0,0,0.5);
     }
 
     .card-img-wrap {
       position: relative;
-      height: 180px;
+      height: 170px;
       overflow: hidden;
     }
 
@@ -389,25 +429,25 @@
     }
 
     .article-card:hover .card-img {
-      transform: scale(1.05);
+      transform: scale(1.04);
     }
 
     .card-badge {
       position: absolute;
-      top: 12px;
-      left: 12px;
+      top: 10px;
+      left: 10px;
       background: rgba(16, 6, 36, 0.85);
       backdrop-filter: blur(8px);
       border: 1px solid var(--purple-accent);
       color: #fff;
-      padding: 4px 10px;
+      padding: 4px 9px;
       border-radius: 8px;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 700;
     }
 
     .card-body {
-      padding: 20px;
+      padding: 18px;
       display: flex;
       flex-direction: column;
       flex-grow: 1;
@@ -415,25 +455,26 @@
 
     .card-meta {
       display: flex;
-      gap: 12px;
-      font-size: 0.76rem;
+      gap: 10px;
+      font-size: 0.74rem;
       color: var(--text-muted);
-      margin-bottom: 10px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
     }
 
     .card-title {
-      font-size: 1.05rem;
+      font-size: 1.02rem;
       font-weight: 700;
       color: #fff;
       line-height: 1.4;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .card-excerpt {
-      font-size: 0.84rem;
+      font-size: 0.82rem;
       color: var(--text-muted);
-      line-height: 1.6;
-      margin-bottom: 18px;
+      line-height: 1.55;
+      margin-bottom: 16px;
       display: -webkit-box;
       -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
@@ -447,6 +488,7 @@
       flex-wrap: wrap;
     }
 
+    /* MODAL RESPONSIVO */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -456,7 +498,7 @@
       display: none;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 16px;
     }
 
     .modal-overlay.open {
@@ -471,7 +513,7 @@
       max-width: 850px;
       max-height: 92vh;
       overflow-y: auto;
-      padding: 30px;
+      padding: 24px;
       box-shadow: 0 20px 60px rgba(0,0,0,0.8);
       position: relative;
     }
@@ -480,46 +522,47 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
-      padding-bottom: 14px;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
       border-bottom: 1px solid var(--border-glow);
+      gap: 10px;
     }
 
     .modal-close {
       background: transparent;
       border: none;
       color: var(--text-muted);
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       cursor: pointer;
-      transition: color 0.2s;
-    }
-
-    .modal-close:hover {
-      color: #fff;
+      padding: 4px;
+      line-height: 1;
     }
 
     .markdown-view {
-      font-size: 0.95rem;
+      font-size: 0.94rem;
       line-height: 1.8;
       color: #cbd5e1;
     }
 
     .markdown-view h1, .markdown-view h2, .markdown-view h3 {
       color: #fff;
-      margin: 1.4em 0 0.5em 0;
+      margin: 1.3em 0 0.5em 0;
       font-family: var(--font-heading);
     }
 
     .markdown-view table {
       width: 100%;
       border-collapse: collapse;
-      margin: 20px 0;
+      margin: 18px 0;
+      display: block;
+      overflow-x: auto;
     }
 
     .markdown-view th, .markdown-view td {
       border: 1px solid var(--border-glow);
-      padding: 10px;
+      padding: 8px 10px;
       text-align: left;
+      font-size: 0.85rem;
     }
 
     .markdown-view th {
@@ -527,14 +570,13 @@
       color: #fff;
     }
 
-    /* ESTILOS DO EDITOR INLINE */
     .edit-field-group {
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
     .edit-label {
       display: block;
-      font-size: 0.82rem;
+      font-size: 0.78rem;
       font-weight: 700;
       color: var(--text-muted);
       margin-bottom: 6px;
@@ -547,38 +589,71 @@
       background: rgba(8, 3, 19, 0.9);
       border: 1px solid var(--border-glow);
       border-radius: 12px;
-      padding: 12px 16px;
+      padding: 12px 14px;
       color: #fff;
       font-family: var(--font-body);
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       outline: none;
-      transition: border-color 0.2s;
     }
 
     .edit-input:focus, .edit-textarea:focus {
       border-color: var(--purple-accent);
-      box-shadow: 0 0 14px var(--purple-glow);
+      box-shadow: 0 0 12px var(--purple-glow);
     }
 
     .edit-textarea {
       font-family: var(--font-mono);
-      font-size: 0.9rem;
-      min-height: 320px;
+      font-size: 0.88rem;
+      min-height: 280px;
       resize: vertical;
       line-height: 1.6;
     }
 
     .empty-state {
       text-align: center;
-      padding: 60px 20px;
+      padding: 50px 20px;
       color: var(--text-muted);
       grid-column: 1 / -1;
     }
 
     .empty-state i {
-      font-size: 3rem;
+      font-size: 2.8rem;
       color: var(--purple-accent);
-      margin-bottom: 14px;
+      margin-bottom: 12px;
+    }
+
+    /* MEDIA QUERIES MOBILE CELULAR */
+    @media (max-width: 680px) {
+      .app-container {
+        padding: 10px 10px 80px 10px;
+      }
+      .header {
+        padding: 14px;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .header-actions {
+        width: 100%;
+      }
+      .header-actions a {
+        width: 100%;
+        justify-content: center;
+      }
+      .modal-box {
+        padding: 18px 14px;
+        max-height: 95vh;
+        border-radius: 16px;
+      }
+      .articles-grid {
+        grid-template-columns: 1fr;
+      }
+      .card-actions {
+        flex-direction: column;
+      }
+      .card-actions .btn {
+        width: 100%;
+        justify-content: center;
+      }
     }
   </style>
 </head>
@@ -596,10 +671,17 @@
       </div>
       <div class="header-actions">
         <a href="https://primerankmarketing.com.br/blog.html" target="_blank" class="btn btn-secondary">
-          <i class="fa-solid fa-arrow-up-right-from-square"></i> Ver Blog no Site
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> Ver Blog Oficial
         </a>
       </div>
     </header>
+
+    <div class="banner-info">
+      <div class="banner-info-text">
+        <i class="fa-solid fa-bolt"></i>
+        <span><strong>Publicação em Tempo Real:</strong> Assim que você clica em <em>Aprovar</em>, o artigo é publicado no site oficial instantaneamente (0 segundos de espera).</span>
+      </div>
+    </div>
 
     <div class="stats-grid">
       <div class="stat-card">
@@ -620,30 +702,33 @@
         <div class="stat-icon amber"><i class="fa-solid fa-clock"></i></div>
         <div class="stat-info">
           <div class="stat-value" id="stat-pending">--</div>
-          <div class="stat-label">Aguardando Validação</div>
+          <div class="stat-label">Fila de Validação</div>
         </div>
       </div>
       <div class="stat-card">
         <div class="stat-icon cyan"><i class="fa-solid fa-bolt"></i></div>
         <div class="stat-info">
           <div class="stat-value" id="stat-words">--</div>
-          <div class="stat-label">Palavras Indexadas</div>
+          <div class="stat-label">Palavras no Site</div>
         </div>
       </div>
     </div>
 
     <nav class="tabs-nav">
       <button class="tab-btn active" onclick="switchTab('tab-generate')">
-        <i class="fa-solid fa-wand-magic-sparkles"></i> Gerador com IA
+        <i class="fa-solid fa-wand-magic-sparkles"></i> Gerador IA
       </button>
       <button class="tab-btn" onclick="switchTab('tab-pending')">
-        <i class="fa-solid fa-list-check"></i> Fila de Validação (<span id="badge-pending">0</span>)
+        <i class="fa-solid fa-list-check"></i> Fila (<span id="badge-pending">0</span>)
       </button>
       <button class="tab-btn" onclick="switchTab('tab-published')">
-        <i class="fa-solid fa-globe"></i> Artigos Ativos no Site
+        <i class="fa-solid fa-globe"></i> Ativos no Site
+      </button>
+      <button class="tab-btn" onclick="switchTab('tab-scheduler')">
+        <i class="fa-solid fa-calendar-check"></i> Agendador Diário
       </button>
       <button class="tab-btn" onclick="switchTab('tab-trends')">
-        <i class="fa-solid fa-chart-line"></i> Radar de Tendências
+        <i class="fa-solid fa-chart-line"></i> Trends
       </button>
     </nav>
 
@@ -651,18 +736,18 @@
     <div id="tab-generate" class="tab-content active">
       <div class="ai-box">
         <h2><i class="fa-solid fa-robot" style="color: var(--purple-accent);"></i> Criador Autônomo de Artigos SEO</h2>
-        <p>Gere artigos de alta densidade (+1500 palavras) estrategicamente otimizados para converter leitores em clientes da Prime Rank Marketing.</p>
+        <p>Gere artigos aprofundados (+1500 a 2200 palavras) otimizados para converter visitantes em clientes da Prime Rank.</p>
         
         <form onsubmit="handleGenerate(event)" class="input-group">
-          <input type="text" id="topic-input" class="input-field" placeholder="Ex: Como Reduzir o Custo por Lead no Meta Ads no Recife (ou deixe vazio para pauta automática)">
-          <button type="submit" id="btn-generate-submit" class="btn btn-primary">
+          <input type="text" id="topic-input" class="input-field" placeholder="Ex: Como Reduzir o Custo por Lead no Meta Ads na RMR (ou vazio para pauta automática)">
+          <button type="submit" id="btn-generate-submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
             <i class="fa-solid fa-sparkles"></i> Redigir Artigo com IA
           </button>
         </form>
       </div>
 
-      <div style="margin-bottom: 16px;">
-        <h3 style="font-family: var(--font-heading); font-size: 1.1rem;">Sugestões de Pautas Estratégicas para a Prime Rank:</h3>
+      <div style="margin-bottom: 14px;">
+        <h3 style="font-family: var(--font-heading); font-size: 1.05rem;">Pautas Estratégicas Recomendadas:</h3>
       </div>
 
       <div class="articles-grid">
@@ -721,7 +806,34 @@
       </div>
     </div>
 
-    <!-- TAB 4: TRENDS -->
+    <!-- TAB 4: AGENDADOR & AUTOMAÇÃO -->
+    <div id="tab-scheduler" class="tab-content">
+      <div class="ai-box">
+        <h2><i class="fa-solid fa-clock" style="color: var(--cyan-accent);"></i> Agendador de Postagens & Rotina Diária</h2>
+        <p>O Agente autônomo está configurado para varrer o Google Trends e redigir novos artigos todos os dias automaticamente.</p>
+        
+        <div style="background: rgba(8, 3, 19, 0.7); border: 1px solid var(--border-glow); border-radius: 14px; padding: 18px; margin-bottom: 20px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 12px;">
+            <div>
+              <span style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase;">Frequência Automática (Vercel Cron)</span>
+              <h4 style="color: #fff; font-size: 1.1rem; margin-top: 2px;">⏰ Todos os dias às 08:00h da manhã</h4>
+            </div>
+            <span style="background: rgba(16, 185, 129, 0.2); border: 1px solid var(--green-success); color: #34d399; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700;">
+              ● Agendador Ativo
+            </span>
+          </div>
+          <p style="font-size: 0.84rem; color: var(--text-muted); line-height: 1.6;">
+            O agente descobre as tendências em alta, redige o artigo com +1500 palavras e deixa pronto na sua <strong>Fila de Validação</strong> para você ler e aprovar no celular em menos de 1 minuto.
+          </p>
+        </div>
+
+        <button onclick="triggerSchedulerNow()" id="btn-trigger-scheduler" class="btn btn-primary" style="width: 100%; justify-content: center;">
+          <i class="fa-solid fa-play"></i> Rodar Varredura e Agendador Agora Manualmente
+        </button>
+      </div>
+    </div>
+
+    <!-- TAB 5: TRENDS -->
     <div id="tab-trends" class="tab-content">
       <div id="trends-feed" class="articles-grid">
         <div class="empty-state">
@@ -733,14 +845,14 @@
 
   </div>
 
-  <!-- Modal de Leitura / Edição -->
+  <!-- Modal de Leitura / Edição (Mobile Full Screen) -->
   <div id="preview-modal" class="modal-overlay">
     <div class="modal-box">
       <div class="modal-header">
-        <h3 id="modal-title" style="font-family: var(--font-heading); font-size: 1.3rem;">Visualização do Artigo</h3>
+        <h3 id="modal-title" style="font-family: var(--font-heading); font-size: 1.15rem;">Visualização do Artigo</h3>
         <div style="display: flex; gap: 8px; align-items: center;">
-          <button id="btn-toggle-edit" onclick="toggleEditMode()" class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.8rem;">
-            <i class="fa-solid fa-pen-to-square"></i> <span id="toggle-edit-text">Editar Texto</span>
+          <button id="btn-toggle-edit" onclick="toggleEditMode()" class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.78rem;">
+            <i class="fa-solid fa-pen-to-square"></i> <span id="toggle-edit-text">Editar</span>
           </button>
           <button onclick="closeModal()" class="modal-close">&times;</button>
         </div>
@@ -748,7 +860,7 @@
 
       <!-- MODO VISUALIZAÇÃO -->
       <div id="modal-view-container">
-        <div id="modal-meta" style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 18px;"></div>
+        <div id="modal-meta" style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 16px;"></div>
         <div id="modal-content" class="markdown-view"></div>
       </div>
 
@@ -767,12 +879,12 @@
           <textarea id="edit-post-excerpt" class="edit-input" style="min-height: 80px;"></textarea>
         </div>
         <div class="edit-field-group">
-          <label class="edit-label">Conteúdo do Artigo (Markdown Completo)</label>
+          <label class="edit-label">Conteúdo do Artigo (Markdown)</label>
           <textarea id="edit-post-content" class="edit-textarea"></textarea>
         </div>
       </div>
 
-      <div id="modal-actions" style="margin-top: 24px; display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; border-top: 1px solid var(--border-glow); padding-top: 18px;"></div>
+      <div id="modal-actions" style="margin-top: 20px; display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; border-top: 1px solid var(--border-glow); padding-top: 16px;"></div>
     </div>
   </div>
 
@@ -824,7 +936,7 @@
         var posts = data.posts || [];
 
         if (posts.length === 0) {
-          container.innerHTML = '<div class="empty-state"><i class="fa-solid fa-circle-check" style="color: var(--green-success);"></i><h3>Nenhum artigo aguardando aprovação!</h3><p>Clique em "Gerador com IA" para redigir uma nova pauta agora mesmo.</p></div>';
+          container.innerHTML = '<div class="empty-state"><i class="fa-solid fa-circle-check" style="color: var(--green-success);"></i><h3>Nenhum artigo aguardando aprovação!</h3><p>Clique em "Gerador IA" para redigir uma nova pauta agora mesmo.</p></div>';
           return;
         }
 
@@ -849,7 +961,7 @@
           html += '    <p class="card-excerpt">' + p.excerpt + '</p>';
           html += '    <div class="card-actions">';
           html += '      <button onclick="previewArticleById(\'' + p.id + '\')" class="btn btn-secondary" style="flex: 1; justify-content: center;"><i class="fa-solid fa-eye"></i> Ler / Editar</button>';
-          html += '      <button onclick="updateStatus(\'' + p.id + '\', \'published\')" class="btn btn-success" style="flex: 1; justify-content: center;"><i class="fa-solid fa-check"></i> Aprovar</button>';
+          html += '      <button onclick="updateStatus(\'' + p.id + '\', \'published\')" class="btn btn-success" style="flex: 1; justify-content: center;"><i class="fa-solid fa-check"></i> Aprovar (0s)</button>';
           html += '      <button onclick="deletePost(\'' + p.id + '\')" class="btn btn-danger" title="Excluir"><i class="fa-solid fa-trash"></i></button>';
           html += '    </div>';
           html += '  </div>';
@@ -895,7 +1007,7 @@
           html += '    <div class="card-actions">';
           html += '      <button onclick="previewArticleById(\'' + p.id + '\')" class="btn btn-secondary" style="flex: 1; justify-content: center;"><i class="fa-solid fa-pen-to-square"></i> Editar</button>';
           html += '      <a href="https://primerankmarketing.com.br/post.html?slug=' + encodeURIComponent(p.slug) + '" target="_blank" class="btn btn-primary" style="flex: 1; justify-content: center;"><i class="fa-solid fa-arrow-up-right-from-square"></i> No Site</a>';
-          html += '      <button onclick="deletePost(\'' + p.id + '\')" class="btn btn-danger" title="Excluir do Site e do Banco"><i class="fa-solid fa-trash"></i> Excluir</button>';
+          html += '      <button onclick="deletePost(\'' + p.id + '\')" class="btn btn-danger" title="Excluir"><i class="fa-solid fa-trash"></i> Excluir</button>';
           html += '    </div>';
           html += '  </div>';
           html += '</div>';
@@ -945,7 +1057,7 @@
     async function quickGenerate(topicTitle) {
       var btn = document.getElementById('btn-generate-submit');
       if (btn) {
-        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Redigindo Artigo (+1500 palavras)...';
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Redigindo (+1500 a 2200 palavras)...';
         btn.disabled = true;
       }
 
@@ -969,6 +1081,37 @@
       } finally {
         if (btn) {
           btn.innerHTML = '<i class="fa-solid fa-sparkles"></i> Redigir Artigo com IA';
+          btn.disabled = false;
+        }
+      }
+    }
+
+    async function triggerSchedulerNow() {
+      var btn = document.getElementById('btn-trigger-scheduler');
+      if (btn) {
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Executando Varredura e Agendador...';
+        btn.disabled = true;
+      }
+
+      try {
+        var res = await fetch('/api/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({})
+        });
+        var data = await res.json();
+        if (data.success && data.post) {
+          alert('🚀 Rotina executada! Novo artigo gerado para a fila de validação.');
+          switchTab('tab-pending');
+          loadStats();
+        } else {
+          alert('Aviso: ' + (data.error || 'Não foi possível executar no momento.'));
+        }
+      } catch (err) {
+        alert('Erro ao rodar agendador.');
+      } finally {
+        if (btn) {
+          btn.innerHTML = '<i class="fa-solid fa-play"></i> Rodar Varredura e Agendador Agora Manualmente';
           btn.disabled = false;
         }
       }
@@ -1059,7 +1202,7 @@
         document.getElementById('edit-post-content').value = post.contentMarkdown || post.markdown || '';
 
         modalActions.innerHTML = `
-          <button onclick="saveEditedPost()" class="btn btn-primary">
+          <button onclick="saveEditedPost()" class="btn btn-primary" style="flex: 1; justify-content: center;">
             <i class="fa-solid fa-floppy-disk"></i> Salvar Alterações
           </button>
           <button onclick="toggleEditMode()" class="btn btn-secondary">Cancelar</button>
@@ -1067,23 +1210,23 @@
       } else {
         viewContainer.style.display = 'block';
         editContainer.style.display = 'none';
-        toggleBtnText.innerText = 'Editar Texto';
+        toggleBtnText.innerText = 'Editar';
         modalTitle.innerText = post.title;
 
         var readTime = post.seo && post.seo.readingTimeMinutes ? post.seo.readingTimeMinutes : 8;
         var date = new Date(post.publishedAt || post.createdAt).toLocaleDateString('pt-BR');
-        document.getElementById('modal-meta').innerHTML = '<span>📅 ' + date + '</span> • <span>⏱️ ' + readTime + ' min de leitura</span> • <span>📂 ' + (post.category || 'SEO') + '</span>';
+        document.getElementById('modal-meta').innerHTML = '<span>📅 ' + date + '</span> • <span>⏱️ ' + readTime + ' min</span> • <span>📂 ' + (post.category || 'SEO') + '</span>';
 
         var content = post.contentMarkdown || post.markdown || post.excerpt;
         document.getElementById('modal-content').innerHTML = typeof marked !== 'undefined' ? marked.parse(content) : content;
 
         var actionsHtml = '';
         if (post.status === 'pending_approval') {
-          actionsHtml += '<button onclick="updateStatus(\'' + post.id + '\', \'published\')" class="btn btn-success"><i class="fa-solid fa-check"></i> Aprovar & Publicar no Site</button>';
+          actionsHtml += '<button onclick="updateStatus(\'' + post.id + '\', \'published\')" class="btn btn-success" style="flex: 1; justify-content: center;"><i class="fa-solid fa-check"></i> Aprovar (0s)</button>';
         } else if (post.status === 'published') {
-          actionsHtml += '<a href="https://primerankmarketing.com.br/post.html?slug=' + encodeURIComponent(post.slug) + '" target="_blank" class="btn btn-primary"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver no Site Oficial</a>';
+          actionsHtml += '<a href="https://primerankmarketing.com.br/post.html?slug=' + encodeURIComponent(post.slug) + '" target="_blank" class="btn btn-primary" style="flex: 1; justify-content: center;"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver no Site</a>';
         }
-        actionsHtml += '<button onclick="toggleEditMode()" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i> Editar Texto</button>';
+        actionsHtml += '<button onclick="toggleEditMode()" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i> Editar</button>';
         actionsHtml += '<button onclick="deletePost(\'' + post.id + '\')" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Excluir</button>';
 
         modalActions.innerHTML = actionsHtml;
