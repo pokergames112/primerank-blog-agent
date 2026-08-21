@@ -1,4 +1,4 @@
-﻿import 'dotenv/config';
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
@@ -15,8 +15,9 @@ const publicDir = path.resolve(process.cwd(), 'public');
 app.use(express.static(publicDir));
 app.use('/dashboard', express.static(path.join(publicDir, 'dashboard')));
 
-// Rotas da API
+// Rotas da API (suporta tanto /api quanto rotas diretas reescritas pela Vercel)
 app.use('/api', apiRouter);
+app.use(apiRouter);
 
 // Rota direta do Dashboard
 app.get(['/', '/dashboard', '/dashboard/index.html'], (_req, res) => {
