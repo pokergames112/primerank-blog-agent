@@ -664,9 +664,65 @@ Se você deseja posicionar a sua empresa no topo das pesquisas, reduzir seu cust
       .slice(0, 80);
   }
 
-  private getFeaturedImageUrl(topic: string): string {
-    const encodedTopic = encodeURIComponent(topic.toLowerCase().replace(/[^a-z0-9]/g, ''));
-    return `https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80&sig=${encodedTopic}`;
+    private getFeaturedImageUrl(topic: string): string {
+    const t = topic.toLowerCase();
+    
+    // Temas de Inteligência Artificial e Automação
+    if (t.includes('ia') || t.includes('inteligência artificial') || t.includes('inteligencia artificial') || t.includes('chat') || t.includes('robô') || t.includes('robo') || t.includes('bot') || t.includes('gpt')) {
+      const aiImages = [
+        'https://images.unsplash.com/photo-1677442136019-21780efad99a?auto=format&fit=crop&w=1200&q=80',
+        'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80',
+        'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1200&q=80'
+      ];
+      return aiImages[Math.abs(this.hashString(topic)) % aiImages.length];
+    }
+    
+    // Temas de Tráfego Pago, Anúncios, Meta Ads, Google Ads
+    if (t.includes('tráfego') || t.includes('trafego') || t.includes('ads') || t.includes('anúncio') || t.includes('anuncio') || t.includes('cpa') || t.includes('roi') || t.includes('meta') || t.includes('facebook') || t.includes('instagram')) {
+      const adsImages = [
+        'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80',
+        'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80',
+        'https://images.unsplash.com/photo-1533750349088-cd871a92f312?auto=format&fit=crop&w=1200&q=80'
+      ];
+      return adsImages[Math.abs(this.hashString(topic)) % adsImages.length];
+    }
+
+    // Temas de SEO, Google, 1ª Página, Busca Orgânica
+    if (t.includes('seo') || t.includes('google') || t.includes('busca') || t.includes('página') || t.includes('pagina') || t.includes('ranquear') || t.includes('ranking')) {
+      const seoImages = [
+        'https://images.unsplash.com/photo-1571786256017-aee7a0c009b6?auto=format&fit=crop&w=1200&q=80',
+        'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=1200&q=80',
+        'https://images.unsplash.com/photo-1562577309-4932fdd64cd1?auto=format&fit=crop&w=1200&q=80'
+      ];
+      return seoImages[Math.abs(this.hashString(topic)) % seoImages.length];
+    }
+
+    // Temas de Vendas, WhatsApp, Conversão
+    if (t.includes('whatsapp') || t.includes('venda') || t.includes('conversão') || t.includes('conversao') || t.includes('lead') || t.includes('cliente')) {
+      const salesImages = [
+        'https://images.unsplash.com/photo-1556742049-0a67e5572263?auto=format&fit=crop&w=1200&q=80',
+        'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=80',
+        'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80'
+      ];
+      return salesImages[Math.abs(this.hashString(topic)) % salesImages.length];
+    }
+
+    // Padrão: Imagens Corporativas Modernas de Alta Resolução
+    const defaultImages = [
+      'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80'
+    ];
+    return defaultImages[Math.abs(this.hashString(topic)) % defaultImages.length];
+  }
+
+  private hashString(str: string): number {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      hash = (hash << 5) - hash + str.charCodeAt(i);
+      hash |= 0;
+    }
+    return hash;
   }
 
   private buildFaqSchema(faqs: FaqItem[]): object {

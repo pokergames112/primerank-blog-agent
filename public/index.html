@@ -622,7 +622,6 @@
       margin-bottom: 12px;
     }
 
-    /* MEDIA QUERIES MOBILE CELULAR */
     @media (max-width: 680px) {
       .app-container {
         padding: 10px 10px 80px 10px;
@@ -875,6 +874,20 @@
           <input type="text" id="edit-post-category" class="edit-input">
         </div>
         <div class="edit-field-group">
+          <label class="edit-label">URL da Imagem de Capa</label>
+          <input type="text" id="edit-post-image" class="edit-input" placeholder="https://images.unsplash.com/..." oninput="updateImagePreview(this.value)">
+          <div style="display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap;">
+            <button type="button" class="btn btn-secondary" style="padding: 4px 10px; font-size: 0.75rem;" onclick="setCoverPreset('seo')">🔍 Capa SEO</button>
+            <button type="button" class="btn btn-secondary" style="padding: 4px 10px; font-size: 0.75rem;" onclick="setCoverPreset('ads')">📈 Capa Anúncios</button>
+            <button type="button" class="btn btn-secondary" style="padding: 4px 10px; font-size: 0.75rem;" onclick="setCoverPreset('ia')">🤖 Capa IA</button>
+            <button type="button" class="btn btn-secondary" style="padding: 4px 10px; font-size: 0.75rem;" onclick="setCoverPreset('sales')">📱 Capa WhatsApp</button>
+            <button type="button" class="btn btn-secondary" style="padding: 4px 10px; font-size: 0.75rem;" onclick="setCoverPreset('corp')">🏢 Capa Negócios</button>
+          </div>
+          <div id="edit-img-preview-box" style="margin-top: 10px; border-radius: 10px; overflow: hidden; max-height: 140px; display: none;">
+            <img id="edit-img-preview" src="" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+        </div>
+        <div class="edit-field-group">
           <label class="edit-label">Resumo / Excerpt</label>
           <textarea id="edit-post-excerpt" class="edit-input" style="min-height: 80px;"></textarea>
         </div>
@@ -891,6 +904,33 @@
   <script>
     var currentEditingPost = null;
     var isEditMode = false;
+
+    var COVER_PRESETS = {
+      seo: 'https://images.unsplash.com/photo-1571786256017-aee7a0c009b6?auto=format&fit=crop&w=1200&q=80',
+      ads: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80',
+      ia: 'https://images.unsplash.com/photo-1677442136019-21780efad99a?auto=format&fit=crop&w=1200&q=80',
+      sales: 'https://images.unsplash.com/photo-1556742049-0a67e5572263?auto=format&fit=crop&w=1200&q=80',
+      corp: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80'
+    };
+
+    function setCoverPreset(key) {
+      if (COVER_PRESETS[key]) {
+        var input = document.getElementById('edit-post-image');
+        input.value = COVER_PRESETS[key];
+        updateImagePreview(COVER_PRESETS[key]);
+      }
+    }
+
+    function updateImagePreview(url) {
+      var box = document.getElementById('edit-img-preview-box');
+      var img = document.getElementById('edit-img-preview');
+      if (url && url.trim().length > 5) {
+        img.src = url;
+        box.style.display = 'block';
+      } else {
+        box.style.display = 'none';
+      }
+    }
 
     function switchTab(tabId) {
       document.querySelectorAll('.tab-content').forEach(function(el) { el.classList.remove('active'); });
@@ -1198,6 +1238,8 @@
 
         document.getElementById('edit-post-title').value = post.title || '';
         document.getElementById('edit-post-category').value = post.category || 'Marketing & SEO';
+        document.getElementById('edit-post-image').value = post.featuredImageUrl || '';
+        updateImagePreview(post.featuredImageUrl || '');
         document.getElementById('edit-post-excerpt').value = post.excerpt || '';
         document.getElementById('edit-post-content').value = post.contentMarkdown || post.markdown || '';
 
@@ -1238,6 +1280,7 @@
 
       var updatedTitle = document.getElementById('edit-post-title').value.trim();
       var updatedCategory = document.getElementById('edit-post-category').value.trim();
+      var updatedImage = document.getElementById('edit-post-image').value.trim();
       var updatedExcerpt = document.getElementById('edit-post-excerpt').value.trim();
       var updatedContent = document.getElementById('edit-post-content').value;
 
@@ -1252,6 +1295,7 @@
       var payload = {
         title: updatedTitle,
         category: updatedCategory,
+        featuredImageUrl: updatedImage || currentEditingPost.featuredImageUrl,
         excerpt: updatedExcerpt,
         contentMarkdown: updatedContent,
         seo: Object.assign({}, currentEditingPost.seo, {
