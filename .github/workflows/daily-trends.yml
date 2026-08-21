@@ -1,0 +1,38 @@
+name: Daily Google Trends Blog Agent
+
+on:
+  schedule:
+    # Executa todos os dias às 08:00 da manhã (11:00 UTC) no servidor do GitHub
+    - cron: '0 11 * * *'
+  workflow_dispatch: # Permite disparar manualmente pelo painel do GitHub
+
+jobs:
+  scout-and-draft:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run Trend Scouting & Drafting (+1500 words)
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_ADMIN_CHAT_ID: ${{ secrets.TELEGRAM_ADMIN_CHAT_ID }}
+        run: npx tsx src/cli/generate-manual.ts
+
+      - name: Commit & Push New Drafts
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "PrimeRank-AI-Agent"
+          git add data/
+          git commit -m "chore(agent): novos rascunhos gerados a partir do google trends" || exit 0
+          git push
