@@ -32,7 +32,17 @@ export class StorageService {
       if (!fs.existsSync(DATA_DIR)) {
         fs.mkdirSync(DATA_DIR, { recursive: true });
       }
-      if (!fs.existsSync(DB_FILE)) {
+      if (fs.existsSync(DB_FILE)) {
+        try {
+          const content = fs.readFileSync(DB_FILE, 'utf-8');
+          const parsed = JSON.parse(content);
+          if (!parsed || !Array.isArray(parsed.posts) || parsed.posts.length === 0) {
+            fs.writeFileSync(DB_FILE, JSON.stringify(getInitialDatabase(), null, 2), 'utf-8');
+          }
+        } catch (_) {
+          fs.writeFileSync(DB_FILE, JSON.stringify(getInitialDatabase(), null, 2), 'utf-8');
+        }
+      } else {
         fs.writeFileSync(DB_FILE, JSON.stringify(getInitialDatabase(), null, 2), 'utf-8');
       }
     } catch (err) {
@@ -71,8 +81,13 @@ export class StorageService {
         if (p && p.id) postMap.set(p.id, p);
       });
       filePosts.forEach((p) => {
-        if (p && p.id && (p.title || p.contentMarkdown)) {
-          postMap.set(p.id, p);
+        if (p && p.id) {
+          if (postMap.has(p.id)) {
+            const existing = postMap.get(p.id)!;
+            postMap.set(p.id, { ...existing, ...p });
+          } else if (p.title && (p.contentMarkdown || p.excerpt)) {
+            postMap.set(p.id, p);
+          }
         }
       });
 
