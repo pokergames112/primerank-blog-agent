@@ -185,10 +185,20 @@
       color: #fff;
     }
 
+    .btn-warning {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #fff;
+    }
+
     .btn-danger {
       background: rgba(244, 63, 94, 0.15);
       border: 1px solid rgba(244, 63, 94, 0.4);
       color: #fda4af;
+    }
+
+    .btn-danger:hover {
+      background: rgba(244, 63, 94, 0.3);
+      color: #fff;
     }
 
     .stats-grid {
@@ -434,13 +444,14 @@
       margin-top: auto;
       display: flex;
       gap: 8px;
+      flex-wrap: wrap;
     }
 
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(8px);
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(10px);
       z-index: 100;
       display: none;
       align-items: center;
@@ -457,11 +468,12 @@
       border: 1px solid var(--border-active);
       border-radius: 20px;
       width: 100%;
-      max-width: 800px;
-      max-height: 90vh;
+      max-width: 850px;
+      max-height: 92vh;
       overflow-y: auto;
       padding: 30px;
       box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+      position: relative;
     }
 
     .modal-header {
@@ -477,8 +489,13 @@
       background: transparent;
       border: none;
       color: var(--text-muted);
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .modal-close:hover {
+      color: #fff;
     }
 
     .markdown-view {
@@ -487,10 +504,68 @@
       color: #cbd5e1;
     }
 
-    .markdown-view h2, .markdown-view h3 {
+    .markdown-view h1, .markdown-view h2, .markdown-view h3 {
       color: #fff;
       margin: 1.4em 0 0.5em 0;
       font-family: var(--font-heading);
+    }
+
+    .markdown-view table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+
+    .markdown-view th, .markdown-view td {
+      border: 1px solid var(--border-glow);
+      padding: 10px;
+      text-align: left;
+    }
+
+    .markdown-view th {
+      background: rgba(145, 57, 229, 0.2);
+      color: #fff;
+    }
+
+    /* ESTILOS DO EDITOR INLINE */
+    .edit-field-group {
+      margin-bottom: 16px;
+    }
+
+    .edit-label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .edit-input, .edit-textarea {
+      width: 100%;
+      background: rgba(8, 3, 19, 0.9);
+      border: 1px solid var(--border-glow);
+      border-radius: 12px;
+      padding: 12px 16px;
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .edit-input:focus, .edit-textarea:focus {
+      border-color: var(--purple-accent);
+      box-shadow: 0 0 14px var(--purple-glow);
+    }
+
+    .edit-textarea {
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      min-height: 320px;
+      resize: vertical;
+      line-height: 1.6;
     }
 
     .empty-state {
@@ -658,20 +733,53 @@
 
   </div>
 
-  <!-- Modal de Leitura -->
+  <!-- Modal de Leitura / Edição -->
   <div id="preview-modal" class="modal-overlay">
     <div class="modal-box">
       <div class="modal-header">
         <h3 id="modal-title" style="font-family: var(--font-heading); font-size: 1.3rem;">Visualização do Artigo</h3>
-        <button onclick="closeModal()" class="modal-close">&times;</button>
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <button id="btn-toggle-edit" onclick="toggleEditMode()" class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.8rem;">
+            <i class="fa-solid fa-pen-to-square"></i> <span id="toggle-edit-text">Editar Texto</span>
+          </button>
+          <button onclick="closeModal()" class="modal-close">&times;</button>
+        </div>
       </div>
-      <div id="modal-meta" style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 18px;"></div>
-      <div id="modal-content" class="markdown-view"></div>
-      <div id="modal-actions" style="margin-top: 24px; display: flex; gap: 10px; justify-content: flex-end;"></div>
+
+      <!-- MODO VISUALIZAÇÃO -->
+      <div id="modal-view-container">
+        <div id="modal-meta" style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 18px;"></div>
+        <div id="modal-content" class="markdown-view"></div>
+      </div>
+
+      <!-- MODO EDIÇÃO -->
+      <div id="modal-edit-container" style="display: none;">
+        <div class="edit-field-group">
+          <label class="edit-label">Título do Artigo</label>
+          <input type="text" id="edit-post-title" class="edit-input">
+        </div>
+        <div class="edit-field-group">
+          <label class="edit-label">Categoria</label>
+          <input type="text" id="edit-post-category" class="edit-input">
+        </div>
+        <div class="edit-field-group">
+          <label class="edit-label">Resumo / Excerpt</label>
+          <textarea id="edit-post-excerpt" class="edit-input" style="min-height: 80px;"></textarea>
+        </div>
+        <div class="edit-field-group">
+          <label class="edit-label">Conteúdo do Artigo (Markdown Completo)</label>
+          <textarea id="edit-post-content" class="edit-textarea"></textarea>
+        </div>
+      </div>
+
+      <div id="modal-actions" style="margin-top: 24px; display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; border-top: 1px solid var(--border-glow); padding-top: 18px;"></div>
     </div>
   </div>
 
   <script>
+    var currentEditingPost = null;
+    var isEditMode = false;
+
     function switchTab(tabId) {
       document.querySelectorAll('.tab-content').forEach(function(el) { el.classList.remove('active'); });
       document.querySelectorAll('.tab-btn').forEach(function(el) { el.classList.remove('active'); });
@@ -724,7 +832,6 @@
         for (var i = 0; i < posts.length; i++) {
           var p = posts[i];
           var readTime = p.seo && p.seo.readingTimeMinutes ? p.seo.readingTimeMinutes : 8;
-          var words = p.seo && p.seo.wordCount ? p.seo.wordCount : 1500;
           var img = p.featuredImageUrl || 'img/service_blog.jpg';
           var cat = p.category || 'SEO';
 
@@ -736,14 +843,14 @@
           html += '  <div class="card-body">';
           html += '    <div class="card-meta">';
           html += '      <span>⏱️ ' + readTime + ' min</span>';
-          html += '      <span>📝 ' + words + ' palavras</span>';
+          html += '      <span>⚡ IA Prime Rank</span>';
           html += '    </div>';
           html += '    <h4 class="card-title">' + p.title + '</h4>';
           html += '    <p class="card-excerpt">' + p.excerpt + '</p>';
           html += '    <div class="card-actions">';
-          html += '      <button onclick="previewArticleById(\'' + p.id + '\')" class="btn btn-secondary" style="flex: 1; justify-content: center;"><i class="fa-solid fa-eye"></i> Ler</button>';
+          html += '      <button onclick="previewArticleById(\'' + p.id + '\')" class="btn btn-secondary" style="flex: 1; justify-content: center;"><i class="fa-solid fa-eye"></i> Ler / Editar</button>';
           html += '      <button onclick="updateStatus(\'' + p.id + '\', \'published\')" class="btn btn-success" style="flex: 1; justify-content: center;"><i class="fa-solid fa-check"></i> Aprovar</button>';
-          html += '      <button onclick="updateStatus(\'' + p.id + '\', \'rejected\')" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>';
+          html += '      <button onclick="deletePost(\'' + p.id + '\')" class="btn btn-danger" title="Excluir"><i class="fa-solid fa-trash"></i></button>';
           html += '    </div>';
           html += '  </div>';
           html += '</div>';
@@ -786,7 +893,9 @@
           html += '    <h4 class="card-title">' + p.title + '</h4>';
           html += '    <p class="card-excerpt">' + p.excerpt + '</p>';
           html += '    <div class="card-actions">';
-          html += '      <a href="https://primerankmarketing.com.br/post.html?slug=' + encodeURIComponent(p.slug) + '" target="_blank" class="btn btn-primary" style="flex: 1; justify-content: center;"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver no Site Oficial</a>';
+          html += '      <button onclick="previewArticleById(\'' + p.id + '\')" class="btn btn-secondary" style="flex: 1; justify-content: center;"><i class="fa-solid fa-pen-to-square"></i> Editar</button>';
+          html += '      <a href="https://primerankmarketing.com.br/post.html?slug=' + encodeURIComponent(p.slug) + '" target="_blank" class="btn btn-primary" style="flex: 1; justify-content: center;"><i class="fa-solid fa-arrow-up-right-from-square"></i> No Site</a>';
+          html += '      <button onclick="deletePost(\'' + p.id + '\')" class="btn btn-danger" title="Excluir do Site e do Banco"><i class="fa-solid fa-trash"></i> Excluir</button>';
           html += '    </div>';
           html += '  </div>';
           html += '</div>';
@@ -884,22 +993,38 @@
       }
     }
 
+    async function deletePost(id) {
+      if (!confirm('Tem certeza que deseja excluir este artigo? Ele será removido do painel e do site imediatamente.')) {
+        return;
+      }
+
+      try {
+        var res = await fetch('/api/posts/' + id, {
+          method: 'DELETE'
+        });
+        var data = await res.json();
+        if (data.success) {
+          alert('🗑️ Artigo excluído com sucesso!');
+          loadPending();
+          loadPublished();
+          loadStats();
+          closeModal();
+        } else {
+          alert('Erro ao excluir: ' + (data.error || 'Erro desconhecido.'));
+        }
+      } catch (err) {
+        alert('Erro ao excluir artigo.');
+      }
+    }
+
     async function previewArticleById(id) {
       try {
         var res = await fetch('/api/posts/' + id);
         var data = await res.json();
         if (data.success && data.post) {
-          var post = data.post;
-          document.getElementById('modal-title').innerText = post.title;
-          var readTime = post.seo && post.seo.readingTimeMinutes ? post.seo.readingTimeMinutes : 8;
-          var words = post.seo && post.seo.wordCount ? post.seo.wordCount : 1500;
-          document.getElementById('modal-meta').innerHTML = '<span>📅 ' + new Date(post.createdAt).toLocaleDateString('pt-BR') + '</span> • <span>⏱️ ' + readTime + ' min</span> • <span>📝 ' + words + ' palavras</span>';
-
-          var content = post.contentMarkdown || post.markdown || post.excerpt;
-          document.getElementById('modal-content').innerHTML = typeof marked !== 'undefined' ? marked.parse(content) : content;
-
-          document.getElementById('modal-actions').innerHTML = '<button onclick="updateStatus(\'' + post.id + '\', \'published\')" class="btn btn-success"><i class="fa-solid fa-check"></i> Aprovar & Publicar</button><button onclick="updateStatus(\'' + post.id + '\', \'rejected\')" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Rejeitar</button>';
-
+          currentEditingPost = data.post;
+          isEditMode = false;
+          updateModalDisplay();
           document.getElementById('preview-modal').classList.add('open');
         }
       } catch (err) {
@@ -907,8 +1032,118 @@
       }
     }
 
+    function toggleEditMode() {
+      isEditMode = !isEditMode;
+      updateModalDisplay();
+    }
+
+    function updateModalDisplay() {
+      if (!currentEditingPost) return;
+      var post = currentEditingPost;
+
+      var viewContainer = document.getElementById('modal-view-container');
+      var editContainer = document.getElementById('modal-edit-container');
+      var toggleBtnText = document.getElementById('toggle-edit-text');
+      var modalTitle = document.getElementById('modal-title');
+      var modalActions = document.getElementById('modal-actions');
+
+      if (isEditMode) {
+        viewContainer.style.display = 'none';
+        editContainer.style.display = 'block';
+        toggleBtnText.innerText = 'Ver Visualização';
+        modalTitle.innerText = '✏️ Editar Artigo';
+
+        document.getElementById('edit-post-title').value = post.title || '';
+        document.getElementById('edit-post-category').value = post.category || 'Marketing & SEO';
+        document.getElementById('edit-post-excerpt').value = post.excerpt || '';
+        document.getElementById('edit-post-content').value = post.contentMarkdown || post.markdown || '';
+
+        modalActions.innerHTML = `
+          <button onclick="saveEditedPost()" class="btn btn-primary">
+            <i class="fa-solid fa-floppy-disk"></i> Salvar Alterações
+          </button>
+          <button onclick="toggleEditMode()" class="btn btn-secondary">Cancelar</button>
+        `;
+      } else {
+        viewContainer.style.display = 'block';
+        editContainer.style.display = 'none';
+        toggleBtnText.innerText = 'Editar Texto';
+        modalTitle.innerText = post.title;
+
+        var readTime = post.seo && post.seo.readingTimeMinutes ? post.seo.readingTimeMinutes : 8;
+        var date = new Date(post.publishedAt || post.createdAt).toLocaleDateString('pt-BR');
+        document.getElementById('modal-meta').innerHTML = '<span>📅 ' + date + '</span> • <span>⏱️ ' + readTime + ' min de leitura</span> • <span>📂 ' + (post.category || 'SEO') + '</span>';
+
+        var content = post.contentMarkdown || post.markdown || post.excerpt;
+        document.getElementById('modal-content').innerHTML = typeof marked !== 'undefined' ? marked.parse(content) : content;
+
+        var actionsHtml = '';
+        if (post.status === 'pending_approval') {
+          actionsHtml += '<button onclick="updateStatus(\'' + post.id + '\', \'published\')" class="btn btn-success"><i class="fa-solid fa-check"></i> Aprovar & Publicar no Site</button>';
+        } else if (post.status === 'published') {
+          actionsHtml += '<a href="https://primerankmarketing.com.br/post.html?slug=' + encodeURIComponent(post.slug) + '" target="_blank" class="btn btn-primary"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver no Site Oficial</a>';
+        }
+        actionsHtml += '<button onclick="toggleEditMode()" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i> Editar Texto</button>';
+        actionsHtml += '<button onclick="deletePost(\'' + post.id + '\')" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Excluir</button>';
+
+        modalActions.innerHTML = actionsHtml;
+      }
+    }
+
+    async function saveEditedPost() {
+      if (!currentEditingPost) return;
+
+      var updatedTitle = document.getElementById('edit-post-title').value.trim();
+      var updatedCategory = document.getElementById('edit-post-category').value.trim();
+      var updatedExcerpt = document.getElementById('edit-post-excerpt').value.trim();
+      var updatedContent = document.getElementById('edit-post-content').value;
+
+      if (!updatedTitle || !updatedContent) {
+        alert('Por favor, preencha o título e o conteúdo do artigo.');
+        return;
+      }
+
+      var wordCount = updatedContent.trim().split(/\\s+/).length;
+      var readingTime = Math.ceil(wordCount / 200);
+
+      var payload = {
+        title: updatedTitle,
+        category: updatedCategory,
+        excerpt: updatedExcerpt,
+        contentMarkdown: updatedContent,
+        seo: Object.assign({}, currentEditingPost.seo, {
+          wordCount: wordCount,
+          readingTimeMinutes: readingTime
+        })
+      };
+
+      try {
+        var res = await fetch('/api/posts/' + currentEditingPost.id, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        var data = await res.json();
+        if (data.success && data.post) {
+          alert('✅ Artigo atualizado e salvo com sucesso!');
+          currentEditingPost = data.post;
+          isEditMode = false;
+          updateModalDisplay();
+          loadPending();
+          loadPublished();
+          loadStats();
+        } else {
+          alert('Erro ao salvar: ' + (data.error || 'Erro desconhecido.'));
+        }
+      } catch (err) {
+        alert('Erro ao conectar com a API para salvar.');
+      }
+    }
+
     function closeModal() {
       document.getElementById('preview-modal').classList.remove('open');
+      currentEditingPost = null;
+      isEditMode = false;
     }
 
     loadStats();
