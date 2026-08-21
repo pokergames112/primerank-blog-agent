@@ -53,23 +53,36 @@ export class StorageService {
     }
   }
 
+  private getBundledDbFilePath(): string {
+    const cwdPath = path.resolve(process.cwd(), 'data', 'blog_storage.json');
+    if (fs.existsSync(cwdPath)) return cwdPath;
+
+    const altPath = path.join(process.cwd(), '..', 'data', 'blog_storage.json');
+    if (fs.existsSync(altPath)) return altPath;
+
+    return BUNDLED_DB_FILE;
+  }
+
   private loadDatabase(): StorageDatabase {
     try {
+      const bundledPath = this.getBundledDbFilePath();
       let basePosts: BlogPost[] = [];
       let extraPosts: BlogPost[] = [];
       let baseDb: StorageDatabase = { ...DEFAULT_DB };
 
-      if (fs.existsSync(BUNDLED_DB_FILE)) {
+      if (fs.existsSync(bundledPath)) {
         try {
-          const content = fs.readFileSync(BUNDLED_DB_FILE, 'utf-8');
+          const content = fs.readFileSync(bundledPath, 'utf-8');
           baseDb = JSON.parse(content);
           if (Array.isArray(baseDb.posts)) {
             basePosts = baseDb.posts;
           }
-        } catch (_) {}
+        } catch (e) {
+          console.error('[STORAGE] Erro ao ler BUNDLED_DB_FILE:', e);
+        }
       }
 
-      if (fs.existsSync(DB_FILE) && DB_FILE !== BUNDLED_DB_FILE) {
+      if (fs.existsSync(DB_FILE) && DB_FILE !== bundledPath) {
         try {
           const content = fs.readFileSync(DB_FILE, 'utf-8');
           const tmpDb = JSON.parse(content);
@@ -80,8 +93,12 @@ export class StorageService {
       }
 
       const postMap = new Map<string, BlogPost>();
-      basePosts.forEach((p) => postMap.set(p.id, p));
-      extraPosts.forEach((p) => postMap.set(p.id, p));
+      basePosts.forEach((p) => {
+        if (p && p.id) postMap.set(p.id, p);
+      });
+      extraPosts.forEach((p) => {
+        if (p && p.id) postMap.set(p.id, p);
+      });
 
       baseDb.posts = Array.from(postMap.values()).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
       return baseDb;
