@@ -1,6 +1,6 @@
 import { StorageDatabase } from '../types/index.js';
 
-export const INITIAL_DATABASE: StorageDatabase = {
+const INITIAL_DATABASE_RAW: StorageDatabase = {
   posts: [
     {
       id: "post_1787332276274_4rpnx",
@@ -178,3 +178,7 @@ export const INITIAL_DATABASE: StorageDatabase = {
     telegramEnabled: true
   }
 };
+
+export function getInitialDatabase(): StorageDatabase {
+  return JSON.parse(JSON.stringify(INITIAL_DATABASE_RAW));
+}

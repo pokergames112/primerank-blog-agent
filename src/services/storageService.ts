@@ -2,14 +2,12 @@ import fs from 'fs';
 import path from 'path';
 import axios from 'axios';
 import { BlogPost, StorageDatabase, TrendTopic, PostStatus } from '../types/index.js';
-import { INITIAL_DATABASE } from '../data/initialData.js';
+import { getInitialDatabase } from '../data/initialData.js';
 
 const CLOUD_STORE_URL = 'https://api.restful-api.dev/objects/ff8081819ff5b11001a0226f71ac66dc';
 const BUNDLED_DB_FILE = path.resolve(process.cwd(), 'data', 'blog_storage.json');
 const DATA_DIR = process.env.VERCEL ? '/tmp/data' : path.resolve(process.cwd(), 'data');
 const DB_FILE = process.env.VERCEL ? path.join(DATA_DIR, 'blog_storage.json') : BUNDLED_DB_FILE;
-
-const DEFAULT_DB: StorageDatabase = INITIAL_DATABASE;
 
 export class StorageService {
   private static instance: StorageService;
@@ -35,7 +33,7 @@ export class StorageService {
         fs.mkdirSync(DATA_DIR, { recursive: true });
       }
       if (!fs.existsSync(DB_FILE)) {
-        fs.writeFileSync(DB_FILE, JSON.stringify(INITIAL_DATABASE, null, 2), 'utf-8');
+        fs.writeFileSync(DB_FILE, JSON.stringify(getInitialDatabase(), null, 2), 'utf-8');
       }
     } catch (err) {
       console.warn('Aviso ao inicializar diretório de dados:', err);
@@ -54,15 +52,15 @@ export class StorageService {
 
   private loadDatabase(): StorageDatabase {
     try {
-      const basePosts: BlogPost[] = Array.isArray(INITIAL_DATABASE.posts) ? INITIAL_DATABASE.posts : [];
+      const baseDb = getInitialDatabase();
+      const basePosts: BlogPost[] = baseDb.posts || [];
       let extraPosts: BlogPost[] = [];
-      const baseDb: StorageDatabase = JSON.parse(JSON.stringify(INITIAL_DATABASE));
 
       if (fs.existsSync(DB_FILE)) {
         try {
           const content = fs.readFileSync(DB_FILE, 'utf-8');
           const tmpDb = JSON.parse(content);
-          if (Array.isArray(tmpDb.posts)) {
+          if (Array.isArray(tmpDb.posts) && tmpDb.posts.length > 0) {
             extraPosts = tmpDb.posts;
           }
         } catch (_) {}
@@ -76,11 +74,17 @@ export class StorageService {
         if (p && p.id) postMap.set(p.id, p);
       });
 
-      baseDb.posts = Array.from(postMap.values()).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+      baseDb.posts = Array.from(postMap.values())
+        .map((p) => ({
+          ...p,
+          status: (p.status || (p.publishedAt ? 'published' : 'pending_approval')) as PostStatus,
+        }))
+        .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+
       return baseDb;
     } catch (err) {
       console.error('Erro ao carregar banco de dados local. Usando padrão...', err);
-      return INITIAL_DATABASE;
+      return getInitialDatabase();
     }
   }
 
