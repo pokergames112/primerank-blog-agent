@@ -9,14 +9,7 @@ const BUNDLED_DB_FILE = path.resolve(process.cwd(), 'data', 'blog_storage.json')
 const DATA_DIR = process.env.VERCEL ? '/tmp/data' : path.resolve(process.cwd(), 'data');
 const DB_FILE = process.env.VERCEL ? path.join(DATA_DIR, 'blog_storage.json') : BUNDLED_DB_FILE;
 
-const DEFAULT_DB: StorageDatabase = {
-  posts: [],
-  trendsHistory: [],
-  systemSettings: {
-    autoGenerate: true,
-    telegramEnabled: true,
-  },
-};
+const DEFAULT_DB: StorageDatabase = INITIAL_DATABASE;
 
 export class StorageService {
   private static instance: StorageService;
@@ -42,12 +35,7 @@ export class StorageService {
         fs.mkdirSync(DATA_DIR, { recursive: true });
       }
       if (!fs.existsSync(DB_FILE)) {
-        if (fs.existsSync(BUNDLED_DB_FILE)) {
-          const initialData = fs.readFileSync(BUNDLED_DB_FILE, 'utf-8');
-          fs.writeFileSync(DB_FILE, initialData, 'utf-8');
-        } else {
-          fs.writeFileSync(DB_FILE, JSON.stringify(DEFAULT_DB, null, 2), 'utf-8');
-        }
+        fs.writeFileSync(DB_FILE, JSON.stringify(INITIAL_DATABASE, null, 2), 'utf-8');
       }
     } catch (err) {
       console.warn('Aviso ao inicializar diretório de dados:', err);
@@ -66,22 +54,11 @@ export class StorageService {
 
   private loadDatabase(): StorageDatabase {
     try {
-      let basePosts: BlogPost[] = INITIAL_DATABASE.posts || [];
+      const basePosts: BlogPost[] = Array.isArray(INITIAL_DATABASE.posts) ? INITIAL_DATABASE.posts : [];
       let extraPosts: BlogPost[] = [];
-      let baseDb: StorageDatabase = JSON.parse(JSON.stringify(INITIAL_DATABASE));
+      const baseDb: StorageDatabase = JSON.parse(JSON.stringify(INITIAL_DATABASE));
 
-      const bundledPath = this.getBundledDbFilePath();
-      if (fs.existsSync(bundledPath)) {
-        try {
-          const content = fs.readFileSync(bundledPath, 'utf-8');
-          const parsed = JSON.parse(content);
-          if (Array.isArray(parsed.posts) && parsed.posts.length > 0) {
-            basePosts = parsed.posts;
-          }
-        } catch (_) {}
-      }
-
-      if (fs.existsSync(DB_FILE) && DB_FILE !== bundledPath) {
+      if (fs.existsSync(DB_FILE)) {
         try {
           const content = fs.readFileSync(DB_FILE, 'utf-8');
           const tmpDb = JSON.parse(content);
@@ -103,7 +80,7 @@ export class StorageService {
       return baseDb;
     } catch (err) {
       console.error('Erro ao carregar banco de dados local. Usando padrão...', err);
-      return DEFAULT_DB;
+      return INITIAL_DATABASE;
     }
   }
 
