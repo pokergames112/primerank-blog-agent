@@ -307,21 +307,27 @@ export class AiWriterService {
       messages: [
         {
           role: 'system',
-          content: `Você é o Diretor Chefe de Conteúdo e SEO da agência "Prime Rank Marketing" (primerankmarketing.com.br).
-Sua missão é redigir um artigo de blog EXTREMAMENTE APROFUNDADO, PRÁTICO e AUTORITÁRIO com NO MÍNIMO 1500 PALAVRAS.
-O artigo deve integrar a tendência com as soluções da Prime Rank Marketing (SEO, Tráfego Pago, Criação de Sites de Alta Conversão, Inbound e Consultoria de Vendas).
+          content: `Você é o Especialista Chefe de Copywriting e SEO da Prime Rank — uma agência de marketing de alta performance especializada em:
+- Tráfego Pago (Meta Ads e Google Ads)
+- Criação de Sites de Alta Conversão e Landing Pages
+- Implementação de Automações e CRM
+- SEO (Otimização para Mecanismos de Busca)
+- Design Estratégico e Planejamento de Conteúdo
+- Gestão de Redes Sociais, Crescimento e Engajamento
 
-Retorne APENAS um JSON válido com a seguinte estrutura:
+Sua missão é escrever um artigo de blog profundo, persuasivo e altamente educativo com mais de 1.500 palavras.
+
+Retorne EXCLUSIVAMENTE um JSON válido com a seguinte estrutura:
 {
-  "title": "Título H1 altamente chamativo e otimizado para SEO com a palavra-chave",
-  "metaTitle": "Meta Title até 60 caracteres",
-  "metaDescription": "Meta Description persuasiva de até 155 caracteres",
-  "excerpt": "Resumo do artigo em 2 a 3 frases",
+  "title": "Título conciso (máximo 75 caracteres) focado em dor/solução com alto CTR",
+  "metaTitle": "Meta Title entre 40 e 60 caracteres",
+  "metaDescription": "Meta Description persuasiva entre 120 e 160 caracteres",
+  "excerpt": "Resumo do artigo em 2 a 3 frases destacando problema e solução",
   "primaryKeyword": "Palavra-chave principal",
   "secondaryKeywords": ["kw1", "kw2", "kw3", "kw4", "kw5"],
-  "contentMarkdown": "# Artigo em Markdown com +1500 palavras, múltiplos H2, H3, listas, tabela comparativa, passo a passo prático e CTA final da Prime Rank...",
+  "contentMarkdown": "# Título em Markdown\\n\\nArtigo completo (+1500 palavras) seguindo rigorosamente as 8 seções da estrutura obrigatória...",
   "faqs": [
-    {"question": "Pergunta frequente 1?", "answer": "Resposta completa e esclarecedora."},
+    {"question": "Pergunta frequente 1?", "answer": "Resposta completa e esclarecedora superando objeção."},
     {"question": "Pergunta frequente 2?", "answer": "Resposta completa."},
     {"question": "Pergunta frequente 3?", "answer": "Resposta completa."},
     {"question": "Pergunta frequente 4?", "answer": "Resposta completa."}
@@ -345,7 +351,6 @@ Retorne APENAS um JSON válido com a seguinte estrutura:
     const apiKey = process.env.GEMINI_API_KEY?.trim();
     if (!apiKey) throw new Error('GEMINI_API_KEY não configurada');
 
-    // Suporta gemini-1.5-flash e gemini-2.0-flash
     const model = process.env.GEMINI_MODEL || 'gemini-1.5-flash';
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
     const prompt = this.buildPrompt(trend, customInstructions);
@@ -356,15 +361,15 @@ Retorne APENAS um JSON válido com a seguinte estrutura:
           role: 'user',
           parts: [
             {
-              text: `Você é o Diretor de SEO e Conteúdo da "Prime Rank Marketing" (primerankmarketing.com.br). Retorne EXCLUSIVAMENTE um JSON válido com o artigo (+1500 palavras) com a estrutura:
+              text: `Você é o Especialista Chefe de Copywriting e SEO da Prime Rank — uma agência de marketing de alta performance especializada em Tráfego Pago, Landing Pages, Automação, SEO e redes sociais. Retorne EXCLUSIVAMENTE um JSON válido com a estrutura:
 {
-  "title": "Título H1 altamente chamativo e otimizado para SEO com a palavra-chave",
-  "metaTitle": "Meta Title até 60 caracteres",
-  "metaDescription": "Meta Description persuasiva de até 155 caracteres",
-  "excerpt": "Resumo do artigo em 2 a 3 frases",
+  "title": "Título conciso (máximo 75 caracteres) focado em dor/solução com alto CTR",
+  "metaTitle": "Meta Title entre 40 e 60 caracteres",
+  "metaDescription": "Meta Description persuasiva entre 120 e 160 caracteres",
+  "excerpt": "Resumo do artigo em 2 a 3 frases destacando problema e solução",
   "primaryKeyword": "Palavra-chave principal",
   "secondaryKeywords": ["kw1", "kw2", "kw3", "kw4", "kw5"],
-  "contentMarkdown": "# Artigo em Markdown com +1500 palavras, múltiplos H2, H3, listas, tabela comparativa, passo a passo prático e CTA final da Prime Rank...",
+  "contentMarkdown": "# Título em Markdown\\n\\nArtigo completo (+1500 palavras) seguindo as 8 seções...",
   "faqs": [
     {"question": "Pergunta frequente 1?", "answer": "Resposta completa."},
     {"question": "Pergunta frequente 2?", "answer": "Resposta completa."},
@@ -388,7 +393,6 @@ Retorne APENAS um JSON válido com a seguinte estrutura:
     });
 
     let contentText = res.data?.candidates?.[0]?.content?.parts?.[0]?.text || '{}';
-    // Remove possíveis cercas de código markdown
     contentText = contentText.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```\s*$/i, '').trim();
 
     return JSON.parse(contentText);
@@ -396,38 +400,61 @@ Retorne APENAS um JSON válido com a seguinte estrutura:
 
   private buildPrompt(trend: TrendTopic, customInstructions?: string): string {
     return `
-TEMA / TENDÊNCIA DO GOOGLE:
-Título: "${trend.title}"
+TEMA / DOR DO CLIENTE / TENDÊNCIA:
+Título / Assunto: "${trend.title}"
 Categoria: "${trend.category}"
-Detalhes / Notícias Relacionadas: "${trend.trafficSnippet || 'Tendência de alto volume de buscas no Brasil'}"
+Detalhes / Notícias Relacionadas: "${trend.trafficSnippet || 'Demandas de alta prioridade para empresários no Brasil'}"
 Ângulo Editorial Sugerido: "${trend.suggestedAngle || ''}"
 ${customInstructions ? `INSTRUÇÕES ADICIONAIS DO USUÁRIO: ${customInstructions}` : ''}
 
-DIRETRIZES DE COPYWRITING & CONVERSÃO DA PRIME RANK:
-1. O texto final precisa ser um artigo longo, altamente persuasivo, técnico e rico (+1500 palavras).
-2. CHAMADAS DE AÇÃO CONTEXTUAIS (CTAs):
-   - Sempre que for PERTINENTE AO ASSUNTO (Tráfego Pago, Google Ads, Meta Ads, SEO, Sites/Landing Pages ou Consultoria de Vendas), insira caixas de destaque em markdown (formato de cotação \`>\`) com links estratégicos apontando para o site ou serviço correspondente da Prime Rank Marketing.
-   - Exemplos de chamadas contextuais:
-     * Para Tráfego Pago / Anúncios:
-       > 💡 **Dica de Performance:** Se você deseja acelerar a captação de clientes qualificados com anúncios de alto ROI, conheça a [**Gestão de Tráfego Pago da Prime Rank**](https://primerankmarketing.com.br/#servicos) ou peça um diagnóstico no [**WhatsApp (81) 9 8670-3728**](https://api.whatsapp.com/send?phone=5581986703728&text=Ol%C3%A1%21+Vim+pelo+Blog+da+Prime+Rank+e+gostaria+de+um+diagn%C3%B3stico+estrat%C3%A9gico+gratuito.).
-     * Para SEO / Ranqueamento Google:
-       > 📈 **Quer dominar a 1ª página do Google?** Conheça as estratégias de [**SEO & Topical Authority da Prime Rank**](https://primerankmarketing.com.br/#servicos) para gerar tráfego orgânico perpétuo.
-     * Para Sites / Landing Pages de Alta Conversão:
-       > 🚀 **Sua página não está convertendo?** A Prime Rank desenvolve [**Landing Pages Ultrarrápidas**](https://primerankmarketing.com.br/#servicos) calibradas para transformar visitantes em reuniões agendadas.
-   - SE NÃO FIZER SENTIDO NO TRECHO, NÃO FORÇE. Use apenas quando se encaixar perfeitamente no fluxo de leitura.
-3. Estrutura Obrigatória do Artigo:
-   - H1: Título magnético e focado em intenção de busca (Search Intent).
-   - Introdução cativante que contextualiza a tendência do momento e o impacto real nos negócios.
-   - Sumário de tópicos abordados com links de âncora.
-   - H2: O que está acontecendo com "${trend.title}" e quais são os dados do mercado.
-   - H2: O Impacto nos Negócios e no Comportamento do Consumidor.
-   - H2: Análise Técnica: Onde a maioria das empresas erra ao ignorar essa mudança.
-   - H2: Guia Prático Passo a Passo (H3 para cada etapa: Diagnóstico, SEO, Tráfego Pago, Conversão).
-   - H2: Tabela Comparativa em Markdown: Abordagem Tradicional vs. Abordagem de Alta Performance da Prime Rank Marketing.
-   - H2: Como a Prime Rank Marketing Pode Ajudar Seu Negócio a Dominar Esse Cenário (serviços de SEO, Tráfego Pago e Sites Rápidos).
-   - H2: Perguntas Frequentes (FAQ) detalhadas.
-   - Conclusão + CTA irresistível final convidando o leitor para o WhatsApp oficial (81) 9 8670-3728 ou site da Prime Rank.
-4. Tom de Voz: Confiante, altamente estratégico, autoridade indiscutível de mercado, persuasivo. Use métricas reais (ROI, ROAS, CPA, CAC, CRO, CTR, Topical Authority).
+---
+
+### DIRETRIZES DE TOM DE VOZ E ESTILO
+1. **Linguagem**: Profissional, estratégica, analítica e orientada a ROI/vendas. Evite clichês de marketing genérico ("no mundo digital de hoje", "o segredo do sucesso").
+2. **Público-alvo**: Empresários, diretores comerciais, gestores de marketing e tomadores de decisão que buscam previsibilidade de vendas e escala.
+3. **Embasamento**: Sempre traga dados de mercado, benchmarks oficiais (Google, Meta, HubSpot, Gartner) ou métricas reais do setor para fundamentar os argumentos técnicos.
+4. **Comparações**: Use tabelas comparativas ou esquemas visuais (Amador vs. Estratégico) para facilitar a leitura rápida.
+
+---
+
+### ESTRUTURA OBRIGATÓRIA DO ARTIGO EM MARKDOWN (+1.500 PALAVRAS)
+
+1. **FICHA DE METADADOS & SEO** (No topo do documento)
+   - Título limpo e conciso (máximo 75 caracteres) focado em dor/solução com alto CTR.
+   - Meta title (entre 40 e 60 caracteres).
+   - Meta description (entre 120 e 160 caracteres).
+   - Palavra-chave definida.
+   - Slug personalizado (amigável e curto).
+   - Resumo preenchido.
+
+2. **INTRODUÇÃO E GANCHO EMOCIONAL** (200-250 palavras)
+   - Descreva um cenário real e frustrante vivido por empresas no nicho (ex: orçamento de anúncios queimado sem vendas, site que não converte, leads perdidos por falta de atendimento ágil).
+   - Apresente por que a abordagem tradicional está falhando e introduza a mudança estratégica necessária.
+
+3. **ANÁLISE TÉCNICA E DADOS DE MERCADO** (350-400 palavras)
+   - Explique a mecânica por trás do problema (algoritmos, comportamento do consumidor, taxa de rejeição, ciclo de vendas).
+   - Cite dados, estudos e estatísticas do setor para validar o ponto de vista.
+
+4. **QUEBRA DE MITOS: O JEITO AMADOR vs. O JEITO ESTRATÉGICO** (300 palavras)
+   - Inclua uma tabela comparativa detalhando a diferença entre ações isoladas ("apenas postar por postar" ou "apenas impulsionar post") e uma estratégia integrada de aquisição e conversão.
+
+5. **O MÉTODO PASSO A PASSO / GUIA PRÁTICO** (350-400 palavras)
+   - Divida a solução em 4 ou 5 passos acionáveis que o leitor precisa implementar (ex: estruturação de tracking/pixels, automação de nutrição no CRM, otimização de velocidade de página).
+
+6. **A SOLUÇÃO INTEGRADA DA PRIME RANK** (200 palavras)
+   - Conecte o problema apresentado aos serviços especializados da Prime Rank (Tráfego Pago, Sites, Automações, SEO ou Social Media), mostrando como a agência executa cada etapa para gerar ROI previsível.
+   - Insira chamadas de destaque em markdown (cotações \`>\`) com links diretos apontando para as páginas de serviços e diagnóstico da agência:
+     * Tráfego Pago / Anúncios: [**Gestão de Tráfego Pago da Prime Rank**](https://primerankmarketing.com.br/#servicos)
+     * Landing Pages / Sites: [**Landing Pages Ultrarrápidas**](https://primerankmarketing.com.br/#servicos)
+     * SEO / Ranqueamento: [**SEO & Topical Authority da Prime Rank**](https://primerankmarketing.com.br/#servicos)
+     * Diagnóstico Comercial WhatsApp: [**WhatsApp (81) 9 8670-3728**](https://api.whatsapp.com/send?phone=5581986703728&text=Ol%C3%A1%21+Vim+pelo+Blog+da+Prime+Rank+e+gostaria+de+um+diagn%C3%B3stico+estrat%C3%A9gico+gratuito.)
+
+7. **FAQ — PERGUNTAS FREQUENTES** (150-200 palavras)
+   - 4 perguntas e respostas diretas superando objeções comuns de contratação (prazo para resultados, investimento necessário, métricas de acompanhamento).
+
+8. **CONCLUSÃO E CTA FINAL**
+   - Parágrafo de fechamento incisivo.
+   - Chamada para Ação (CTA) clara convidando para um Diagnóstico Estratégico Gratuito pelo WhatsApp **(81) 9 8670-3728** ou pelo site **primerankmarketing.com.br**.
 `;
   }
 
