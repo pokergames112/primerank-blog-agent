@@ -82,6 +82,7 @@ export interface BlogPost {
 export interface StorageDatabase {
   posts: BlogPost[];
   trendsHistory: TrendTopic[];
+  deletedIds?: string[];
   systemSettings: {
     autoGenerate: boolean;
     telegramEnabled: boolean;

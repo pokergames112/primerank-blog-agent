@@ -172,30 +172,22 @@ apiRouter.put('/posts/:id', async (req: Request, res: Response) => {
 // Excluir post
 apiRouter.delete('/posts/:id', async (req: Request, res: Response) => {
   const { id } = req.params;
-  const deleted = await storage.deletePost(id);
-
-  if (!deleted) {
-    return res.status(404).json({ success: false, error: 'Post não encontrado' });
-  }
-
-  res.json({ success: true, message: 'Post excluído' });
+  await storage.deletePost(id);
+  res.json({ success: true, message: 'Post excluído com sucesso' });
 });
 
 // Estatísticas do Painel
 apiRouter.get('/stats', (_req: Request, res: Response) => {
-  let allPosts = storage.getAllPosts();
-  if (!allPosts || allPosts.length === 0) {
-    allPosts = getCleanInitialPosts();
-  }
+  const allPosts = storage.getAllPosts();
 
   const published = allPosts.filter((p) => (p.status || 'published').toLowerCase() === 'published' || p.publishedAt);
   const pending = allPosts.filter((p) => (p.status || '').toLowerCase() === 'pending_approval');
   const rejected = allPosts.filter((p) => (p.status || '').toLowerCase() === 'rejected');
   const totalWords = published.reduce((acc, p) => acc + (p.seo?.wordCount || 2000), 0);
 
-  const total = Math.max(allPosts.length, 3);
-  const publishedCount = Math.max(published.length, 3);
-  const finalWords = Math.max(totalWords, 6044);
+  const total = allPosts.length;
+  const publishedCount = published.length;
+  const finalWords = totalWords;
 
   res.json({
     success: true,
@@ -205,7 +197,7 @@ apiRouter.get('/stats', (_req: Request, res: Response) => {
       pendingApproval: pending.length,
       rejected: rejected.length,
       totalWordsPublished: finalWords,
-      averageWordsPerPost: publishedCount > 0 ? Math.round(finalWords / publishedCount) : 2015,
+      averageWordsPerPost: publishedCount > 0 ? Math.round(finalWords / publishedCount) : 0,
     },
   });
 });

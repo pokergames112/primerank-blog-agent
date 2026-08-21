@@ -1020,13 +1020,13 @@
         for (var i = 0; i < posts.length; i++) {
           var p = posts[i];
           var readTime = p.seo && p.seo.readingTimeMinutes ? p.seo.readingTimeMinutes : 8;
-          var img = p.featuredImageUrl || 'img/service_blog.jpg';
+          var img = p.featuredImageUrl || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80';
           var cat = p.category || 'SEO';
           var displayTitle = cleanTitle(p.title);
 
           html += '<div class="article-card">';
           html += '  <div class="card-img-wrap">';
-          html += '    <img src="' + img + '" class="card-img">';
+          html += '    <img src="' + img + '" class="card-img" onerror="this.onerror=null;this.src=\'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80\';">';
           html += '    <span class="card-badge">' + cat + '</span>';
           html += '  </div>';
           html += '  <div class="card-body">';
@@ -1067,12 +1067,12 @@
           var p = posts[i];
           var date = new Date(p.publishedAt || p.createdAt).toLocaleDateString('pt-BR');
           var readTime = p.seo && p.seo.readingTimeMinutes ? p.seo.readingTimeMinutes : 8;
-          var img = p.featuredImageUrl || 'img/service_blog.jpg';
+          var img = p.featuredImageUrl || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80';
           var displayTitle = cleanTitle(p.title);
 
           html += '<div class="article-card">';
           html += '  <div class="card-img-wrap">';
-          html += '    <img src="' + img + '" class="card-img">';
+          html += '    <img src="' + img + '" class="card-img" onerror="this.onerror=null;this.src=\'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80\';">';
           html += '    <span class="card-badge" style="background: var(--green-success); border-color: var(--green-success);">● Ativo no Site</span>';
           html += '  </div>';
           html += '  <div class="card-body">';
