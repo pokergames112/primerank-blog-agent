@@ -1,7 +1,9 @@
 import fs from 'fs';
 import path from 'path';
+import axios from 'axios';
 import { BlogPost, StorageDatabase, TrendTopic, PostStatus } from '../types/index.js';
 
+const CLOUD_STORE_URL = 'https://api.restful-api.dev/objects/ff8081819ff5b11001a0226f71ac66dc';
 const BUNDLED_DB_FILE = path.resolve(process.cwd(), 'data', 'blog_storage.json');
 const DATA_DIR = process.env.VERCEL ? '/tmp/data' : path.resolve(process.cwd(), 'data');
 const DB_FILE = process.env.VERCEL ? path.join(DATA_DIR, 'blog_storage.json') : BUNDLED_DB_FILE;
@@ -18,10 +20,12 @@ const DEFAULT_DB: StorageDatabase = {
 export class StorageService {
   private static instance: StorageService;
   private db: StorageDatabase;
+  private isSyncing = false;
 
   private constructor() {
     this.ensureDataDirectory();
     this.db = this.loadDatabase();
+    this.syncFromCloud();
   }
 
   public static getInstance(): StorageService {
@@ -61,17 +65,54 @@ export class StorageService {
       }
       return DEFAULT_DB;
     } catch (err) {
-      console.error('Erro ao carregar banco de dados. Usando padrão...', err);
+      console.error('Erro ao carregar banco de dados local. Usando padrão...', err);
       return DEFAULT_DB;
     }
   }
 
-  private saveDatabase() {
+  private async syncFromCloud() {
+    try {
+      const res = await axios.get(CLOUD_STORE_URL, { timeout: 3000 });
+      if (res.data && res.data.data && Array.isArray(res.data.data.posts)) {
+        if (res.data.data.posts.length > 0 || this.db.posts.length === 0) {
+          this.db.posts = res.data.data.posts;
+          this.saveLocalDatabase();
+          console.log('[STORAGE] Sincronizado com a nuvem com sucesso. Total posts:', this.db.posts.length);
+        }
+      }
+    } catch (err) {
+      console.warn('[STORAGE] Usando banco de dados local (nuvem offline ou timeout)');
+    }
+  }
+
+  private saveLocalDatabase() {
     try {
       this.ensureDataDirectory();
       fs.writeFileSync(DB_FILE, JSON.stringify(this.db, null, 2), 'utf-8');
     } catch (err) {
-      console.error('Erro ao salvar no banco de dados local:', err);
+      console.error('Erro ao salvar localmente:', err);
+    }
+  }
+
+  private async saveDatabase() {
+    this.saveLocalDatabase();
+
+    // Sincroniza em background com o armazenamento em nuvem persistente
+    try {
+      await axios.put(
+        CLOUD_STORE_URL,
+        {
+          name: 'primerank_blog_storage',
+          data: {
+            posts: this.db.posts,
+            updatedAt: new Date().toISOString(),
+          },
+        },
+        { timeout: 5000 }
+      );
+      console.log('[STORAGE] Nuvem atualizada com sucesso!');
+    } catch (err) {
+      console.warn('[STORAGE] Erro ao sincronizar com a nuvem em background:', err);
     }
   }
 
