@@ -1,28 +1,29 @@
 :root {
-  --bg-dark: #080c14;
-  --bg-surface: #0f172a;
-  --bg-card: rgba(17, 24, 39, 0.75);
-  --bg-card-hover: rgba(26, 35, 53, 0.9);
-  --border-color: rgba(255, 255, 255, 0.08);
-  --border-gold: rgba(245, 158, 11, 0.35);
+  --bg-dark: #0b0415;
+  --bg-surface: #140827;
+  --bg-card: rgba(26, 11, 51, 0.85);
+  --bg-card-hover: rgba(50, 9, 109, 0.95);
+  --border-color: rgba(145, 57, 229, 0.25);
+  --border-glow: rgba(145, 57, 229, 0.5);
   
-  --gold-primary: #f59e0b;
-  --gold-light: #fbbf24;
-  --gold-glow: rgba(245, 158, 11, 0.2);
-  --blue-accent: #3b82f6;
-  --emerald-accent: #10b981;
+  --purple-primary: #9139e5;
+  --purple-dark: #32096d;
+  --purple-accent: #b179f2;
+  --purple-light: #ede5f9;
+  --gold-accent: #fbbf24;
+  --gold-glow: rgba(251, 191, 36, 0.25);
   
-  --text-main: #f8fafc;
-  --text-muted: #94a3b8;
-  --text-dim: #64748b;
+  --text-main: #ffffff;
+  --text-muted: #d4cbe8;
+  --text-dim: #9ca3af;
   
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 22px;
   --radius-full: 9999px;
   
-  --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-display: 'Space Grotesk', sans-serif;
+  --font-main: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Integral CF', 'Syne', 'Montserrat', sans-serif;
 }
 
 * {

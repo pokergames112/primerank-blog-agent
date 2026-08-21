@@ -1,40 +1,56 @@
 {
   "agencyName": "Prime Rank Marketing",
   "website": "https://primerankmarketing.com.br",
-  "tagline": "Estratégias de Marketing Digital de Alta Performance, SEO e Conversão",
-  "targetAudience": "Empresários, diretores de marketing, gestores comerciais, e-commerces e profissionais liberais que buscam escalar vendas, tráfego qualificado e autoridade no Google e mídias pagas.",
+  "tagline": "Performance que Gera Resultado: Tráfego Pago, SEO, Web Design e Gestão com IA",
+  "contact": {
+    "whatsapp": "(81) 9 8670-3728",
+    "whatsappLink": "https://api.whatsapp.com/send?phone=5581986703728",
+    "instagram": "https://www.instagram.com/primerank_/",
+    "region": "Região Metropolitana do Recife (RMR) e Atendimento Nacional"
+  },
+  "targetAudience": "Empresários, diretores de marketing, gestores comerciais, e-commerces, profissionais liberais e negócios que buscam escalar vendas, tráfego qualificado e liderança no Google e mídias pagas.",
   "toneOfVoice": {
-    "style": "Profissional, autoritário, persuasivo, analítico, direto ao ponto e orientado a resultados (ROI e dados)",
+    "style": "Profissional, autoritário, inovador, persuasivo, analítico e orientado a resultados (ROI, CPA e faturamento real)",
     "person": "Nós (Prime Rank Marketing) / Você (Leitor/Empresário)",
-    "vocabulary": ["ROI", "conversão", "escalabilidade", "autoridade de domínio", "tráfego qualificado", "SEO de alta performance", "posicionamento estratégico", "funil de vendas", "growth marketing"]
+    "vocabulary": ["ROI", "conversão", "CPA reduzido", "ROAS", "autoridade de domínio", "tráfego qualificado", "SEO de alta performance", "Inteligência Artificial", "Core Web Vitals", "posicionamento orgânico", "funil de vendas", "growth marketing"]
   },
   "coreServices": [
     {
-      "name": "SEO & Otimização para Mecanismos de Busca",
-      "description": "Posicionamento orgânico nas primeiras posições do Google, auditoria técnica, link building e SEO on-page.",
-      "ctaText": "Quer dominar a primeira página do Google? Fale com os especialistas da Prime Rank Marketing."
+      "name": "Tráfego & Performance (Google & Meta Ads)",
+      "description": "Gestão estratégica de anúncios no Google Ads, Instagram e Facebook com foco no menor custo por aquisição (CPA) e máximo retorno sobre investimento.",
+      "ctaText": "Escale suas vendas diárias com tráfego pago de alta precisão com a Prime Rank Marketing."
     },
     {
-      "name": "Gestão de Tráfego Pago (Google Ads & Meta Ads)",
-      "description": "Campanhas otimizadas com foco em menor custo por aquisição (CPA) e máximo retorno sobre investimento (ROAS).",
-      "ctaText": "Escale suas vendas com campanhas de tráfego pago de alta precisão com a Prime Rank."
+      "name": "SEO & Topo do Google",
+      "description": "Otimização orgânica de alta performance, auditoria técnica e link building para dominar a primeira página do Google de forma sustentável.",
+      "ctaText": "Quer colocar sua empresa no topo do Google? Fale com os especialistas da Prime Rank Marketing."
     },
     {
-      "name": "Criação de Sites de Alta Conversão & Landing Pages",
-      "description": "Desenvolvimento web responsivo, ultra rápido e planejado para converter visitantes em clientes pagantes.",
+      "name": "Criação Web & Landing Pages de Alta Conversão",
+      "description": "Desenvolvimento de sites ultra velozes, responsivos e projetados com CRO (Conversion Rate Optimization) para transformar cliques em clientes.",
       "ctaText": "Transforme seu site em uma máquina de vendas com a Prime Rank Marketing."
     },
     {
-      "name": "Inbound Marketing & Estratégia de Conteúdo",
-      "description": "Nutrição de leads, criação de autoridade com artigos e materiais ricos que atraem compradores qualificados.",
-      "ctaText": "Crie uma presença digital irresistível e atraia clientes todos os dias."
+      "name": "Estratégia de Blog & Marketing de Conteúdo",
+      "description": "Produção de artigos aprofundados baseados nas tendências do Google Trends para construir autoridade, educar o mercado e gerar leads qualificados.",
+      "ctaText": "Crie uma presença digital irresistível e atraia clientes qualificados todos os dias."
+    },
+    {
+      "name": "Autoridade & Comunidade (Social Media & Branding)",
+      "description": "Posicionamento de marca forte e gestão profissional para formar uma comunidade engajada e com alto valor percebido.",
+      "ctaText": "Fortaleça o branding da sua empresa e se torne a referência do seu setor."
+    },
+    {
+      "name": "Gestão com Inteligência Artificial & Automações",
+      "description": "Implementação de IA para automação de atendimento, qualificação de leads e inteligência de dados comerciais.",
+      "ctaText": "Acelere a eficiência comercial da sua empresa com Inteligência Artificial."
     }
   ],
   "defaultCTA": {
-    "heading": "Pronto para levar seu negócio ao próximo nível de faturamento?",
-    "text": "Na **Prime Rank Marketing**, nós não vendemos promessas; entregamos estratégias validadas com métricas claras de crescimento. Agende uma consultoria estratégica gratuita com o nosso time de especialistas e descubra onde sua empresa está perdendo oportunidades.",
-    "buttonLabel": "Solicitar Diagnóstico Estratégico Gratuito",
-    "buttonUrl": "https://primerankmarketing.com.br/#contato"
+    "heading": "Pronto para acelerar o crescimento do seu negócio com a Prime Rank?",
+    "text": "Na **Prime Rank Marketing**, nós não vendemos promessas; entregamos estratégias validadas de tráfego, SEO e conversão com métricas transparentes. Agende um diagnóstico estratégico gratuito pelo WhatsApp **(81) 9 8670-3728** e descubra onde sua empresa está perdendo oportunidades de escala.",
+    "buttonLabel": "Agendar Diagnóstico Gratuito no WhatsApp",
+    "buttonUrl": "https://api.whatsapp.com/send?phone=5581986703728&text=Ol%C3%A1%21+Vim+pelo+Blog+da+Prime+Rank+e+gostaria+de+um+diagn%C3%B3stico+estrat%C3%A9gico+gratuito."
   },
   "editorialGuidelines": {
     "minWords": 1500,
