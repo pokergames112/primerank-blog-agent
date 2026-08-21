@@ -2,14 +2,77 @@
 
 let currentViewingPost = null;
 let allPosts = [];
+let authToken = localStorage.getItem('primerank_admin_token') || null;
 
 document.addEventListener('DOMContentLoaded', () => {
+  checkAuth();
   setupTabs();
   setupEventListeners();
-  loadPendingPosts();
-  loadTrends();
-  loadPublishedPosts();
 });
+
+// ==========================================
+// 0. AUTHENTICATION & LOCK SCREEN
+// ==========================================
+function checkAuth() {
+  const authModal = document.getElementById('auth-modal');
+  const logoutBtn = document.getElementById('btn-logout');
+
+  if (authToken) {
+    authModal?.classList.remove('open');
+    if (logoutBtn) logoutBtn.style.display = 'inline-flex';
+    loadPendingPosts();
+    loadTrends();
+    loadPublishedPosts();
+  } else {
+    authModal?.classList.add('open');
+    if (logoutBtn) logoutBtn.style.display = 'none';
+  }
+}
+
+async function handleLoginSubmit(e) {
+  if (e) e.preventDefault();
+  const passInput = document.getElementById('input-auth-password');
+  const errorMsg = document.getElementById('auth-error-msg');
+  const password = passInput?.value?.trim();
+
+  if (!password) return;
+
+  try {
+    const res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password }),
+    });
+    const data = await res.json();
+
+    if (data.success && data.token) {
+      authToken = data.token;
+      localStorage.setItem('primerank_admin_token', authToken);
+      if (errorMsg) errorMsg.style.display = 'none';
+      checkAuth();
+      showToast('🔓 Painel Desbloqueado!');
+    } else {
+      if (errorMsg) {
+        errorMsg.innerText = data.error || 'Senha incorreta.';
+        errorMsg.style.display = 'block';
+      }
+    }
+  } catch (err) {
+    if (errorMsg) {
+      errorMsg.innerText = 'Erro ao autenticar. Tente novamente.';
+      errorMsg.style.display = 'block';
+    }
+  }
+}
+
+function logout() {
+  authToken = null;
+  localStorage.removeItem('primerank_admin_token');
+  const passInput = document.getElementById('input-auth-password');
+  if (passInput) passInput.value = '';
+  checkAuth();
+  showToast('🔒 Painel Bloqueado.');
+}
 
 // ==========================================
 // 1. TABS NAVIGATION
@@ -44,6 +107,9 @@ function setupEventListeners() {
   document.getElementById('btn-quick-generate')?.addEventListener('click', () => {
     document.getElementById('generate-modal')?.classList.add('open');
   });
+
+  // Logout / Lock button
+  document.getElementById('btn-logout')?.addEventListener('click', logout);
 
   // Close modals
   document.getElementById('btn-close-modal')?.addEventListener('click', closeModal);

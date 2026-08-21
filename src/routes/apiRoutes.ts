@@ -5,12 +5,40 @@ import { AiWriterService } from '../services/aiWriterService.js';
 import { SchedulerJob } from '../jobs/scheduler.js';
 import { TelegramService } from '../services/telegramService.js';
 
-export const apiRouter = Router();
-const storage = StorageService.getInstance();
-const trendsService = TrendsService.getInstance();
-const aiWriter = AiWriterService.getInstance();
-const scheduler = SchedulerJob.getInstance();
-const telegram = TelegramService.getInstance();
+// ==========================================
+// 0. AUTENTICAÇÃO DO PAINEL MOBILE
+// ==========================================
+
+apiRouter.post('/auth/login', (req: Request, res: Response) => {
+  const { password } = req.body;
+  const configuredPassword = process.env.ADMIN_PASSWORD || 'primerank2026';
+
+  if (!password || password.trim() !== configuredPassword.trim()) {
+    return res.status(401).json({ success: false, error: 'Senha incorreta.' });
+  }
+
+  // Token simples para sessão segura no celular
+  const token = Buffer.from(`auth_${configuredPassword}_${Date.now()}`).toString('base64');
+  res.json({ success: true, token, message: 'Autenticado com sucesso!' });
+});
+
+// Middleware de verificação para rotas administrativas (gerar, aprovar, deletar)
+const checkAdminAuth = (req: Request, res: Response, next: Function) => {
+  const configuredPassword = process.env.ADMIN_PASSWORD || 'primerank2026';
+  const authHeader = req.headers.authorization;
+
+  if (authHeader && authHeader.startsWith('Bearer ')) {
+    return next();
+  }
+
+  // Se não tem header, mas enviou senha direta
+  const directPass = req.headers['x-admin-key'] || req.query.key;
+  if (directPass === configuredPassword) {
+    return next();
+  }
+
+  return res.status(401).json({ success: false, error: 'Acesso restrito. Faça login com sua senha.' });
+};
 
 // ==========================================
 // 1. ENDPOINTS DE TENDÊNCIAS E GERAÇÃO

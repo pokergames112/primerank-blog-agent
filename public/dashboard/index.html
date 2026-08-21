@@ -21,10 +21,13 @@
           <span class="brand-sub">Marketing AI Agent</span>
         </div>
       </div>
-      <div class="header-actions">
+      <div class="header-actions" style="display: flex; gap: 8px; align-items: center;">
         <button id="btn-quick-generate" class="btn btn-gradient-sm">
           <i class="fa-solid fa-wand-magic-sparkles"></i>
           <span>Gerar Artigo</span>
+        </button>
+        <button id="btn-logout" class="btn-icon" title="Bloquear Painel" style="display: none;">
+          <i class="fa-solid fa-lock"></i>
         </button>
       </div>
     </div>
@@ -196,6 +199,25 @@
           <i class="fa-solid fa-bolt"></i> Iniciar Redação IA (+1500 Palavras)
         </button>
       </div>
+    </div>
+  </div>
+
+  <!-- Modal de Bloqueio / Autenticação de Segurança -->
+  <div id="auth-modal" class="modal-backdrop open" style="z-index: 999; background: rgba(8, 12, 20, 0.96); backdrop-filter: blur(20px);">
+    <div class="modal-card modal-compact" style="text-align: center; padding: 28px 24px; border: 1px solid var(--border-gold);">
+      <div style="width: 54px; height: 54px; border-radius: var(--radius-md); background: var(--gradient-gold); color: #000; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin: 0 auto 16px auto; box-shadow: 0 0 20px var(--accent-gold-glow);">
+        <i class="fa-solid fa-shield-halved"></i>
+      </div>
+      <h2 style="font-family: var(--font-display); font-size: 1.3rem; margin-bottom: 6px;">Área Restrita</h2>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">Digite a senha de administrador da Prime Rank para gerenciar e validar artigos.</p>
+      
+      <form id="form-login" onsubmit="handleLoginSubmit(event)">
+        <input type="password" id="input-auth-password" class="form-input" placeholder="Digite sua senha..." style="text-align: center; font-size: 1.1rem; letter-spacing: 2px; margin-bottom: 14px;" required autofocus>
+        <button type="submit" class="btn btn-gradient btn-full" style="padding: 12px;">
+          <i class="fa-solid fa-lock-open"></i> Desbloquear Painel
+        </button>
+      </form>
+      <p id="auth-error-msg" style="color: #f43f5e; font-size: 0.8rem; margin-top: 12px; display: none;"></p>
     </div>
   </div>
 
