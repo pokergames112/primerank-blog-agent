@@ -2,8 +2,9 @@ import fs from 'fs';
 import path from 'path';
 import { BlogPost, StorageDatabase, TrendTopic, PostStatus } from '../types/index.js';
 
-const DATA_DIR = path.resolve(process.cwd(), 'data');
-const DB_FILE = path.join(DATA_DIR, 'blog_storage.json');
+const BUNDLED_DB_FILE = path.resolve(process.cwd(), 'data', 'blog_storage.json');
+const DATA_DIR = process.env.VERCEL ? '/tmp/data' : path.resolve(process.cwd(), 'data');
+const DB_FILE = process.env.VERCEL ? path.join(DATA_DIR, 'blog_storage.json') : BUNDLED_DB_FILE;
 
 const DEFAULT_DB: StorageDatabase = {
   posts: [],
@@ -31,26 +32,43 @@ export class StorageService {
   }
 
   private ensureDataDirectory() {
-    if (!fs.existsSync(DATA_DIR)) {
-      fs.mkdirSync(DATA_DIR, { recursive: true });
-    }
-    if (!fs.existsSync(DB_FILE)) {
-      fs.writeFileSync(DB_FILE, JSON.stringify(DEFAULT_DB, null, 2), 'utf-8');
+    try {
+      if (!fs.existsSync(DATA_DIR)) {
+        fs.mkdirSync(DATA_DIR, { recursive: true });
+      }
+      if (!fs.existsSync(DB_FILE)) {
+        if (fs.existsSync(BUNDLED_DB_FILE)) {
+          const initialData = fs.readFileSync(BUNDLED_DB_FILE, 'utf-8');
+          fs.writeFileSync(DB_FILE, initialData, 'utf-8');
+        } else {
+          fs.writeFileSync(DB_FILE, JSON.stringify(DEFAULT_DB, null, 2), 'utf-8');
+        }
+      }
+    } catch (err) {
+      console.warn('Aviso ao inicializar diretório de dados:', err);
     }
   }
 
   private loadDatabase(): StorageDatabase {
     try {
-      const content = fs.readFileSync(DB_FILE, 'utf-8');
-      return JSON.parse(content);
+      if (fs.existsSync(DB_FILE)) {
+        const content = fs.readFileSync(DB_FILE, 'utf-8');
+        return JSON.parse(content);
+      }
+      if (fs.existsSync(BUNDLED_DB_FILE)) {
+        const content = fs.readFileSync(BUNDLED_DB_FILE, 'utf-8');
+        return JSON.parse(content);
+      }
+      return DEFAULT_DB;
     } catch (err) {
-      console.error('Erro ao carregar banco de dados local. Recriando padrão...', err);
+      console.error('Erro ao carregar banco de dados. Usando padrão...', err);
       return DEFAULT_DB;
     }
   }
 
   private saveDatabase() {
     try {
+      this.ensureDataDirectory();
       fs.writeFileSync(DB_FILE, JSON.stringify(this.db, null, 2), 'utf-8');
     } catch (err) {
       console.error('Erro ao salvar no banco de dados local:', err);
