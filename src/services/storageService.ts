@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import axios from 'axios';
 import { BlogPost, StorageDatabase, TrendTopic, PostStatus } from '../types/index.js';
+import { INITIAL_DATABASE } from '../data/initialData.js';
 
 const CLOUD_STORE_URL = 'https://api.restful-api.dev/objects/ff8081819ff5b11001a0226f71ac66dc';
 const BUNDLED_DB_FILE = path.resolve(process.cwd(), 'data', 'blog_storage.json');
@@ -65,21 +66,19 @@ export class StorageService {
 
   private loadDatabase(): StorageDatabase {
     try {
-      const bundledPath = this.getBundledDbFilePath();
-      let basePosts: BlogPost[] = [];
+      let basePosts: BlogPost[] = INITIAL_DATABASE.posts || [];
       let extraPosts: BlogPost[] = [];
-      let baseDb: StorageDatabase = { ...DEFAULT_DB };
+      let baseDb: StorageDatabase = JSON.parse(JSON.stringify(INITIAL_DATABASE));
 
+      const bundledPath = this.getBundledDbFilePath();
       if (fs.existsSync(bundledPath)) {
         try {
           const content = fs.readFileSync(bundledPath, 'utf-8');
-          baseDb = JSON.parse(content);
-          if (Array.isArray(baseDb.posts)) {
-            basePosts = baseDb.posts;
+          const parsed = JSON.parse(content);
+          if (Array.isArray(parsed.posts) && parsed.posts.length > 0) {
+            basePosts = parsed.posts;
           }
-        } catch (e) {
-          console.error('[STORAGE] Erro ao ler BUNDLED_DB_FILE:', e);
-        }
+        } catch (_) {}
       }
 
       if (fs.existsSync(DB_FILE) && DB_FILE !== bundledPath) {
