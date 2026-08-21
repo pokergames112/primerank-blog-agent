@@ -4,6 +4,7 @@ import { TrendsService } from '../services/trendsService.js';
 import { AiWriterService } from '../services/aiWriterService.js';
 import { SchedulerJob } from '../jobs/scheduler.js';
 import { TelegramService } from '../services/telegramService.js';
+import { WhatsAppService } from '../services/whatsappService.js';
 
 export const apiRouter = Router();
 const storage = StorageService.getInstance();
@@ -11,6 +12,7 @@ const trendsService = TrendsService.getInstance();
 const aiWriter = AiWriterService.getInstance();
 const scheduler = SchedulerJob.getInstance();
 const telegram = TelegramService.getInstance();
+const whatsapp = WhatsAppService.getInstance();
 
 // ==========================================
 // 0. AUTENTICAÇÃO DO PAINEL MOBILE
@@ -78,6 +80,7 @@ apiRouter.post('/generate', async (req: Request, res: Response) => {
       };
       post = await aiWriter.generateArticleFromTrend(trend, customInstructions);
       storage.savePost(post);
+      await whatsapp.notifyNewDraft(post);
       await telegram.notifyNewDraft(post);
     } else {
       post = await scheduler.runTrendDiscoveryAndDrafting();

@@ -3,6 +3,7 @@ import { TrendsService } from '../services/trendsService.js';
 import { AiWriterService } from '../services/aiWriterService.js';
 import { StorageService } from '../services/storageService.js';
 import { TelegramService } from '../services/telegramService.js';
+import { WhatsAppService } from '../services/whatsappService.js';
 
 export class SchedulerJob {
   private static instance: SchedulerJob;
@@ -72,12 +73,14 @@ export class SchedulerJob {
 
       console.log(`[AGENTE] 4. Artigo criado com sucesso! ID: ${post.id} | Palavras: ${post.seo.wordCount} | Status: ${post.status}`);
 
-      // Notifica no celular via Telegram
+      const whatsapp = WhatsAppService.getInstance();
+      await whatsapp.notifyNewDraft(post);
+
       const notifiedTelegram = await telegram.notifyNewDraft(post);
       if (notifiedTelegram) {
         console.log(`[AGENTE] 5. Notificação de validação enviada ao celular pelo Telegram!`);
       } else {
-        console.log(`[AGENTE] 5. Rascunho pronto para validação no Dashboard Web Mobile (http://localhost:3000/dashboard)`);
+        console.log(`[AGENTE] 5. Rascunho pronto para validação no Dashboard Web Mobile`);
       }
 
       return post;
