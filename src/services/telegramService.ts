@@ -133,7 +133,18 @@ export class TelegramService {
         return;
       }
 
-      const host = process.env.HOST || 'http://localhost:3000';
+      const getHostUrl = (): string => {
+        if (process.env.HOST && process.env.HOST.trim() !== '' && !process.env.HOST.includes('localhost')) {
+          return process.env.HOST.replace(/\/$/, '');
+        }
+        if (process.env.VERCEL_URL) {
+          return `https://${process.env.VERCEL_URL.replace(/\/$/, '')}`;
+        }
+        return 'https://primerank-blog-agent.vercel.app';
+      };
+
+      const host = getHostUrl();
+      const sitePostUrl = `https://primerankmarketing.com.br/post.html?slug=${encodeURIComponent(post.slug)}`;
 
       if (action === 'approve') {
         storage.updatePostStatus(postId, 'published', 'Aprovado via celular pelo Telegram');
@@ -142,8 +153,9 @@ export class TelegramService {
           `✅ *ARTIGO PUBLICADO COM SUCESSO!*\n\n` +
           `📌 *Título:* ${post.title}\n` +
           `📝 *Palavras:* ${post.seo.wordCount}\n` +
-          `🔗 *Slug:* \`${post.slug}\`\n` +
-          `🌐 *Disponível na API do Blog:* ${host}/api/blog/posts/${post.slug}`,
+          `🔗 *Slug:* \`${post.slug}\`\n\n` +
+          `🌐 *Ver no Site Oficial:* ${sitePostUrl}\n` +
+          `📱 *Painel de Gestão:* ${host}/dashboard`,
           {
             chat_id: query.message?.chat.id,
             message_id: query.message?.message_id,
@@ -191,7 +203,10 @@ export class TelegramService {
   private async sendApprovalCard(post: BlogPost, chatId: string): Promise<boolean> {
     if (!this.bot) return false;
 
-    const host = process.env.HOST || 'http://localhost:3000';
+    const host = (process.env.HOST && !process.env.HOST.includes('localhost'))
+      ? process.env.HOST.replace(/\/$/, '')
+      : (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL.replace(/\/$/, '')}` : 'https://primerank-blog-agent.vercel.app');
+
     const webReviewUrl = `${host}/dashboard/#review-${post.id}`;
 
     const text =
