@@ -975,6 +975,19 @@
       if (tabId === 'tab-trends') loadTrends();
     }
 
+    function cleanTitle(t) {
+      if (!t) return '';
+      var c = t.replace(/\s+/g, ' ').trim();
+      c = c.replace(/[\:\-\.\?]*\s*como empresas inteligentes.*$/i, '');
+      c = c.replace(/[\:\-\.\?]*\s*como empresas.*$/i, '');
+      c = c.replace(/[\:\-\.\?]*\s*guia completo.*$/i, '');
+      c = c.trim().replace(/[\.\:\-\?]+$/, '');
+      if (c.length > 75) {
+        c = c.slice(0, 72).replace(/\s+[^\s]*$/, '') + '...';
+      }
+      return c;
+    }
+
     async function loadStats() {
       try {
         var res = await fetch('/api/stats');
@@ -1009,6 +1022,7 @@
           var readTime = p.seo && p.seo.readingTimeMinutes ? p.seo.readingTimeMinutes : 8;
           var img = p.featuredImageUrl || 'img/service_blog.jpg';
           var cat = p.category || 'SEO';
+          var displayTitle = cleanTitle(p.title);
 
           html += '<div class="article-card">';
           html += '  <div class="card-img-wrap">';
@@ -1020,7 +1034,7 @@
           html += '      <span>⏱️ ' + readTime + ' min</span>';
           html += '      <span>⚡ IA Prime Rank</span>';
           html += '    </div>';
-          html += '    <h4 class="card-title">' + p.title + '</h4>';
+          html += '    <h4 class="card-title">' + displayTitle + '</h4>';
           html += '    <p class="card-excerpt">' + p.excerpt + '</p>';
           html += '    <div class="card-actions">';
           html += '      <button onclick="previewArticleById(\'' + p.id + '\')" class="btn btn-secondary" style="flex: 1; justify-content: center;"><i class="fa-solid fa-eye"></i> Ler / Editar</button>';
@@ -1054,6 +1068,7 @@
           var date = new Date(p.publishedAt || p.createdAt).toLocaleDateString('pt-BR');
           var readTime = p.seo && p.seo.readingTimeMinutes ? p.seo.readingTimeMinutes : 8;
           var img = p.featuredImageUrl || 'img/service_blog.jpg';
+          var displayTitle = cleanTitle(p.title);
 
           html += '<div class="article-card">';
           html += '  <div class="card-img-wrap">';
@@ -1065,7 +1080,7 @@
           html += '      <span>📅 ' + date + '</span>';
           html += '      <span>⏱️ ' + readTime + ' min</span>';
           html += '    </div>';
-          html += '    <h4 class="card-title">' + p.title + '</h4>';
+          html += '    <h4 class="card-title">' + displayTitle + '</h4>';
           html += '    <p class="card-excerpt">' + p.excerpt + '</p>';
           html += '    <div class="card-actions">';
           html += '      <button onclick="previewArticleById(\'' + p.id + '\')" class="btn btn-secondary" style="flex: 1; justify-content: center;"><i class="fa-solid fa-pen-to-square"></i> Editar</button>';

@@ -7,11 +7,11 @@ export function cleanTitle(rawTitle: string): string {
   let clean = rawTitle.replace(/\s+/g, ' ').trim();
 
   // Remove redundâncias e sufixos repetitivos antigos (como "como empresas inteligentes...")
-  clean = clean.replace(/[\.\:\-]*\s*como empresas inteligentes estão aproveitando.*$/i, '');
-  clean = clean.replace(/[\.\:\-]*\s*como empresas inteligentes.*$/i, '');
-  clean = clean.replace(/[\.\:\-]*\s*guia completo.*$/i, '');
+  clean = clean.replace(/[\:\-\.\?]*\s*como empresas inteligentes.*$/i, '');
+  clean = clean.replace(/[\:\-\.\?]*\s*como empresas.*$/i, '');
+  clean = clean.replace(/[\:\-\.\?]*\s*guia completo.*$/i, '');
 
-  clean = clean.trim().replace(/[\.\:\-]+$/, '');
+  clean = clean.trim().replace(/[\.\:\-\?]+$/, '');
 
   // Limite estrito de 75 caracteres com corte em palavra inteira
   if (clean.length > 75) {
