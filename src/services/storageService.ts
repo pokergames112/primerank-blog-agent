@@ -1,10 +1,9 @@
 import fs from 'fs';
 import path from 'path';
-import axios from 'axios';
 import { BlogPost, StorageDatabase, TrendTopic, PostStatus } from '../types/index.js';
 
-const INITIAL_DATABASE_RAW: StorageDatabase = {
-  posts: [
+function getStaticInitialPosts(): BlogPost[] {
+  return [
     {
       id: "post_1787332276274_4rpnx",
       title: "Como Usar Inteligência Artificial para Escalar Vendas no Google Ads e Meta Ads: Como Empresas Inteligentes Estão Aproveitando Essa Tendência para Escalar Vendas no Google",
@@ -76,7 +75,7 @@ const INITIAL_DATABASE_RAW: StorageDatabase = {
       title: "IA muda regras da busca do Google e transforma o SEO: como as empresas podem ser encontradas agora?",
       subtitle: "Como transformar a nova busca impulsionada por IA no Google em posicionamento estratégico, autoridade de marca e novos clientes para o seu negócio.",
       slug: "ia-muda-regras-da-busca-do-google-e-transforma-o-seo-como-as-empresas-podem-ser-",
-      contentMarkdown: "\n# IA muda regras da busca do Google e transforma o SEO: como as empresas podem ser encontradas agora?\n\nO ecossistema de buscas do Google passa pela sua transformação mais profunda nas últimas duas décadas. Com a expansão do Google Search Generative Experience (SGE), a integração de resumos de Inteligência Artificial diretamente no topo dos resultados e as constantes atualizações de algoritmos focados em experiência (Helpful Content Updates), a forma como os consumidores buscam e tomam decisões de compra mudou radicalmente.\n\nPara empresas que dependem exclusivamente de técnicas antigas de SEO ou de anúncios genéricos, essas mudanças representam perda acelerada de tráfego. No entanto, na metodologia da **Prime Rank Marketing**, essa revolução da IA é encarada como a maior oportunidade dos últimos anos para **dominar o topo das buscas, construir autoridade inquestionável e gerar um fluxo previsível de vendas diárias**.\n\n---\n\n## 1. O Que Mudou no Algoritmo do Google com a Inteligência Artificial\n\nA IA do Google não lê apenas palavras-chave repetidas; ela analisa a **intenção real de busca (Search Intent)**, a profundidade do conteúdo e a experiência comprovada do autor (E-E-A-T: Experiência, Especialidade, Autoridade e Confiabilidade).\n\n- **Resumos Gerativos no Topo:** O Google responde dúvidas diretas com resumos de IA, destacando apenas as marcas que possuem conteúdo técnico aprofundado e citações relevantes.\n- **Fim do Conteúdo Superficial:** Artigos curtos e genéricos foram desindexados. O buscador prioriza conteúdos extensos (+1500 palavras) com análises práticas, dados reais e respostas completas.\n- **Busca Semântica Avançada:** A inteligência artificial compreende sinônimos, contextos de negócios locais e intenções de contratação em tempo real.\n\n---\n\n## 2. O Método Prime Rank para Vencer na Era da Busca por IA\n\nPara garantir que a sua empresa lidere as pesquisas e transforme visitantes em clientes no WhatsApp, aplicamos um roteiro estratégico em 4 pilares:\n\n1. **SEO Semântico & Topical Authority:** Otimizamos o site da sua empresa para cobrir todos os tópicos do seu setor, tornando sua marca a autoridade máxima reconhecida pelo Google.\n2. **Engenharia de Landing Pages Ultrarrápidas:** Páginas leves (Core Web Vitals 90+) projetadas para converter o leitor em um contato imediato no WhatsApp comercial.\n3. **Tráfego Pago de Alta Precisão (Google Ads & Meta Ads):** Anúncios segmentados por intenção de busca para garantir que sua empresa apareça tanto no topo pago quanto no orgânico.\n4. **Rastreamento Avançado de Conversões:** Monitoramento completo via GA4 e Tag Manager para identificar exatamente qual palavra-chave e qual anúncio geram maior lucro real no seu caixa.\n\n---\n\n## Conclusão: Posicione Sua Marca no Novo Google\n\nSe você deseja posicionar a sua empresa no topo das pesquisas, reduzir seu custo por cliente e acelerar suas vendas com segurança, converse agora mesmo com os especialistas da **Prime Rank Marketing**.\n\n> 🚀 [**Solicitar Diagnóstico Estratégico Gratuito no WhatsApp**](https://api.whatsapp.com/send?phone=5581986703728&text=Ol%C3%A1%21+Vim+pelo+Blog+da+Prime+Rank+e+gostaria+de+um+diagn%C3%B3stico+estrat%C3%A9gico+gratuito.)\n",
+      contentMarkdown: "\n# IA muda regras da busca do Google e transforma o SEO: como as empresas podem ser encontradas agora?\n\nO ecossistema de buscas do Google passa pela sua transformação mais profunda nas últimas duas décadas. Com a expansão do Google Search Generative Experience (SGE), a integração de resumos de Inteligência Artificial diretamente no topo dos resultados e as constantes atualizações de algoritmos focados em experiência (Helpful Content Updates), a forma como os consumidores buscam e tomam decisões de compra mudou radicalmente.\n\nPara empresas que dependem exclusivamente de técnicas antigas de SEO ou de anúncios genéricos, essas mudanças representam perda acelerada de tráfego. No entanto, na metodologia da **Prime Rank Marketing**, essa revolução da IA é encarada como a maior oportunidade dos últimos anos para **dominar o topo das buscas, construir autoridade inquestionável e gerar um fluxo previsível de vendas diárias**.\n\n---\n\n## 1. O Que Mudou no Algoritmo do Google com a Inteligência Artificial\n\nA IA do Google não lê apenas palavras-chave repetidas; ela analisa a **intenção real de busca (Search Intent)**, a profundidade do conteúdo e a experiência comprovada do autor (E-E-A-T: Experiência, Especialidade, Autoridade e Confiabilidade).\n\n- **Resumos Gerativos no Topo:** O Google responde dúvidas diretas com resumos de IA, destacando apenas as marcas que possuem conteúdo técnico aprofundado e citações relevantes.\n- **Fim do Conteúdo Superficial:** Artigos curtos e genéricos foram desindexados. O buscador prioriza conteúdos extensos (+1500 palavras) com análises práticas, dados reais e respostas completas.\n- **Busca Semântica Avançada:** A inteligência artificial compreende sinônimos, contexts de negócios locais e intenções de contratação em tempo real.\n\n---\n\n## 2. O Método Prime Rank para Vencer na Era da Busca por IA\n\nPara garantir que a sua empresa lidere as pesquisas e transforme visitantes em clientes no WhatsApp, aplicamos um roteiro estratégico em 4 pilares:\n\n1. **SEO Semântico & Topical Authority:** Otimizamos o site da sua empresa para cobrir todos os tópicos do seu setor, tornando sua marca a autoridade máxima reconhecida pelo Google.\n2. **Engenharia de Landing Pages Ultrarrápidas:** Páginas leves (Core Web Vitals 90+) projetadas para converter o leitor em um contato imediato no WhatsApp comercial.\n3. **Tráfego Pago de Alta Precisão (Google Ads & Meta Ads):** Anúncios segmentados por intenção de busca para garantir que sua empresa apareça tanto no topo pago quanto no orgânico.\n4. **Rastreamento Avançado de Conversões:** Monitoramento completo via GA4 e Tag Manager para identificar exatamente qual palavra-chave e qual anúncio geram maior lucro real no seu caixa.\n\n---\n\n## Conclusão: Posicione Sua Marca no Novo Google\n\nSe você deseja posicionar a sua empresa no topo das pesquisas, reduzir seu custo por cliente e acelerar suas vendas com segurança, converse agora mesmo com os especialistas da **Prime Rank Marketing**.\n\n> 🚀 [**Solicitar Diagnóstico Estratégico Gratuito no WhatsApp**](https://api.whatsapp.com/send?phone=5581986703728&text=Ol%C3%A1%21+Vim+pelo+Blog+da+Prime+Rank+e+gostaria+de+um+diagn%C3%B3stico+estrat%C3%A9gico+gratuito.)\n",
       excerpt: "A evolução da busca com Inteligência Artificial no Google transforma o SEO. Descubra como ajustar o posicionamento da sua empresa para capturar tráfego qualificado e converter leitores em clientes.",
       featuredImageUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80",
       imageAlt: "IA muda regras da busca do Google por Prime Rank Marketing",
@@ -174,19 +173,9 @@ const INITIAL_DATABASE_RAW: StorageDatabase = {
       updatedAt: "2026-08-21T03:29:35.825Z",
       publishedAt: "2026-08-21T03:29:35.827Z"
     }
-  ],
-  trendsHistory: [],
-  systemSettings: {
-    autoGenerate: true,
-    telegramEnabled: true
-  }
-};
-
-function getInitialDatabase(): StorageDatabase {
-  return JSON.parse(JSON.stringify(INITIAL_DATABASE_RAW));
+  ];
 }
 
-const CLOUD_STORE_URL = 'https://api.restful-api.dev/objects/ff8081819ff5b11001a0226f71ac66dc';
 const BUNDLED_DB_FILE = path.resolve(process.cwd(), 'data', 'blog_storage.json');
 const DATA_DIR = process.env.VERCEL ? '/tmp/data' : path.resolve(process.cwd(), 'data');
 const DB_FILE = process.env.VERCEL ? path.join(DATA_DIR, 'blog_storage.json') : BUNDLED_DB_FILE;
@@ -194,12 +183,10 @@ const DB_FILE = process.env.VERCEL ? path.join(DATA_DIR, 'blog_storage.json') : 
 export class StorageService {
   private static instance: StorageService;
   private db: StorageDatabase;
-  private isSyncing = false;
 
   private constructor() {
     this.ensureDataDirectory();
     this.db = this.loadDatabase();
-    this.syncFromCloud();
   }
 
   public static getInstance(): StorageService {
@@ -214,88 +201,57 @@ export class StorageService {
       if (!fs.existsSync(DATA_DIR)) {
         fs.mkdirSync(DATA_DIR, { recursive: true });
       }
-      if (fs.existsSync(DB_FILE)) {
-        try {
-          const content = fs.readFileSync(DB_FILE, 'utf-8');
-          const parsed = JSON.parse(content);
-          if (!parsed || !Array.isArray(parsed.posts) || parsed.posts.length === 0) {
-            fs.writeFileSync(DB_FILE, JSON.stringify(getInitialDatabase(), null, 2), 'utf-8');
-          }
-        } catch (_) {
-          fs.writeFileSync(DB_FILE, JSON.stringify(getInitialDatabase(), null, 2), 'utf-8');
-        }
-      } else {
-        fs.writeFileSync(DB_FILE, JSON.stringify(getInitialDatabase(), null, 2), 'utf-8');
-      }
     } catch (err) {
       console.warn('Aviso ao inicializar diretório de dados:', err);
     }
   }
 
-  private getBundledDbFilePath(): string {
-    const cwdPath = path.resolve(process.cwd(), 'data', 'blog_storage.json');
-    if (fs.existsSync(cwdPath)) return cwdPath;
-
-    const altPath = path.join(process.cwd(), '..', 'data', 'blog_storage.json');
-    if (fs.existsSync(altPath)) return altPath;
-
-    return BUNDLED_DB_FILE;
-  }
-
   private loadDatabase(): StorageDatabase {
-    try {
-      const initialDb = getInitialDatabase();
-      const initialPosts = initialDb.posts || [];
-      let filePosts: BlogPost[] = [];
+    const base = getStaticInitialPosts();
+    let filePosts: BlogPost[] = [];
 
-      if (fs.existsSync(DB_FILE)) {
-        try {
-          const content = fs.readFileSync(DB_FILE, 'utf-8');
-          const tmpDb = JSON.parse(content);
-          if (Array.isArray(tmpDb.posts)) {
-            filePosts = tmpDb.posts;
-          }
-        } catch (_) {}
-      }
-
-      const postMap = new Map<string, BlogPost>();
-      initialPosts.forEach((p) => {
-        if (p && p.id) postMap.set(p.id, p);
-      });
-      filePosts.forEach((p) => {
-        if (p && p.id) {
-          if (postMap.has(p.id)) {
-            const existing = postMap.get(p.id)!;
-            const validStatus = (p.status && p.status.trim().length > 0) ? p.status : (existing.status || 'published');
-            const validPublishedAt = p.publishedAt || existing.publishedAt || new Date().toISOString();
-            postMap.set(p.id, {
-              ...existing,
-              ...p,
-              status: validStatus as PostStatus,
-              publishedAt: validPublishedAt,
-            });
-          } else if (p.title && (p.contentMarkdown || p.excerpt)) {
-            postMap.set(p.id, p);
-          }
+    if (fs.existsSync(DB_FILE)) {
+      try {
+        const content = fs.readFileSync(DB_FILE, 'utf-8');
+        const tmpDb = JSON.parse(content);
+        if (Array.isArray(tmpDb.posts)) {
+          filePosts = tmpDb.posts;
         }
-      });
-
-      initialDb.posts = Array.from(postMap.values())
-        .map((p) => ({
-          ...p,
-          status: (p.status && p.status.trim().length > 0 ? p.status : (p.publishedAt ? 'published' : 'pending_approval')) as PostStatus,
-        }))
-        .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-
-      return initialDb;
-    } catch (err) {
-      console.error('Erro ao carregar banco de dados local. Usando padrão...', err);
-      return getInitialDatabase();
+      } catch (_) {}
     }
-  }
 
-  private async syncFromCloud() {
-    return;
+    const postMap = new Map<string, BlogPost>();
+    base.forEach((p) => postMap.set(p.id, { ...p }));
+
+    filePosts.forEach((p) => {
+      if (p && p.id) {
+        if (postMap.has(p.id)) {
+          const existing = postMap.get(p.id)!;
+          postMap.set(p.id, {
+            ...existing,
+            ...p,
+            status: (p.status || existing.status || 'published') as PostStatus,
+            publishedAt: p.publishedAt || existing.publishedAt,
+          });
+        } else if (p.title && (p.contentMarkdown || p.excerpt)) {
+          postMap.set(p.id, {
+            ...p,
+            status: (p.status || 'pending_approval') as PostStatus,
+          });
+        }
+      }
+    });
+
+    const posts = Array.from(postMap.values()).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+
+    return {
+      posts,
+      trendsHistory: [],
+      systemSettings: {
+        autoGenerate: true,
+        telegramEnabled: true
+      }
+    };
   }
 
   private saveLocalDatabase() {
@@ -314,41 +270,35 @@ export class StorageService {
   // --- Posts Methods ---
 
   public getAllPosts(): BlogPost[] {
-    try {
-      const initialPosts = Array.isArray(INITIAL_DATABASE_RAW.posts) ? INITIAL_DATABASE_RAW.posts : [];
-      let memoryPosts: BlogPost[] = [];
-      if (this.db && Array.isArray(this.db.posts)) {
-        memoryPosts = this.db.posts;
-      }
+    const base = getStaticInitialPosts();
+    let memoryPosts: BlogPost[] = [];
 
-      const postMap = new Map<string, BlogPost>();
-      initialPosts.forEach((p) => {
-        if (p && p.id) {
-          postMap.set(p.id, {
-            ...p,
-            status: (p.status || 'published') as PostStatus,
-            publishedAt: p.publishedAt || p.createdAt || new Date().toISOString(),
-          });
-        }
-      });
-
-      memoryPosts.forEach((p) => {
-        if (p && p.id && (p.title || p.contentMarkdown)) {
-          const existing = postMap.get(p.id);
-          postMap.set(p.id, {
-            ...(existing || {}),
-            ...p,
-            status: (p.status || existing?.status || 'published') as PostStatus,
-            publishedAt: p.publishedAt || existing?.publishedAt || new Date().toISOString(),
-          });
-        }
-      });
-
-      return Array.from(postMap.values()).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-    } catch (err) {
-      console.error('Erro em getAllPosts, retornando padrao estatico:', err);
-      return Array.isArray(INITIAL_DATABASE_RAW.posts) ? INITIAL_DATABASE_RAW.posts : [];
+    if (this.db && Array.isArray(this.db.posts)) {
+      memoryPosts = this.db.posts;
     }
+
+    const postMap = new Map<string, BlogPost>();
+    base.forEach((p) => postMap.set(p.id, { ...p }));
+
+    memoryPosts.forEach((p) => {
+      if (p && p.id) {
+        if (postMap.has(p.id)) {
+          const existing = postMap.get(p.id)!;
+          postMap.set(p.id, {
+            ...existing,
+            ...p,
+            status: (p.status || existing.status || 'published') as PostStatus,
+          });
+        } else if (p.title && (p.contentMarkdown || p.excerpt)) {
+          postMap.set(p.id, {
+            ...p,
+            status: (p.status || 'pending_approval') as PostStatus,
+          });
+        }
+      }
+    });
+
+    return Array.from(postMap.values()).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
   }
 
   public getPostsByStatus(status: PostStatus): BlogPost[] {
@@ -369,6 +319,9 @@ export class StorageService {
   }
 
   public savePost(post: BlogPost): BlogPost {
+    if (!this.db || !Array.isArray(this.db.posts)) {
+      this.db = this.loadDatabase();
+    }
     const existingIndex = this.db.posts.findIndex((p) => p.id === post.id);
     post.updatedAt = new Date().toISOString();
 
@@ -384,10 +337,6 @@ export class StorageService {
 
   public async updatePostStatus(id: string, status: PostStatus, notes?: string): Promise<BlogPost | null> {
     let post = this.getPostById(id);
-    if (!post) {
-      await this.syncFromCloud();
-      post = this.getPostById(id);
-    }
     if (!post) return null;
 
     post.status = status;
@@ -404,14 +353,13 @@ export class StorageService {
       post.validationNotes = notes;
     }
 
-    await this.saveDatabase();
+    this.savePost(post);
     return post;
   }
 
   public async deletePost(id: string): Promise<boolean> {
-    let post = this.getPostById(id);
-    if (!post) {
-      await this.syncFromCloud();
+    if (!this.db || !Array.isArray(this.db.posts)) {
+      this.db = this.loadDatabase();
     }
     const initialLen = this.db.posts.length;
     this.db.posts = this.db.posts.filter((p) => p.id !== id);
@@ -425,24 +373,17 @@ export class StorageService {
   // --- Trends Methods ---
 
   public getRecentTrends(limit = 20): TrendTopic[] {
+    if (!this.db || !Array.isArray(this.db.trendsHistory)) return [];
     return this.db.trendsHistory.slice(0, limit);
   }
 
   public saveTrends(trends: TrendTopic[]) {
+    if (!this.db || !Array.isArray(this.db.trendsHistory)) {
+      this.db = this.loadDatabase();
+    }
     const existingIds = new Set(this.db.trendsHistory.map((t) => t.id));
     const newTrends = trends.filter((t) => !existingIds.has(t.id));
     this.db.trendsHistory = [...newTrends, ...this.db.trendsHistory].slice(0, 100);
-    this.saveDatabase();
-  }
-
-  // --- System Settings ---
-
-  public getSettings() {
-    return this.db.systemSettings;
-  }
-
-  public updateSettings(settings: Partial<StorageDatabase['systemSettings']>) {
-    this.db.systemSettings = { ...this.db.systemSettings, ...settings };
     this.saveDatabase();
   }
 }
