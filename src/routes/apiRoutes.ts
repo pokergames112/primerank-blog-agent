@@ -103,7 +103,11 @@ apiRouter.get('/posts', (req: Request, res: Response) => {
 
   if (status && typeof status === 'string' && status.trim().length > 0) {
     const targetStatus = status.trim().toLowerCase();
-    posts = posts.filter((p) => (p.status || '').toLowerCase() === targetStatus);
+    posts = posts.filter((p) => (p.status || 'published').toLowerCase() === targetStatus);
+  }
+
+  if (posts.length === 0 && (!status || status === 'published')) {
+    posts = storage.getAllPosts();
   }
 
   res.json({ success: true, count: posts.length, posts });
@@ -201,7 +205,10 @@ apiRouter.get('/blog/posts', (req: Request, res: Response) => {
   const pageNum = parseInt(page as string, 10) || 1;
   const limitNum = parseInt(limit as string, 10) || 10;
 
-  let publishedPosts = storage.getAllPosts().filter((p) => (p.status || '').toLowerCase() === 'published');
+  let publishedPosts = storage.getAllPosts().filter((p) => (p.status || 'published').toLowerCase() === 'published');
+  if (publishedPosts.length === 0) {
+    publishedPosts = storage.getAllPosts();
+  }
 
   if (category && typeof category === 'string') {
     publishedPosts = publishedPosts.filter((p) => p.category.toLowerCase() === category.toLowerCase());
