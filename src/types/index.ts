@@ -65,13 +65,13 @@ export interface BlogPost {
     role: string;
     avatarUrl?: string;
   };
-  cta: {
+  cta?: {
     heading: string;
     text: string;
     buttonLabel: string;
     buttonUrl: string;
   };
-  faqs: FaqItem[];
+  faqs?: FaqItem[];
   createdAt: string;
   updatedAt: string;
   approvedAt?: string;

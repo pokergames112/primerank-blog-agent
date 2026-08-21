@@ -3,6 +3,7 @@ import path from 'path';
 import OpenAI from 'openai';
 import axios from 'axios';
 import { cleanTitle } from './storageService.js';
+import { BlogPost, TrendTopic, FaqItem } from '../types/index.js';
 
 interface BrandProfile {
   agencyName: string;
