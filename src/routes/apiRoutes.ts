@@ -5,6 +5,13 @@ import { AiWriterService } from '../services/aiWriterService.js';
 import { SchedulerJob } from '../jobs/scheduler.js';
 import { TelegramService } from '../services/telegramService.js';
 
+export const apiRouter = Router();
+const storage = StorageService.getInstance();
+const trendsService = TrendsService.getInstance();
+const aiWriter = AiWriterService.getInstance();
+const scheduler = SchedulerJob.getInstance();
+const telegram = TelegramService.getInstance();
+
 // ==========================================
 // 0. AUTENTICAÇÃO DO PAINEL MOBILE
 // ==========================================
