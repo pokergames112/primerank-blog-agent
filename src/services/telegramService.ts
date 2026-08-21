@@ -144,7 +144,8 @@ export class TelegramService {
       };
 
       const host = getHostUrl();
-      const sitePostUrl = `https://primerankmarketing.com.br/post.html?slug=${encodeURIComponent(post.slug)}`;
+      const baseUrl = process.env.SITE_URL || 'https://pokergames112.github.io/primerankmarketing.com.br';
+      const sitePostUrl = `${baseUrl.replace(/\/$/, '')}/post.html?slug=${encodeURIComponent(post.slug)}`;
 
       if (action === 'approve') {
         storage.updatePostStatus(postId, 'published', 'Aprovado via celular pelo Telegram');
