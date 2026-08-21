@@ -11,8 +11,8 @@ export function getCleanInitialPosts(): BlogPost[] {
       slug: "como-usar-inteligncia-artificial-para-escalar-vendas-no-google-ads-e-meta-ads-co",
       contentMarkdown: "# Como Usar Inteligência Artificial para Escalar Vendas no Google Ads e Meta Ads\n\nO mercado digital brasileiro evolui em velocidade recorde. Diariamente, novas tecnologias, inteligência artificial e atualizações nos algoritmos dos mecanismos de busca criam novos comportamentos de consumo e novos padrões de tomada de decisão. Recentemente, a pauta **\"Como Usar Inteligência Artificial para Escalar Vendas no Google Ads e Meta Ads\"** alcançou destaque expressivo nas buscas do Google, chamando a atenção de gestores, empresários e líderes de mercado.\n\nPara empresas que atuam de forma amadora, uma tendência em alta é encarada apenas como uma novidade passageira. No entanto, na metodologia de **Growth e Performance da Prime Rank Marketing**, cada movimento de alta demanda representa uma oportunidade de ouro para **capturar tráfego altamente qualificado, construir autoridade inquestionável no seu segmento e gerar um fluxo previsível de vendas diárias**.\n\nNeste guia completo e aprofundado, você vai entender os bastidores dessa tendência, o impacto direto no comportamento de compra do seu público e o passo a passo prático para transformar essa atenção do mercado em contratos assinados e faturamento real para o seu negócio.",
       excerpt: "A alta recente de buscas por Como Usar Inteligência Artificial para Escalar Vendas no Google Ads e Meta Ads revela uma oportunidade para marcas que desejam se posicionar no topo do Google e converter atenção em clientes reais.",
-      featuredImageUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80",
-      imageAlt: "Guia Estratégico sobre Como Usar Inteligência Artificial",
+      featuredImageUrl: "https://images.unsplash.com/photo-1677442136019-21780efad99a?auto=format&fit=crop&w=1200&q=80&sig=como-usar-ia-no-ads",
+      imageAlt: "Guia Estratégico sobre Como Usar Inteligência Artificial no Google e Meta Ads",
       status: "published",
       trendSource: {
         topic: "Como Usar Inteligência Artificial para Escalar Vendas no Google Ads e Meta Ads",
@@ -44,7 +44,7 @@ export function getCleanInitialPosts(): BlogPost[] {
       slug: "ia-muda-regras-da-busca-do-google-e-transforma-o-seo-como-as-empresas-podem-ser-",
       contentMarkdown: "# IA muda regras da busca do Google e transforma o SEO: como as empresas podem ser encontradas agora?\n\nO ecossistema de buscas do Google passa pela sua transformação mais profunda nas últimas duas décadas. Com a expansão do Google Search Generative Experience (SGE), a integração de resumos de Inteligência Artificial diretamente no topo dos resultados e as constantes atualizações de algoritmos focados em experiência, a forma como os consumidores buscam mudou radicalmente.",
       excerpt: "A evolução da busca com Inteligência Artificial no Google transforma o SEO. Descubra como ajustar o posicionamento da sua empresa para capturar tráfego qualificado e converter leitores em clientes.",
-      featuredImageUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80",
+      featuredImageUrl: "https://images.unsplash.com/photo-1571786256017-aee7a0c009b6?auto=format&fit=crop&w=1200&q=80&sig=ia-muda-regras-do-google",
       imageAlt: "IA muda regras da busca do Google por Prime Rank Marketing",
       status: "published",
       trendSource: {
@@ -77,7 +77,7 @@ export function getCleanInitialPosts(): BlogPost[] {
       slug: "como-dominar-a-1-pagina-do-google-na-regiao-metropolitana-do-recife-como-empresa",
       contentMarkdown: "# Como Dominar a 1ª Página do Google na Região Metropolitana do Recife\n\nO mercado digital brasileiro evolui em velocidade recorde. Diariamente, novas tecnologias, inteligência artificial e atualizações nos algoritmos dos mecanismos de busca criam novos comportamentos de consumo e novos padrões de tomada de decisão. Recentemente, a pauta **\"Como Dominar a 1ª Página do Google na Região Metropolitana do Recife\"** alcançou destaque expressivo nas buscas do Google.",
       excerpt: "A alta recente de buscas por Como Dominar a 1ª Página do Google na Região Metropolitana do Recife revela uma oportunidade para marcas que desejam se posicionar no topo do Google e converter atenção em clientes reais.",
-      featuredImageUrl: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80",
+      featuredImageUrl: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80&sig=dominar-recife-google",
       imageAlt: "Guia Estratégico sobre Como Dominar a 1ª Página do Google na Região Metropolitana do Recife",
       status: "published",
       trendSource: {

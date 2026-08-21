@@ -403,21 +403,31 @@ Detalhes / Notícias Relacionadas: "${trend.trafficSnippet || 'Tendência de alt
 Ângulo Editorial Sugerido: "${trend.suggestedAngle || ''}"
 ${customInstructions ? `INSTRUÇÕES ADICIONAIS DO USUÁRIO: ${customInstructions}` : ''}
 
-DIRETRIZES OBRIGATÓRIAS:
-1. O texto final precisa ser um artigo longo, técnico e rico (+1500 palavras).
-2. Estrutura do artigo:
+DIRETRIZES DE COPYWRITING & CONVERSÃO DA PRIME RANK:
+1. O texto final precisa ser um artigo longo, altamente persuasivo, técnico e rico (+1500 palavras).
+2. CHAMADAS DE AÇÃO CONTEXTUAIS (CTAs):
+   - Sempre que for PERTINENTE AO ASSUNTO (Tráfego Pago, Google Ads, Meta Ads, SEO, Sites/Landing Pages ou Consultoria de Vendas), insira caixas de destaque em markdown (formato de cotação \`>\`) com links estratégicos apontando para o site ou serviço correspondente da Prime Rank Marketing.
+   - Exemplos de chamadas contextuais:
+     * Para Tráfego Pago / Anúncios:
+       > 💡 **Dica de Performance:** Se você deseja acelerar a captação de clientes qualificados com anúncios de alto ROI, conheça a [**Gestão de Tráfego Pago da Prime Rank**](https://primerankmarketing.com.br/#servicos) ou peça um diagnóstico no [**WhatsApp (81) 9 8670-3728**](https://api.whatsapp.com/send?phone=5581986703728&text=Ol%C3%A1%21+Vim+pelo+Blog+da+Prime+Rank+e+gostaria+de+um+diagn%C3%B3stico+estrat%C3%A9gico+gratuito.).
+     * Para SEO / Ranqueamento Google:
+       > 📈 **Quer dominar a 1ª página do Google?** Conheça as estratégias de [**SEO & Topical Authority da Prime Rank**](https://primerankmarketing.com.br/#servicos) para gerar tráfego orgânico perpétuo.
+     * Para Sites / Landing Pages de Alta Conversão:
+       > 🚀 **Sua página não está convertendo?** A Prime Rank desenvolve [**Landing Pages Ultrarrápidas**](https://primerankmarketing.com.br/#servicos) calibradas para transformar visitantes em reuniões agendadas.
+   - SE NÃO FIZER SENTIDO NO TRECHO, NÃO FORÇE. Use apenas quando se encaixar perfeitamente no fluxo de leitura.
+3. Estrutura Obrigatória do Artigo:
    - H1: Título magnético e focado em intenção de busca (Search Intent).
-   - Introdução cativante que contextualiza a tendência do momento e por que ela afeta diretamente empresários, gestores e o mercado.
-   - Sumário de tópicos abordados.
+   - Introdução cativante que contextualiza a tendência do momento e o impacto real nos negócios.
+   - Sumário de tópicos abordados com links de âncora.
    - H2: O que está acontecendo com "${trend.title}" e quais são os dados do mercado.
    - H2: O Impacto nos Negócios e no Comportamento do Consumidor.
    - H2: Análise Técnica: Onde a maioria das empresas erra ao ignorar essa mudança.
-   - H2: Guia Prático Passo a Passo (H3 para cada etapa: Diagnóstico, Estratégia de SEO, Tráfego Pago, Otimização de Conversão).
+   - H2: Guia Prático Passo a Passo (H3 para cada etapa: Diagnóstico, SEO, Tráfego Pago, Conversão).
    - H2: Tabela Comparativa em Markdown: Abordagem Tradicional vs. Abordagem de Alta Performance da Prime Rank Marketing.
-   - H2: Como a Prime Rank Marketing Pode Ajudar Seu Negócio a Dominar Esse Cenário (apresentar nossos serviços de SEO, Gestão de Anúncios e Sites Rápidos).
+   - H2: Como a Prime Rank Marketing Pode Ajudar Seu Negócio a Dominar Esse Cenário (serviços de SEO, Tráfego Pago e Sites Rápidos).
    - H2: Perguntas Frequentes (FAQ) detalhadas.
-   - Conclusão + CTA irresistível convidando o leitor para um diagnóstico gratuito em primerankmarketing.com.br.
-3. Tom: Confiante, estratégico, autoridade de mercado, sem clichês vazios. Use termos como ROI, ROAS, tráfego qualificado, intenção de busca, autoridade de domínio.
+   - Conclusão + CTA irresistível final convidando o leitor para o WhatsApp oficial (81) 9 8670-3728 ou site da Prime Rank.
+4. Tom de Voz: Confiante, altamente estratégico, autoridade indiscutível de mercado, persuasivo. Use métricas reais (ROI, ROAS, CPA, CAC, CRO, CTR, Topical Authority).
 `;
   }
 
@@ -507,6 +517,8 @@ O público que pesquisa sobre temas ligados a **"${topic}"** não está apenas p
 
 Para capturar esse cliente no momento exato em que ele toma a decisão, sua marca precisa dominar tanto os resultados orgânicos quanto os links patrocinados. É essa integração que constrói a percepção de que sua empresa é a líder absoluta da categoria.
 
+> 💡 **Dica de Performance:** Se você deseja acelerar a captação de clientes qualificados com anúncios de alto ROI, conheça o serviço de [**Gestão de Tráfego Pago da Prime Rank**](https://primerankmarketing.com.br/#servicos) ou peça uma análise de conta gratuita no [**WhatsApp (81) 9 8670-3728**](https://api.whatsapp.com/send?phone=5581986703728&text=Ol%C3%A1%21+Vim+pelo+Blog+da+Prime+Rank+e+gostaria+de+um+diagn%C3%B3stico+estrat%C3%A9gico+gratuito.).
+
 ---
 
 <a id="riscos"></a>
@@ -532,11 +544,15 @@ Não focamos em termos genéricos com alto volume e baixa conversão. Mapeamos a
 ### Etapa 2: Engenharia de Landing Pages Ultrarrápidas com Foco em CRO (Conversion Rate Optimization)
 Desenvolvemos páginas leves com tempo de carregamento inferior a 1,5 segundos no celular. Cada elemento visual, título, depoimento e formulário é projetado estrategicamente para direcionar o visitante a iniciar uma conversa no WhatsApp.
 
+> 🚀 **Sua página não está convertendo?** A Prime Rank desenvolve [**Landing Pages Ultrarrápidas**](https://primerankmarketing.com.br/#servicos) calibradas para transformar visitantes em reuniões agendadas.
+
 ### Etapa 3: Campanhas de Tráfego Pago de Alta Precisão (Google Ads & Meta Ads)
 Estruturamos anúncios segmentados por intenção de busca na Rede de Pesquisa do Google e campanhas dinâmicas de remarketing no Instagram e Facebook, garantindo que o lead veja sua empresa repetidamente até fechar negócio.
 
 ### Etapa 4: Construção de Autoridade Orgânica e SEO Técnico Contínuo
 Otimizamos a arquitetura do seu site com dados estruturados (Schema Markup), hierarquia semântica rigorosa (H1, H2, H3), otimização de Core Web Vitals e conteúdo aprofundado para conquistar as primeiras colocações do Google de forma sustentável.
+
+> 📈 **Quer dominar a 1ª página do Google?** Conheça as estratégias de [**SEO & Topical Authority da Prime Rank**](https://primerankmarketing.com.br/#servicos) para gerar tráfego orgânico perpétuo.
 
 ### Etapa 5: Rastreamento Avançado de Conversões e Inteligência de Vendas
 Implementamos mensuração precisa via Google Analytics 4, Tag Manager e API de Conversões do Meta. Cada clique, mensagem no WhatsApp e fechamento de contrato é monitorado para identificar exatamente qual anúncio gera maior lucro real.
@@ -665,56 +681,64 @@ Se você deseja posicionar a sua empresa no topo das pesquisas, reduzir seu cust
       .replace(/^-+|-+$/g, '');
   }
 
-    private getFeaturedImageUrl(topic: string): string {
+  private getFeaturedImageUrl(topic: string): string {
     const t = topic.toLowerCase();
-    
-    // Temas de Inteligência Artificial e Automação
+    const slugSeed = this.slugify(topic);
+    let imagesPool: string[] = [];
+
+    // Temas de IA, Automação, Bots e ChatGPT
     if (t.includes('ia') || t.includes('inteligência artificial') || t.includes('inteligencia artificial') || t.includes('chat') || t.includes('robô') || t.includes('robo') || t.includes('bot') || t.includes('gpt')) {
-      const aiImages = [
+      imagesPool = [
         'https://images.unsplash.com/photo-1677442136019-21780efad99a?auto=format&fit=crop&w=1200&q=80',
         'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80',
-        'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1200&q=80'
+        'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1200&q=80',
+        'https://images.unsplash.com/photo-1655720828018-edd2daac9349?auto=format&fit=crop&w=1200&q=80',
+        'https://images.unsplash.com/photo-1675557009875-436f707f7899?auto=format&fit=crop&w=1200&q=80'
       ];
-      return aiImages[Math.abs(this.hashString(topic)) % aiImages.length];
     }
-    
-    // Temas de Tráfego Pago, Anúncios, Meta Ads, Google Ads
-    if (t.includes('tráfego') || t.includes('trafego') || t.includes('ads') || t.includes('anúncio') || t.includes('anuncio') || t.includes('cpa') || t.includes('roi') || t.includes('meta') || t.includes('facebook') || t.includes('instagram')) {
-      const adsImages = [
+    // Temas de Tráfego Pago, Anúncios, Google Ads, Meta Ads & ROI
+    else if (t.includes('tráfego') || t.includes('trafego') || t.includes('ads') || t.includes('anúncio') || t.includes('anuncio') || t.includes('cpa') || t.includes('roi') || t.includes('meta') || t.includes('facebook') || t.includes('instagram')) {
+      imagesPool = [
         'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80',
         'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80',
-        'https://images.unsplash.com/photo-1533750349088-cd871a92f312?auto=format&fit=crop&w=1200&q=80'
+        'https://images.unsplash.com/photo-1533750349088-cd871a92f312?auto=format&fit=crop&w=1200&q=80',
+        'https://images.unsplash.com/photo-1557838923-2985c318be48?auto=format&fit=crop&w=1200&q=80',
+        'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?auto=format&fit=crop&w=1200&q=80'
       ];
-      return adsImages[Math.abs(this.hashString(topic)) % adsImages.length];
     }
-
-    // Temas de SEO, Google, 1ª Página, Busca Orgânica
-    if (t.includes('seo') || t.includes('google') || t.includes('busca') || t.includes('página') || t.includes('pagina') || t.includes('ranquear') || t.includes('ranking')) {
-      const seoImages = [
+    // Temas de SEO, Google, Busca Orgânica, 1ª Página
+    else if (t.includes('seo') || t.includes('google') || t.includes('busca') || t.includes('página') || t.includes('pagina') || t.includes('ranquear') || t.includes('ranking')) {
+      imagesPool = [
         'https://images.unsplash.com/photo-1571786256017-aee7a0c009b6?auto=format&fit=crop&w=1200&q=80',
         'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=1200&q=80',
-        'https://images.unsplash.com/photo-1562577309-4932fdd64cd1?auto=format&fit=crop&w=1200&q=80'
+        'https://images.unsplash.com/photo-1562577309-4932fdd64cd1?auto=format&fit=crop&w=1200&q=80',
+        'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=1200&q=80',
+        'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=80'
       ];
-      return seoImages[Math.abs(this.hashString(topic)) % seoImages.length];
     }
-
-    // Temas de Vendas, WhatsApp, Conversão
-    if (t.includes('whatsapp') || t.includes('venda') || t.includes('conversão') || t.includes('conversao') || t.includes('lead') || t.includes('cliente')) {
-      const salesImages = [
+    // Temas de Sites, Landing Pages, Velocidade & CRO
+    else if (t.includes('site') || t.includes('landing') || t.includes('page') || t.includes('velocidade') || t.includes('cro') || t.includes('design')) {
+      imagesPool = [
+        'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1200&q=80',
+        'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80',
+        'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?auto=format&fit=crop&w=1200&q=80'
+      ];
+    }
+    // Temas de Vendas, WhatsApp Comercial & Growth
+    else {
+      imagesPool = [
         'https://images.unsplash.com/photo-1556742049-0a67e5572263?auto=format&fit=crop&w=1200&q=80',
         'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=80',
-        'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80'
+        'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80',
+        'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80',
+        'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80'
       ];
-      return salesImages[Math.abs(this.hashString(topic)) % salesImages.length];
     }
 
-    // Padrão: Imagens Corporativas Modernas de Alta Resolução
-    const defaultImages = [
-      'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80'
-    ];
-    return defaultImages[Math.abs(this.hashString(topic)) % defaultImages.length];
+    const index = Math.abs(this.hashString(topic)) % imagesPool.length;
+    const selectedUrl = imagesPool[index];
+
+    return `${selectedUrl}&sig=${encodeURIComponent(slugSeed)}`;
   }
 
   private hashString(str: string): number {
