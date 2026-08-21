@@ -1,9 +1,9 @@
 ﻿{
-  "version": 2,
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/index.ts" },
-    { "source": "/dashboard/(.*)", "destination": "/public/dashboard/" },
-    { "source": "/(.*)", "destination": "/api/index.ts" }
+    {
+      "source": "/(.*)",
+      "destination": "/api"
+    }
   ],
   "crons": [
     {
