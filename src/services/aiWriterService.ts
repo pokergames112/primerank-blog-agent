@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import OpenAI from 'openai';
 import axios from 'axios';
-import { BlogPost, TrendTopic, SEOMetadata, FaqItem } from '../types/index.js';
+import { cleanTitle } from './storageService.js';
 
 interface BrandProfile {
   agencyName: string;
@@ -435,15 +435,7 @@ DIRETRIZES DE COPYWRITING & CONVERSÃO DA PRIME RANK:
    * Limpa e formata títulos para ficarem concisos, elegantes e no tamanho ideal (máx 75 caracteres)
    */
   private cleanAndFormatTitle(rawTitle: string): string {
-    let clean = rawTitle.replace(/\s+/g, ' ').trim();
-    // Remove redundâncias de texto antigo
-    clean = clean.replace(/:\s*como empresas inteligentes estão aproveitando.*$/i, '');
-    clean = clean.replace(/:\s*como empresas inteligentes.*$/i, '');
-
-    if (clean.length > 75) {
-      clean = clean.slice(0, 72).replace(/\s+[^\s]*$/, '');
-    }
-    return clean;
+    return cleanTitle(rawTitle);
   }
 
   /**

@@ -2,6 +2,25 @@ import fs from 'fs';
 import path from 'path';
 import { BlogPost, StorageDatabase, TrendTopic, PostStatus } from '../types/index.js';
 
+export function cleanTitle(rawTitle: string): string {
+  if (!rawTitle) return '';
+  let clean = rawTitle.replace(/\s+/g, ' ').trim();
+
+  // Remove redundâncias e sufixos repetitivos antigos (como "como empresas inteligentes...")
+  clean = clean.replace(/[\.\:\-]*\s*como empresas inteligentes estão aproveitando.*$/i, '');
+  clean = clean.replace(/[\.\:\-]*\s*como empresas inteligentes.*$/i, '');
+  clean = clean.replace(/[\.\:\-]*\s*guia completo.*$/i, '');
+
+  clean = clean.trim().replace(/[\.\:\-]+$/, '');
+
+  // Limite estrito de 75 caracteres com corte em palavra inteira
+  if (clean.length > 75) {
+    clean = clean.slice(0, 72).replace(/\s+[^\s]*$/, '') + '...';
+  }
+
+  return clean;
+}
+
 export function getCleanInitialPosts(): BlogPost[] {
   return [
     {
@@ -151,13 +170,14 @@ export class StorageService {
     }
 
     const postMap = new Map<string, BlogPost>();
-    base.forEach((p) => postMap.set(p.id, { ...p, status: 'published' }));
+    base.forEach((p) => postMap.set(p.id, { ...p, title: cleanTitle(p.title), status: 'published' }));
 
     filePosts.forEach((p) => {
       if (p && p.id && !postMap.has(p.id)) {
         if (p.title && (p.contentMarkdown || p.excerpt)) {
           postMap.set(p.id, {
             ...p,
+            title: cleanTitle(p.title),
             status: (p.status || 'pending_approval') as PostStatus,
           });
         }
@@ -200,20 +220,21 @@ export class StorageService {
     }
 
     const postMap = new Map<string, BlogPost>();
-    base.forEach((p) => postMap.set(p.id, { ...p, status: 'published' }));
+    base.forEach((p) => postMap.set(p.id, { ...p, title: cleanTitle(p.title), status: 'published' }));
 
     memoryPosts.forEach((p) => {
       if (p && p.id && !postMap.has(p.id)) {
         if (p.title && (p.contentMarkdown || p.excerpt)) {
           postMap.set(p.id, {
             ...p,
+            title: cleanTitle(p.title),
             status: (p.status || 'pending_approval') as PostStatus,
           });
         }
       }
     });
 
-    return Array.from(postMap.values()).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    return Array.from(postMap.values()).map((p) => ({ ...p, title: cleanTitle(p.title) })).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
   }
 
   public getPostsByStatus(status: PostStatus): BlogPost[] {
