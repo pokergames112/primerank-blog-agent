@@ -157,8 +157,12 @@ export class StorageService {
     return post;
   }
 
-  public updatePostStatus(id: string, status: PostStatus, notes?: string): BlogPost | null {
-    const post = this.getPostById(id);
+  public async updatePostStatus(id: string, status: PostStatus, notes?: string): Promise<BlogPost | null> {
+    let post = this.getPostById(id);
+    if (!post) {
+      await this.syncFromCloud();
+      post = this.getPostById(id);
+    }
     if (!post) return null;
 
     post.status = status;
@@ -175,7 +179,7 @@ export class StorageService {
       post.validationNotes = notes;
     }
 
-    this.saveDatabase();
+    await this.saveDatabase();
     return post;
   }
 

@@ -121,7 +121,7 @@ apiRouter.get('/posts/:id', (req: Request, res: Response) => {
 });
 
 // Atualizar status (Validação Mobile: Aprovar / Rejeitar / Publicar)
-apiRouter.patch('/posts/:id/status', (req: Request, res: Response) => {
+apiRouter.patch('/posts/:id/status', async (req: Request, res: Response) => {
   const { id } = req.params;
   const { status, notes } = req.body;
 
@@ -129,7 +129,7 @@ apiRouter.patch('/posts/:id/status', (req: Request, res: Response) => {
     return res.status(400).json({ success: false, error: 'Status inválido' });
   }
 
-  const updated = storage.updatePostStatus(id, status, notes);
+  const updated = await storage.updatePostStatus(id, status, notes);
   if (!updated) {
     return res.status(404).json({ success: false, error: 'Post não encontrado' });
   }
