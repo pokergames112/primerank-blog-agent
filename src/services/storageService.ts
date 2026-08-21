@@ -72,16 +72,20 @@ export class StorageService {
 
   private async syncFromCloud() {
     try {
-      const res = await axios.get(CLOUD_STORE_URL, { timeout: 3000 });
+      const res = await axios.get(CLOUD_STORE_URL, { timeout: 4000 });
       if (res.data && res.data.data && Array.isArray(res.data.data.posts)) {
-        if (res.data.data.posts.length > 0 || this.db.posts.length === 0) {
-          this.db.posts = res.data.data.posts;
+        const cloudPosts: BlogPost[] = res.data.data.posts;
+        if (cloudPosts.length > 0) {
+          const postMap = new Map<string, BlogPost>();
+          this.db.posts.forEach((p) => postMap.set(p.id, p));
+          cloudPosts.forEach((p) => postMap.set(p.id, p));
+          this.db.posts = Array.from(postMap.values()).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
           this.saveLocalDatabase();
           console.log('[STORAGE] Sincronizado com a nuvem com sucesso. Total posts:', this.db.posts.length);
         }
       }
     } catch (err) {
-      console.warn('[STORAGE] Usando banco de dados local (nuvem offline ou timeout)');
+      console.warn('[STORAGE] Usando banco de dados local/bundle (nuvem offline ou timeout)');
     }
   }
 
@@ -89,6 +93,11 @@ export class StorageService {
     try {
       this.ensureDataDirectory();
       fs.writeFileSync(DB_FILE, JSON.stringify(this.db, null, 2), 'utf-8');
+      if (process.env.VERCEL && fs.existsSync(BUNDLED_DB_FILE)) {
+        try {
+          fs.writeFileSync(BUNDLED_DB_FILE, JSON.stringify(this.db, null, 2), 'utf-8');
+        } catch (_) {}
+      }
     } catch (err) {
       console.error('Erro ao salvar localmente:', err);
     }
