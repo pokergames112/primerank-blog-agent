@@ -266,7 +266,14 @@ export class StorageService {
         if (p && p.id) {
           if (postMap.has(p.id)) {
             const existing = postMap.get(p.id)!;
-            postMap.set(p.id, { ...existing, ...p });
+            const validStatus = (p.status && p.status.trim().length > 0) ? p.status : (existing.status || 'published');
+            const validPublishedAt = p.publishedAt || existing.publishedAt || new Date().toISOString();
+            postMap.set(p.id, {
+              ...existing,
+              ...p,
+              status: validStatus as PostStatus,
+              publishedAt: validPublishedAt,
+            });
           } else if (p.title && (p.contentMarkdown || p.excerpt)) {
             postMap.set(p.id, p);
           }
@@ -276,7 +283,7 @@ export class StorageService {
       initialDb.posts = Array.from(postMap.values())
         .map((p) => ({
           ...p,
-          status: (p.status || (p.publishedAt ? 'published' : 'pending_approval')) as PostStatus,
+          status: (p.status && p.status.trim().length > 0 ? p.status : (p.publishedAt ? 'published' : 'pending_approval')) as PostStatus,
         }))
         .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
