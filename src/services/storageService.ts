@@ -6,7 +6,7 @@ export function getCleanInitialPosts(): BlogPost[] {
   return [
     {
       id: "post_1787332276274_4rpnx",
-      title: "Como Usar Inteligência Artificial para Escalar Vendas no Google Ads e Meta Ads: Como Empresas Inteligentes Estão Aproveitando Essa Tendência para Escalar Vendas no Google",
+      title: "Como Usar Inteligência Artificial para Escalar Vendas no Google Ads e Meta Ads",
       subtitle: "Como transformar a tendência em crescimento real, autoridade no Google e conversões previsíveis para o seu negócio.",
       slug: "como-usar-inteligncia-artificial-para-escalar-vendas-no-google-ads-e-meta-ads-co",
       contentMarkdown: "# Como Usar Inteligência Artificial para Escalar Vendas no Google Ads e Meta Ads\n\nO mercado digital brasileiro evolui em velocidade recorde. Diariamente, novas tecnologias, inteligência artificial e atualizações nos algoritmos dos mecanismos de busca criam novos comportamentos de consumo e novos padrões de tomada de decisão. Recentemente, a pauta **\"Como Usar Inteligência Artificial para Escalar Vendas no Google Ads e Meta Ads\"** alcançou destaque expressivo nas buscas do Google, chamando a atenção de gestores, empresários e líderes de mercado.\n\nPara empresas que atuam de forma amadora, uma tendência em alta é encarada apenas como uma novidade passageira. No entanto, na metodologia de **Growth e Performance da Prime Rank Marketing**, cada movimento de alta demanda representa uma oportunidade de ouro para **capturar tráfego altamente qualificado, construir autoridade inquestionável no seu segmento e gerar um fluxo previsível de vendas diárias**.\n\nNeste guia completo e aprofundado, você vai entender os bastidores dessa tendência, o impacto direto no comportamento de compra do seu público e o passo a passo prático para transformar essa atenção do mercado em contratos assinados e faturamento real para o seu negócio.",
@@ -19,7 +19,7 @@ export function getCleanInitialPosts(): BlogPost[] {
         discoveredAt: "2026-08-21T17:11:16.274Z"
       },
       seo: {
-        metaTitle: "Como Usar Inteligência Artificial para Escalar Vendas no...",
+        metaTitle: "Como Usar IA para Escalar Vendas no Google e Meta Ads | Prime Rank",
         metaDescription: "Descubra o impacto de Como Usar Inteligência Artificial para Escalar Vendas no Google Ads e Meta Ads no comportamento do consumidor...",
         slug: "como-usar-inteligncia-artificial-para-escalar-vendas-no-google-ads-e-meta-ads-co",
         primaryKeyword: "Como Usar Inteligência Artificial para Escalar Vendas no Google Ads e Meta Ads",
@@ -39,10 +39,10 @@ export function getCleanInitialPosts(): BlogPost[] {
     },
     {
       id: "post_1787330789567_tlawo",
-      title: "IA muda regras da busca do Google e transforma o SEO: como as empresas podem ser encontradas agora?",
+      title: "IA Muda Regras do Google e Transforma o SEO: Como Ranquear Agora?",
       subtitle: "Como transformar a nova busca impulsionada por IA no Google em posicionamento estratégico, autoridade de marca e novos clientes para o seu negócio.",
       slug: "ia-muda-regras-da-busca-do-google-e-transforma-o-seo-como-as-empresas-podem-ser-",
-      contentMarkdown: "# IA muda regras da busca do Google e transforma o SEO: como as empresas podem ser encontradas agora?\n\nO ecossistema de buscas do Google passa pela sua transformação mais profunda nas últimas duas décadas. Com a expansão do Google Search Generative Experience (SGE), a integração de resumos de Inteligência Artificial diretamente no topo dos resultados e as constantes atualizações de algoritmos focados em experiência, a forma como os consumidores buscam mudou radicalmente.",
+      contentMarkdown: "# IA Muda Regras do Google e Transforma o SEO: Como Ranquear Agora?\n\nO ecossistema de buscas do Google passa pela sua transformação mais profunda nas últimas duas décadas. Com a expansão do Google Search Generative Experience (SGE), a integração de resumos de Inteligência Artificial diretamente no topo dos resultados e as constantes atualizações de algoritmos focados em experiência, a forma como os consumidores buscam mudou radicalmente.",
       excerpt: "A evolução da busca com Inteligência Artificial no Google transforma o SEO. Descubra como ajustar o posicionamento da sua empresa para capturar tráfego qualificado e converter leitores em clientes.",
       featuredImageUrl: "https://images.unsplash.com/photo-1571786256017-aee7a0c009b6?auto=format&fit=crop&w=1200&q=80&sig=ia-muda-regras-do-google",
       imageAlt: "IA muda regras da busca do Google por Prime Rank Marketing",
@@ -52,7 +52,7 @@ export function getCleanInitialPosts(): BlogPost[] {
         discoveredAt: "2026-08-21T13:40:00.000Z"
       },
       seo: {
-        metaTitle: "IA muda regras da busca do Google e transforma o SEO",
+        metaTitle: "IA Muda Regras do Google e Transforma o SEO | Prime Rank",
         metaDescription: "Entenda como a Inteligência Artificial altera os resultados de busca do Google e como a Prime Rank posiciona sua empresa no topo das pesquisas.",
         slug: "ia-muda-regras-da-busca-do-google-e-transforma-o-seo-como-as-empresas-podem-ser-",
         primaryKeyword: "IA muda regras da busca do Google",
@@ -72,7 +72,7 @@ export function getCleanInitialPosts(): BlogPost[] {
     },
     {
       id: "post_1787282975825_ep7et",
-      title: "Como Dominar a 1ª Página do Google na Região Metropolitana do Recife: Como Empresas Inteligentes Estão Aproveitando Essa Tendência para Escalar Vendas no Google",
+      title: "Como Dominar a 1ª Página do Google na Região Metropolitana do Recife",
       subtitle: "Como transformar a tendência em crescimento real, autoridade no Google e conversões previsíveis para o seu negócio.",
       slug: "como-dominar-a-1-pagina-do-google-na-regiao-metropolitana-do-recife-como-empresa",
       contentMarkdown: "# Como Dominar a 1ª Página do Google na Região Metropolitana do Recife\n\nO mercado digital brasileiro evolui em velocidade recorde. Diariamente, novas tecnologias, inteligência artificial e atualizações nos algoritmos dos mecanismos de busca criam novos comportamentos de consumo e novos padrões de tomada de decisão. Recentemente, a pauta **\"Como Dominar a 1ª Página do Google na Região Metropolitana do Recife\"** alcançou destaque expressivo nas buscas do Google.",

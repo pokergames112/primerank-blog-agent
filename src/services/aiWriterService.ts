@@ -156,7 +156,7 @@ export class AiWriterService {
     }
 
     // Calibração e validação rigorosa dos critérios SEO
-    const finalTitle = suggestedTitle.length >= 10 ? suggestedTitle : `${trend.title}: Guia Completo de Marketing`;
+    const finalTitle = this.cleanAndFormatTitle(suggestedTitle || trend.title);
     const finalMetaTitle = this.calibrateMetaTitle(metaTitle || finalTitle);
     const finalMetaDesc = this.calibrateMetaDescription(metaDescription || excerpt || finalTitle);
     const finalSlug = this.slugify(finalTitle);
@@ -432,6 +432,21 @@ DIRETRIZES DE COPYWRITING & CONVERSÃO DA PRIME RANK:
   }
 
   /**
+   * Limpa e formata títulos para ficarem concisos, elegantes e no tamanho ideal (máx 75 caracteres)
+   */
+  private cleanAndFormatTitle(rawTitle: string): string {
+    let clean = rawTitle.replace(/\s+/g, ' ').trim();
+    // Remove redundâncias de texto antigo
+    clean = clean.replace(/:\s*como empresas inteligentes estão aproveitando.*$/i, '');
+    clean = clean.replace(/:\s*como empresas inteligentes.*$/i, '');
+
+    if (clean.length > 75) {
+      clean = clean.slice(0, 72).replace(/\s+[^\s]*$/, '');
+    }
+    return clean;
+  }
+
+  /**
    * Gerador Estruturado de Alta Densidade (+1500 palavras) caso nenhuma chave externa esteja conectada
    */
   public generateHighDensityPost(trend: TrendTopic, customInstructions?: string): {
@@ -443,11 +458,11 @@ DIRETRIZES DE COPYWRITING & CONVERSÃO DA PRIME RANK:
     contentMarkdown: string;
     faqs: FaqItem[];
   } {
-    const topic = trend.title;
-    const title = `${topic}: Como Empresas Inteligentes Estão Aproveitando Essa Tendência para Escalar Vendas no Google`;
-    const metaTitle = this.calibrateMetaTitle(`${topic}: Guia Estratégico de SEO e Vendas | Prime Rank`);
-    const metaDescription = this.calibrateMetaDescription(`Descubra o impacto de ${topic} no comportamento do consumidor e o método da Prime Rank Marketing para transformar tráfego em vendas reais.`);
-    const excerpt = `A alta recente de buscas por "${topic}" revela uma oportunidade para marcas que desejam se posicionar no topo do Google e converter atenção em clientes reais. Veja o roteiro estratégico.`;
+    const topic = trend.title.trim();
+    const title = this.cleanAndFormatTitle(topic);
+    const metaTitle = this.calibrateMetaTitle(`${title} | Prime Rank`);
+    const metaDescription = this.calibrateMetaDescription(`Descubra o impacto de ${title} no comportamento do consumidor e o método da Prime Rank Marketing para transformar tráfego em vendas.`);
+    const excerpt = `A alta recente de buscas por "${title}" revela uma oportunidade para marcas que desejam se posicionar no topo do Google e converter atenção em clientes reais.`;
 
     const faqs: FaqItem[] = [
       {
