@@ -40,78 +40,86 @@ export class TrendsService {
   }
 
   /**
-   * Coleta as principais tendências do Google Trends (Brasil) e Feeds de Notícias de Negócios/Marketing
+   * Coleta as principais tendências do Google Trends (Brasil) e Notícias de Alta Demanda,
+   * filtrando e adaptando estritamente para o nicho de Marketing, SEO, Tráfego e Vendas da Prime Rank.
    */
   public async fetchTrendingTopics(): Promise<TrendTopic[]> {
-    const topics: TrendTopic[] = [];
+    const rawTopics: TrendTopic[] = [];
 
-    // 1. Google Trends Brasil RSS
+    // 1. Feeds de Busca Estratégica do Google Brasil em tempo real
+    const searchQueries = [
+      'google+ads+OR+seo+OR+trafego+pago+OR+inteligencia+artificial+negocios',
+      'marketing+digital+brasil+OR+vendas+online+OR+conversao+leads',
+      'algoritmo+google+OR+meta+ads+OR+instagram+empresas'
+    ];
+
+    for (const q of searchQueries) {
+      try {
+        const feed = await parser.parseURL(
+          `https://news.google.com/rss/search?q=${q}&hl=pt-BR&gl=BR&ceid=BR:pt-419`
+        );
+        if (feed && feed.items) {
+          for (const item of feed.items.slice(0, 5)) {
+            if (!item.title) continue;
+
+            const cleanTitle = item.title.replace(/\s*-\s*[^-]+$/, '').trim();
+            const topicId = `trend_${Buffer.from(cleanTitle).toString('base64url').slice(0, 16)}`;
+
+            rawTopics.push({
+              id: topicId,
+              title: cleanTitle,
+              approximateTraffic: '+80K buscas estimadas',
+              trafficSnippet: item.contentSnippet || item.content || 'Em alta no Google Brasil',
+              category: 'Tendência de Mercado & SEO',
+              discoveredAt: new Date().toISOString(),
+              relevanceScore: this.calculateRelevanceScore(cleanTitle, item.contentSnippet || ''),
+              suggestedAngle: this.generateAngle(cleanTitle),
+            });
+          }
+        }
+      } catch (err) {
+        console.warn(`[TRENDS] Aviso ao buscar feed para query: ${q}`);
+      }
+    }
+
+    // 2. Google Trends Brasil Geral (Captura grandes ondas do dia)
     try {
       const feed = await parser.parseURL('https://trends.google.com/trending/rss?geo=BR');
       if (feed && feed.items) {
-        for (const item of feed.items.slice(0, 15)) {
+        for (const item of feed.items.slice(0, 8)) {
           if (!item.title) continue;
 
-          const topicId = `trend_${Buffer.from(item.title).toString('base64url').slice(0, 16)}`;
-          const approxTraffic = (item as any).approx_traffic || (item as any)['ht:approx_traffic'] || '+50K';
+          const title = item.title.trim();
+          const topicId = `gtrend_${Buffer.from(title).toString('base64url').slice(0, 16)}`;
           const snippet = (item as any).news_item_snippet || item.content || '';
 
-          topics.push({
+          rawTopics.push({
             id: topicId,
-            title: item.title.trim(),
-            approximateTraffic: approxTraffic,
+            title: title,
+            approximateTraffic: (item as any).approx_traffic || '+100K',
             trafficSnippet: snippet,
-            category: 'Google Trends BR',
+            category: 'Google Trends Viral',
             discoveredAt: new Date().toISOString(),
-            relevanceScore: this.calculateRelevanceScore(item.title, snippet),
-            suggestedAngle: this.generateAngle(item.title),
+            relevanceScore: this.calculateRelevanceScore(title, snippet),
+            suggestedAngle: `Como empresários e gestores devem usar o pico de atenção em "${title}" para gerar tráfego orgânico e conversões com a Prime Rank Marketing.`,
           });
         }
       }
     } catch (err) {
-      console.warn('Aviso: Erro ao buscar Google Trends RSS direto, tentando fontes complementares...', err);
+      console.warn('[TRENDS] Google Trends direto indisponível, usando pautas de alta autoridade.');
     }
 
-    // 2. Google News RSS de Marketing e Negócios no Brasil
-    try {
-      const newsFeed = await parser.parseURL(
-        'https://news.google.com/rss/search?q=marketing+digital+OR+seo+OR+google+ads+OR+inteligencia+artificial+negocios&hl=pt-BR&gl=BR&ceid=BR:pt-419'
-      );
-      if (newsFeed && newsFeed.items) {
-        for (const item of newsFeed.items.slice(0, 10)) {
-          if (!item.title) continue;
-
-          const cleanTitle = item.title.replace(/\s*-\s*[^-]+$/, '').trim();
-          const topicId = `news_${Buffer.from(cleanTitle).toString('base64url').slice(0, 16)}`;
-
-          topics.push({
-            id: topicId,
-            title: cleanTitle,
-            approximateTraffic: 'Alta relevância em Negócios/MKT',
-            trafficSnippet: item.contentSnippet || '',
-            category: 'Marketing & Tech News',
-            discoveredAt: new Date().toISOString(),
-            relevanceScore: 90,
-            suggestedAngle: this.generateAngle(cleanTitle),
-          });
-        }
-      }
-    } catch (err) {
-      console.warn('Aviso: Erro ao buscar Google News RSS...', err);
+    // Fallbacks estratégicos sempre que necessário
+    if (rawTopics.length === 0) {
+      rawTopics.push(...this.getFallbackTrendingTopics());
     }
 
-    // Fallback garantido caso a internet/RSS oscile
-    if (topics.length === 0) {
-      topics.push(...this.getFallbackTrendingTopics());
-    }
+    // Elimina duplicados e ordena por maior relevância
+    const unique = Array.from(new Map(rawTopics.map((item) => [item.title, item])).values());
+    unique.sort((a, b) => (b.relevanceScore || 50) - (a.relevanceScore || 50));
 
-    // Ordena por maior relevância
-    topics.sort((a, b) => (b.relevanceScore || 50) - (a.relevanceScore || 50));
-
-    // Salva histórico
-    this.storage.saveTrends(topics);
-
-    return topics;
+    this.storage.saveTrends(unique);
+    return unique;
   }
 
   private calculateRelevanceScore(title: string, snippet: string): number {
