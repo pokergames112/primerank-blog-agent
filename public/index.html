@@ -639,9 +639,32 @@
         justify-content: center;
       }
       .modal-box {
-        padding: 18px 14px;
-        max-height: 95vh;
+        padding: 18px 14px 0 14px;
+        max-height: 94vh;
         border-radius: 16px;
+        display: flex;
+        flex-direction: column;
+      }
+      #modal-view-container, #modal-edit-container {
+        flex: 1;
+        overflow-y: auto;
+      }
+      #modal-actions {
+        position: sticky;
+        bottom: 0;
+        background: #110729;
+        z-index: 100;
+        padding: 12px 0 16px 0;
+        margin-top: 10px;
+        border-top: 1px solid var(--border-glow);
+        width: 100%;
+        box-shadow: 0 -12px 24px rgba(17, 7, 41, 0.98);
+      }
+      .edit-input, .edit-textarea {
+        font-size: 16px !important; /* Previne zoom forçado em dispositivos iOS/Android */
+      }
+      .edit-textarea {
+        min-height: 180px;
       }
       .articles-grid {
         grid-template-columns: 1fr;
@@ -1157,11 +1180,20 @@
       }
     }
 
+    function getAuthHeaders() {
+      var headers = { 'Content-Type': 'application/json' };
+      var token = localStorage.getItem('primerank_admin_token');
+      if (token) {
+        headers['Authorization'] = 'Bearer ' + token;
+      }
+      return headers;
+    }
+
     async function updateStatus(id, status) {
       try {
         var res = await fetch('/api/posts/' + id + '/status', {
           method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
+          headers: getAuthHeaders(),
           body: JSON.stringify({ status: status })
         });
         var data = await res.json();
@@ -1170,6 +1202,8 @@
           loadPublished();
           loadStats();
           closeModal();
+        } else {
+          alert('Erro ao atualizar status: ' + (data.error || 'Não autorizado.'));
         }
       } catch (err) {
         alert('Erro ao atualizar status.');
@@ -1183,7 +1217,8 @@
 
       try {
         var res = await fetch('/api/posts/' + id, {
-          method: 'DELETE'
+          method: 'DELETE',
+          headers: getAuthHeaders()
         });
         var data = await res.json();
         if (data.success) {
@@ -1244,10 +1279,10 @@
         document.getElementById('edit-post-content').value = post.contentMarkdown || post.markdown || '';
 
         modalActions.innerHTML = `
-          <button onclick="saveEditedPost()" class="btn btn-primary" style="flex: 1; justify-content: center;">
+          <button id="btn-save-post" onclick="saveEditedPost()" class="btn btn-primary" style="flex: 1; justify-content: center; padding: 12px 16px; font-size: 0.95rem;">
             <i class="fa-solid fa-floppy-disk"></i> Salvar Alterações
           </button>
-          <button onclick="toggleEditMode()" class="btn btn-secondary">Cancelar</button>
+          <button onclick="toggleEditMode()" class="btn btn-secondary" style="padding: 12px 16px; font-size: 0.95rem;">Cancelar</button>
         `;
       } else {
         viewContainer.style.display = 'block';
@@ -1278,6 +1313,7 @@
     async function saveEditedPost() {
       if (!currentEditingPost) return;
 
+      var btn = document.getElementById('btn-save-post');
       var updatedTitle = document.getElementById('edit-post-title').value.trim();
       var updatedCategory = document.getElementById('edit-post-category').value.trim();
       var updatedImage = document.getElementById('edit-post-image').value.trim();
@@ -1289,7 +1325,12 @@
         return;
       }
 
-      var wordCount = updatedContent.trim().split(/\\s+/).length;
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Salvando...';
+      }
+
+      var wordCount = updatedContent.trim().split(/\s+/).length;
       var readingTime = Math.ceil(wordCount / 200);
 
       var payload = {
@@ -1307,7 +1348,7 @@
       try {
         var res = await fetch('/api/posts/' + currentEditingPost.id, {
           method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
+          headers: getAuthHeaders(),
           body: JSON.stringify(payload)
         });
         var data = await res.json();
@@ -1320,10 +1361,15 @@
           loadPublished();
           loadStats();
         } else {
-          alert('Erro ao salvar: ' + (data.error || 'Erro desconhecido.'));
+          alert('Erro ao salvar: ' + (data.error || 'Erro desconhecido ou não autorizado.'));
         }
       } catch (err) {
         alert('Erro ao conectar com a API para salvar.');
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Salvar Alterações';
+        }
       }
     }
 
@@ -1333,7 +1379,18 @@
       isEditMode = false;
     }
 
+    function checkHashRoute() {
+      var hash = window.location.hash;
+      if (hash && hash.indexOf('#review-') !== -1) {
+        var postId = hash.replace('#review-', '');
+        if (postId) {
+          previewArticleById(postId);
+        }
+      }
+    }
+
     loadStats();
+    checkHashRoute();
   </script>
 </body>
 </html>
