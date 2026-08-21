@@ -1,1 +1,8 @@
-﻿{"posts":[],"trendsHistory":[],"systemSettings":{"autoGenerate":true,"telegramEnabled":true}}
+{
+  "posts": [],
+  "trendsHistory": [],
+  "systemSettings": {
+    "autoGenerate": true,
+    "telegramEnabled": true
+  }
+}
