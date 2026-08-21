@@ -111,7 +111,12 @@ export class StorageService {
 
   public getAllPosts(): BlogPost[] {
     this.db = this.loadDatabase();
-    return this.db.posts.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    return this.db.posts
+      .map((p) => ({
+        ...p,
+        status: (p.status || (p.publishedAt ? 'published' : 'pending_approval')) as PostStatus,
+      }))
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
   }
 
   public getPostsByStatus(status: PostStatus): BlogPost[] {
