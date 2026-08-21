@@ -52,36 +52,38 @@ export class StorageService {
 
   private loadDatabase(): StorageDatabase {
     try {
-      const baseDb = getInitialDatabase();
-      const basePosts: BlogPost[] = baseDb.posts || [];
-      let extraPosts: BlogPost[] = [];
+      const initialDb = getInitialDatabase();
+      const initialPosts = initialDb.posts || [];
+      let filePosts: BlogPost[] = [];
 
       if (fs.existsSync(DB_FILE)) {
         try {
           const content = fs.readFileSync(DB_FILE, 'utf-8');
           const tmpDb = JSON.parse(content);
-          if (Array.isArray(tmpDb.posts) && tmpDb.posts.length > 0) {
-            extraPosts = tmpDb.posts;
+          if (Array.isArray(tmpDb.posts)) {
+            filePosts = tmpDb.posts;
           }
         } catch (_) {}
       }
 
       const postMap = new Map<string, BlogPost>();
-      basePosts.forEach((p) => {
+      initialPosts.forEach((p) => {
         if (p && p.id) postMap.set(p.id, p);
       });
-      extraPosts.forEach((p) => {
-        if (p && p.id) postMap.set(p.id, p);
+      filePosts.forEach((p) => {
+        if (p && p.id && (p.title || p.contentMarkdown)) {
+          postMap.set(p.id, p);
+        }
       });
 
-      baseDb.posts = Array.from(postMap.values())
+      initialDb.posts = Array.from(postMap.values())
         .map((p) => ({
           ...p,
           status: (p.status || (p.publishedAt ? 'published' : 'pending_approval')) as PostStatus,
         }))
         .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
-      return baseDb;
+      return initialDb;
     } catch (err) {
       console.error('Erro ao carregar banco de dados local. Usando padrão...', err);
       return getInitialDatabase();
@@ -89,19 +91,16 @@ export class StorageService {
   }
 
   private async syncFromCloud() {
-    // Sincronização em nuvem desativada para proteger a integridade dos artigos reais do repositório
     return;
   }
 
   private saveLocalDatabase() {
     try {
+      if (!this.db || !Array.isArray(this.db.posts) || this.db.posts.length === 0) {
+        return;
+      }
       this.ensureDataDirectory();
       fs.writeFileSync(DB_FILE, JSON.stringify(this.db, null, 2), 'utf-8');
-      if (process.env.VERCEL && fs.existsSync(BUNDLED_DB_FILE)) {
-        try {
-          fs.writeFileSync(BUNDLED_DB_FILE, JSON.stringify(this.db, null, 2), 'utf-8');
-        } catch (_) {}
-      }
     } catch (err) {
       console.error('Erro ao salvar localmente:', err);
     }
