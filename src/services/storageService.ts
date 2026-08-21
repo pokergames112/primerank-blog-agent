@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { BlogPost, StorageDatabase, TrendTopic, PostStatus } from '../types/index.js';
 
-function getCleanInitialPosts(): BlogPost[] {
+export function getCleanInitialPosts(): BlogPost[] {
   return [
     {
       id: "post_1787332276274_4rpnx",

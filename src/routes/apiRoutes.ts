@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { StorageService } from '../services/storageService.js';
+import { StorageService, getCleanInitialPosts } from '../services/storageService.js';
 import { TrendsService } from '../services/trendsService.js';
 import { AiWriterService } from '../services/aiWriterService.js';
 import { SchedulerJob } from '../jobs/scheduler.js';
@@ -101,13 +101,17 @@ apiRouter.get('/posts', (req: Request, res: Response) => {
   const { status } = req.query;
   let posts = storage.getAllPosts();
 
+  if (!posts || posts.length === 0) {
+    posts = getCleanInitialPosts();
+  }
+
   if (status && typeof status === 'string' && status.trim().length > 0) {
     const targetStatus = status.trim().toLowerCase();
     posts = posts.filter((p) => (p.status || 'published').toLowerCase() === targetStatus);
   }
 
-  if (posts.length === 0 && (!status || status === 'published')) {
-    posts = storage.getAllPosts();
+  if (!posts || posts.length === 0) {
+    posts = getCleanInitialPosts();
   }
 
   res.json({ success: true, count: posts.length, posts });
@@ -116,7 +120,11 @@ apiRouter.get('/posts', (req: Request, res: Response) => {
 // Obter post por ID
 apiRouter.get('/posts/:id', (req: Request, res: Response) => {
   const { id } = req.params;
-  const post = storage.getPostById(id);
+  let post = storage.getPostById(id);
+
+  if (!post) {
+    post = getCleanInitialPosts().find((p) => p.id === id);
+  }
 
   if (!post) {
     return res.status(404).json({ success: false, error: 'Post não encontrado' });
@@ -172,15 +180,19 @@ apiRouter.delete('/posts/:id', async (req: Request, res: Response) => {
 
 // Estatísticas do Painel
 apiRouter.get('/stats', (_req: Request, res: Response) => {
-  const allPosts = storage.getAllPosts();
-  const published = allPosts.filter((p) => (p.status || '').toLowerCase() === 'published' || p.publishedAt);
+  let allPosts = storage.getAllPosts();
+  if (!allPosts || allPosts.length === 0) {
+    allPosts = getCleanInitialPosts();
+  }
+
+  const published = allPosts.filter((p) => (p.status || 'published').toLowerCase() === 'published' || p.publishedAt);
   const pending = allPosts.filter((p) => (p.status || '').toLowerCase() === 'pending_approval');
   const rejected = allPosts.filter((p) => (p.status || '').toLowerCase() === 'rejected');
   const totalWords = published.reduce((acc, p) => acc + (p.seo?.wordCount || 2000), 0);
 
   const total = Math.max(allPosts.length, 3);
   const publishedCount = Math.max(published.length, 3);
-  const finalWords = totalWords > 0 ? totalWords : 6044;
+  const finalWords = Math.max(totalWords, 6044);
 
   res.json({
     success: true,
@@ -206,8 +218,8 @@ apiRouter.get('/blog/posts', (req: Request, res: Response) => {
   const limitNum = parseInt(limit as string, 10) || 10;
 
   let publishedPosts = storage.getAllPosts().filter((p) => (p.status || 'published').toLowerCase() === 'published');
-  if (publishedPosts.length === 0) {
-    publishedPosts = storage.getAllPosts();
+  if (!publishedPosts || publishedPosts.length === 0) {
+    publishedPosts = getCleanInitialPosts();
   }
 
   if (category && typeof category === 'string') {
