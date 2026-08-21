@@ -300,9 +300,6 @@ export class StorageService {
 
   private saveLocalDatabase() {
     try {
-      if (!this.db || !Array.isArray(this.db.posts) || this.db.posts.length === 0) {
-        return;
-      }
       this.ensureDataDirectory();
       fs.writeFileSync(DB_FILE, JSON.stringify(this.db, null, 2), 'utf-8');
     } catch (err) {
@@ -317,17 +314,46 @@ export class StorageService {
   // --- Posts Methods ---
 
   public getAllPosts(): BlogPost[] {
-    this.db = this.loadDatabase();
-    return this.db.posts
-      .map((p) => ({
-        ...p,
-        status: (p.status || (p.publishedAt ? 'published' : 'pending_approval')) as PostStatus,
-      }))
-      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    try {
+      const initialPosts = Array.isArray(INITIAL_DATABASE_RAW.posts) ? INITIAL_DATABASE_RAW.posts : [];
+      let memoryPosts: BlogPost[] = [];
+      if (this.db && Array.isArray(this.db.posts)) {
+        memoryPosts = this.db.posts;
+      }
+
+      const postMap = new Map<string, BlogPost>();
+      initialPosts.forEach((p) => {
+        if (p && p.id) {
+          postMap.set(p.id, {
+            ...p,
+            status: (p.status || 'published') as PostStatus,
+            publishedAt: p.publishedAt || p.createdAt || new Date().toISOString(),
+          });
+        }
+      });
+
+      memoryPosts.forEach((p) => {
+        if (p && p.id && (p.title || p.contentMarkdown)) {
+          const existing = postMap.get(p.id);
+          postMap.set(p.id, {
+            ...(existing || {}),
+            ...p,
+            status: (p.status || existing?.status || 'published') as PostStatus,
+            publishedAt: p.publishedAt || existing?.publishedAt || new Date().toISOString(),
+          });
+        }
+      });
+
+      return Array.from(postMap.values()).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    } catch (err) {
+      console.error('Erro em getAllPosts, retornando padrao estatico:', err);
+      return Array.isArray(INITIAL_DATABASE_RAW.posts) ? INITIAL_DATABASE_RAW.posts : [];
+    }
   }
 
   public getPostsByStatus(status: PostStatus): BlogPost[] {
-    return this.getAllPosts().filter((p) => p.status === status);
+    const targetStatus = (status || '').toString().trim().toLowerCase();
+    return this.getAllPosts().filter((p) => (p.status || '').toString().trim().toLowerCase() === targetStatus);
   }
 
   public getPostById(id: string): BlogPost | undefined {
