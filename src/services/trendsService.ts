@@ -1,4 +1,4 @@
-import Parser from 'rss-parser';
+﻿import Parser from 'rss-parser';
 import { TrendTopic } from '../types/index.js';
 import { StorageService } from './storageService.js';
 
@@ -7,26 +7,9 @@ interface CustomItem {
   link?: string;
   pubDate?: string;
   content?: string;
-  'ht:approx_traffic'?: string;
-  'ht:news_item'?: any;
-  'ht:news_item_title'?: string;
-  'ht:news_item_snippet'?: string;
-  'ht:news_item_url'?: string;
-  'ht:news_item_source'?: string;
 }
 
-const parser = new Parser<any, CustomItem>({
-  customFields: {
-    item: [
-      ['ht:approx_traffic', 'approx_traffic'],
-      ['ht:news_item', 'news_item'],
-      ['ht:news_item_title', 'news_item_title'],
-      ['ht:news_item_snippet', 'news_item_snippet'],
-      ['ht:news_item_url', 'news_item_url'],
-      ['ht:news_item_source', 'news_item_source'],
-    ],
-  },
-});
+const parser = new Parser<any, CustomItem>();
 
 export class TrendsService {
   private static instance: TrendsService;
@@ -40,81 +23,53 @@ export class TrendsService {
   }
 
   /**
-   * Coleta as principais tendências do Google Trends (Brasil) e Notícias de Alta Demanda,
-   * filtrando e adaptando estritamente para o nicho de Marketing, SEO, Tráfego e Vendas da Prime Rank.
+   * Coleta tendências focadas estritamente em Marketing, SEO, Tráfego Pago, Google Ads e IA
    */
   public async fetchTrendingTopics(): Promise<TrendTopic[]> {
     const rawTopics: TrendTopic[] = [];
 
-    // 1. Feeds de Busca Estratégica do Google Brasil em tempo real
     const searchQueries = [
-      'google+ads+OR+seo+OR+trafego+pago+OR+inteligencia+artificial+negocios',
-      'marketing+digital+brasil+OR+vendas+online+OR+conversao+leads',
-      'algoritmo+google+OR+meta+ads+OR+instagram+empresas'
+      'google+ads+seo+marketing+digital+brasil',
+      'trafego+pago+meta+ads+vendas+online',
+      'inteligencia+artificial+empresas+conversao',
+      'algoritmo+google+otimizacao+sites'
     ];
 
     for (const q of searchQueries) {
       try {
         const feed = await parser.parseURL(
-          `https://news.google.com/rss/search?q=${q}&hl=pt-BR&gl=BR&ceid=BR:pt-419`
+          'https://news.google.com/rss/search?q=' + q + '&hl=pt-BR&gl=BR&ceid=BR:pt-419'
         );
         if (feed && feed.items) {
-          for (const item of feed.items.slice(0, 5)) {
+          for (const item of feed.items.slice(0, 4)) {
             if (!item.title) continue;
 
             const cleanTitle = item.title.replace(/\s*-\s*[^-]+$/, '').trim();
-            const topicId = `trend_${Buffer.from(cleanTitle).toString('base64url').slice(0, 16)}`;
+            if (this.isRelevantMarketingTopic(cleanTitle)) {
+              const topicId = 'trend_' + Buffer.from(cleanTitle).toString('base64url').slice(0, 16);
 
-            rawTopics.push({
-              id: topicId,
-              title: cleanTitle,
-              approximateTraffic: '+80K buscas estimadas',
-              trafficSnippet: item.contentSnippet || item.content || 'Em alta no Google Brasil',
-              category: 'Tendência de Mercado & SEO',
-              discoveredAt: new Date().toISOString(),
-              relevanceScore: this.calculateRelevanceScore(cleanTitle, item.contentSnippet || ''),
-              suggestedAngle: this.generateAngle(cleanTitle),
-            });
+              rawTopics.push({
+                id: topicId,
+                title: cleanTitle,
+                approximateTraffic: '+75K buscas estimadas',
+                trafficSnippet: item.contentSnippet || item.content || 'Em alta no Google Brasil',
+                category: 'Estratégia & Performance',
+                discoveredAt: new Date().toISOString(),
+                relevanceScore: this.calculateRelevanceScore(cleanTitle, item.contentSnippet || ''),
+                suggestedAngle: this.generateAngle(cleanTitle),
+              });
+            }
           }
         }
       } catch (err) {
-        console.warn(`[TRENDS] Aviso ao buscar feed para query: ${q}`);
+        console.warn('[TRENDS] Aviso ao buscar feed para query: ' + q);
       }
     }
 
-    // 2. Google Trends Brasil Geral (Captura grandes ondas do dia)
-    try {
-      const feed = await parser.parseURL('https://trends.google.com/trending/rss?geo=BR');
-      if (feed && feed.items) {
-        for (const item of feed.items.slice(0, 8)) {
-          if (!item.title) continue;
-
-          const title = item.title.trim();
-          const topicId = `gtrend_${Buffer.from(title).toString('base64url').slice(0, 16)}`;
-          const snippet = (item as any).news_item_snippet || item.content || '';
-
-          rawTopics.push({
-            id: topicId,
-            title: title,
-            approximateTraffic: (item as any).approx_traffic || '+100K',
-            trafficSnippet: snippet,
-            category: 'Google Trends Viral',
-            discoveredAt: new Date().toISOString(),
-            relevanceScore: this.calculateRelevanceScore(title, snippet),
-            suggestedAngle: `Como empresários e gestores devem usar o pico de atenção em "${title}" para gerar tráfego orgânico e conversões com a Prime Rank Marketing.`,
-          });
-        }
-      }
-    } catch (err) {
-      console.warn('[TRENDS] Google Trends direto indisponível, usando pautas de alta autoridade.');
-    }
-
-    // Fallbacks estratégicos sempre que necessário
     if (rawTopics.length === 0) {
       rawTopics.push(...this.getFallbackTrendingTopics());
     }
 
-    // Elimina duplicados e ordena por maior relevância
     const unique = Array.from(new Map(rawTopics.map((item) => [item.title, item])).values());
     unique.sort((a, b) => (b.relevanceScore || 50) - (a.relevanceScore || 50));
 
@@ -122,22 +77,32 @@ export class TrendsService {
     return unique;
   }
 
+  private isRelevantMarketingTopic(title: string): boolean {
+    const text = title.toLowerCase();
+    const banned = ['futebol', 'jogo', 'novela', 'bbb', 'reality', 'acidente', 'polícia', 'crime', 'famosos', 'celebridade'];
+    for (const b of banned) {
+      if (text.includes(b)) return false;
+    }
+    const relevant = ['google', 'ads', 'seo', 'marketing', 'vendas', 'tráfego', 'meta', 'instagram', 'inteligência artificial', 'ia', 'lead', 'conversão', 'negócio', 'empresa', 'ecommerce'];
+    return relevant.some((r) => text.includes(r));
+  }
+
   private calculateRelevanceScore(title: string, snippet: string): number {
-    const text = `${title} ${snippet}`.toLowerCase();
-    const highKeywords = ['google', 'vendas', 'ia', 'inteligencia artificial', 'mercado', 'empresa', 'tecnologia', 'consumo', 'marca', 'anuncio', 'e-commerce'];
-    let score = 65; // Base score
+    const text = (title + ' ' + snippet).toLowerCase();
+    const highKeywords = ['google', 'vendas', 'ia', 'inteligência artificial', 'mercado', 'empresa', 'conversão', 'anúncio', 'seo', 'tráfego'];
+    let score = 70;
 
     for (const kw of highKeywords) {
       if (text.includes(kw)) {
-        score += 8;
+        score += 6;
       }
     }
 
-    return Math.min(score, 98);
+    return Math.min(score, 99);
   }
 
   private generateAngle(topicTitle: string): string {
-    return `Como aproveitar o impacto e a alta busca por "${topicTitle}" para gerar autoridade, atrair clientes e aplicar estratégias de SEO e Tráfego com a Prime Rank Marketing.`;
+    return 'Como gestores e empresários devem aplicar a estratégia de "' + topicTitle + '" para gerar mais leads, autoridade e conversões com a Prime Rank Marketing.';
   }
 
   private getFallbackTrendingTopics(): TrendTopic[] {
@@ -145,33 +110,33 @@ export class TrendsService {
     return [
       {
         id: 'fallback_1',
-        title: 'Atualização do Algoritmo do Google e o Futuro do SEO com Busca por IA',
-        approximateTraffic: '+100K',
-        trafficSnippet: 'Como as novas respostas geradas por IA no Google afetam o tráfego orgânico de empresas e sites.',
-        category: 'SEO & Algoritmos',
+        title: 'Como Dominar a 1ª Página do Google com SEO e Tráfego Pago em 2026',
+        approximateTraffic: '+120K',
+        trafficSnippet: 'Estratégias avançadas para posicionar empresas no topo das buscas e acelerar conversões.',
+        category: 'SEO & Performance',
         discoveredAt: now,
-        relevanceScore: 98,
-        suggestedAngle: 'Estratégias para proteger e multiplicar seu tráfego orgânico na era das buscas por Inteligência Artificial.',
+        relevanceScore: 99,
+        suggestedAngle: 'Metodologia Prime Rank para transformar buscas orgânicas e anúncios em vendas recorrentes.',
       },
       {
         id: 'fallback_2',
-        title: 'Redução do Custo por Lead (CPL) no Google Ads e Meta Ads em Mercados Competitivos',
-        approximateTraffic: '+80K',
-        trafficSnippet: 'Estratégias avançadas de segmentação e landing pages de alta conversão para reduzir gastos e aumentar vendas.',
+        title: 'Estratégias Avançadas de Escala no Meta Ads e Google Ads na Região Metropolitana do Recife',
+        approximateTraffic: '+90K',
+        trafficSnippet: 'O passo a passo para reduzir o Custo por Aquisição (CPA) e qualificar leads no WhatsApp.',
         category: 'Tráfego Pago & ROI',
         discoveredAt: now,
-        relevanceScore: 95,
-        suggestedAngle: 'O método comprovado da Prime Rank Marketing para maximizar o ROAS sem inflacionar o orçamento de mídia.',
+        relevanceScore: 96,
+        suggestedAngle: 'Maximizando o retorno sobre investimento de campanhas pagas com alta precisão.',
       },
       {
         id: 'fallback_3',
-        title: 'Como Empresas B2B e E-commerces Estão Escalando Vendas com Inbound de Alta Performance',
-        approximateTraffic: '+60K',
-        trafficSnippet: 'A importância de construir autoridade de marca através de conteúdos profundos e funis de captação contínua.',
-        category: 'Growth & Vendas',
+        title: 'Como a Inteligência Artificial e Automação Estão Revolucionando o Atendimento Comercial',
+        approximateTraffic: '+85K',
+        trafficSnippet: 'Uso de agentes inteligentes integrados ao WhatsApp para fechar contratos 24 horas por dia.',
+        category: 'Inovação & IA',
         discoveredAt: now,
-        relevanceScore: 92,
-        suggestedAngle: 'Construindo uma máquina de aquisição de clientes diária com marketing de conteúdo estratégico.',
+        relevanceScore: 94,
+        suggestedAngle: 'Triagem e qualificação de leads com IA para acelerar o fechamento de vendas.',
       },
     ];
   }
